@@ -4,6 +4,7 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
+    Pressable,
     Image,
     View,
     KeyboardAvoidingView,
@@ -116,12 +117,10 @@ const ProfileImage=()=>{
                 transparent={true}
                 visible={modalVisible}
         >
-                <View style={styles.centeredView}>
-                    <TouchableWithoutFeedback
-                        onPress={closeModal}
-                    >
-                        <View />
-                    </TouchableWithoutFeedback>
+                <Pressable  
+                style={styles.centeredView}
+                onPress={()=>setModalVisible(false)}>
+                   
                     <View style={styles.modalView}>
                         <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
                             <TouchableOpacity onPress={galleryImagePick}>
@@ -136,7 +135,7 @@ const ProfileImage=()=>{
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
+                </Pressable >
             </Modal>
             <View style={{alignItems:'center',marginTop:'9%'}}>
                 <View>
