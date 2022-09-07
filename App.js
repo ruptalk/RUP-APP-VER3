@@ -35,4 +35,4 @@ export default App
 
 // <Stack.Screen name = 'Profile' component={Profile}/>
 // <Stack.Screen name = 'Notice' component={Notice}/>
-
+//fork_test
