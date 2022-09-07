@@ -12,7 +12,7 @@ import styles from './style'
 function Notice(){
     const navigation = useNavigation()
 
-    const renderItem = ({ item}) => (
+    const renderItem = ({item}) => (
         <Item date={item.date} point={item.point}/>
     );
     const Item = ({date,point}) => (

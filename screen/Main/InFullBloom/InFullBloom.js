@@ -62,7 +62,30 @@ function InFullBloom(){
                             </View>
                         </View>
                     </View>
-                    <View style={{height:'70%'}}/>
+                    <View style={{height:'70%'}}>
+                        <View style={{justifyContent:'center',alignItems:'center',}}>
+                            <View style={{height: '0%', width:'79%', flexDirection:"row",position:"absolute", marginLeft:-5}}>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            </View>
+
+                            <View style={{height: '-20%', width:'100%', flexDirection:"row",position:"relative", marginLeft:-5,marginTop:130}}>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            </View>
+
+                            <View style={{height: '-50%', width:'79%', flexDirection:"row",position:"relative", marginLeft:-5,marginTop:180}}>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
+                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            </View>
+                            
+                        </View>
+                    </View>
+
                     <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>
                             <Text style={styles.QrText}>QR코드</Text>
