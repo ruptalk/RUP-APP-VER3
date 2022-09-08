@@ -61,11 +61,31 @@ function InFullBloom(){
                         </View>
                     </View>
                     <View style={{height:'70%'}}>
-                        <View style={{height:'70%'}}>
-                            <Image style={{width:30,height:30}}source={require('../../../imageResource/flower/flower1.png')}/>
-                        </View>
-                        <View style={{height:'30%', backgroundColor:'green'}}/>
 
+                        <View style={{height:'45%', backgroundColor:'green'}}/>
+
+                        <View style={{height:'10%',flexDirection:"row"}}>
+                            <Image style={{width:40,height:40,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                        </View>
+                        
+                        <View style={{height:'10%', flexDirection:"row", backgroundColor:'red'}}>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
+                        </View>
+
+                        <View style={{height:'10%', flexDirection:"row"}}>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                        </View>
+                        
+                        <View style={{height:'25%', backgroundColor:'green'}}/>
+                        
+                        
                             
                     </View>
 
@@ -92,22 +112,3 @@ export default InFullBloom
 //51 55줄 text userObject.xxx-> useState 로 바꾸기//51 55줄 text userObject.xxx-> useState 로 바꾸기//51 55줄 text userObject.xxx-> useState 로 바꾸기
 
 //style변경//style변경//style변경//style변경//style변경//style변경//style변경//style변경//style변경//style변경
-
-{/* <View style={{height: '10%', width:'79%',flexDirection:"row",position:"absolute", marginLeft:-5, backgroundColor:'blue'}}>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            </View>
-
-                            <View style={{height: '-20%', width:'100%', flexDirection:"row",position:"relative", marginLeft:-5,marginTop:130}}>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            </View>
-
-                            <View style={{height: '-50%', width:'79%', flexDirection:"row",position:"relative", marginLeft:-5,marginTop:180}}>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
-                                <Image style={{width:30,height:30,marginLeft:30,flex: 0.5}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            </View> */}
