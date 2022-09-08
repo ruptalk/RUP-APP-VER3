@@ -180,6 +180,29 @@ const styles = StyleSheet.create({
         marginTop: 50
       },
       //calendar
+      noticeText:{
+        alignContent:'center',
+        width:300,
+        height:400,
+        borderColor:'#eee',
+        borderBottomWidth:1,
+        borderTopWidth:1,
+        marginTop:10,
+        padding:5
+      },
+      Notice:{
+        marginTop:10,
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor:'#eee',
+        borderBottomWidth:1,
+        marginLeft:15,
+        padding:5
+    
+      },
+      //Notice
+
 })
 
 
