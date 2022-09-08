@@ -16,6 +16,7 @@
     "react": "18.0.0",
     "react-native": "0.69.1",
     "react-native-big-list": "^1.5.4",
+    "react-native-calendars": "^1.1288.3",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-image-picker": "^4.8.4",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
