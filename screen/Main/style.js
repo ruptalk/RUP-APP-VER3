@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 22,
       },
       modalView: {
         height:500, 
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
       },
       button: {
         
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
       exitlogo: {
         width: 25,
         height: 25,
+        alignSelf: 'flex-end'
       },
       facelogo: {
         width: 35,
@@ -180,29 +181,7 @@ const styles = StyleSheet.create({
         marginTop: 50
       },
       //calendar
-      noticeText:{
-        alignContent:'center',
-        width:300,
-        height:400,
-        borderColor:'#eee',
-        borderBottomWidth:1,
-        borderTopWidth:1,
-        marginTop:10,
-        padding:5
-      },
-      Notice:{
-        marginTop:10,
-        width: '90%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderColor:'#eee',
-        borderBottomWidth:1,
-        marginLeft:15,
-        padding:5
-    
-      },
-      //Notice
-
+     
 })
 
 

@@ -56,27 +56,22 @@ function Main(){
           setcalendarModalVisible(false);
         }}
       > 
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Pressable
-            style={{alignSelf: 'flex-end'}}
-            onPress={() => setcalendarModalVisible(false)}
-          >
+      <Pressable style={styles.centeredView}
+      onPress={() => setcalendarModalVisible(false)}
+      >
+        <View style={styles.modalView}>           
             <Image 
               style={styles.exitlogo}
               source={require('../../imageResource/icon/ic_close.png')}
             />
-          </Pressable>
-        
-          <Calendar
-            style={styles.calendar}
-              theme={{
+            <Calendar
+                style={styles.calendar}
+                theme={{
                 monthTextColor: 'black',
                 arrowColor: '#d1e5cd',
                 textDayFontSize: 16,
                 textMonthFontSize: 30,
                 textDayHeaderFontSize: 0
-              
               }}
 
               dayComponent={({date, state}) => {
@@ -112,7 +107,7 @@ function Main(){
               }}
             /> 
         </View>
-      </View>
+      </Pressable>
     </Modal>
         <View style={{flex:1}}>
             <ImageBackground 
