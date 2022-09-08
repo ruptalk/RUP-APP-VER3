@@ -1,10 +1,12 @@
-import React from 'react'
+import React,{useEffect,useState}  from 'react'
 import {
     View,
     Text,
     TouchableOpacity,
     Image,
-    SafeAreaView
+    SafeAreaView,
+    Pressable,
+    Modal
 } from 'react-native'
 import BigList from "react-native-big-list";
 import {useNavigation} from '@react-navigation/native';
@@ -24,7 +26,41 @@ function Notice(){
             </View>
         </View>
       );
+      const [noticemodalVisible, setnoticeModalVisible] = useState(false);
     return(
+        <>
+         <Modal
+            animationType="slide"
+            transparent={true}
+            visible={noticemodalVisible}
+            onRequestClose={() => {
+            setnoticeModalVisible(false);
+            }}
+        >     
+            <Pressable 
+            style={styles.centeredView}
+            onPress={()=>setnoticeModalVisible(false)}
+            >
+
+                <View style={styles.modalView}>
+                    <Pressable
+                        style={{alignSelf: 'flex-end'}}
+                        onPress={() => setnoticeModalVisible(false)}
+                    >
+                        <Image 
+                            style={styles.exitlogo}
+                            source={require('../../../imageResource/icon/ic_close.png')}
+                        />
+                    </Pressable>
+                    <View style={styles.noticeText}>
+                    <Text style={{textAlign:"center"}}>
+                        ddddddddddddddddddddddddddd
+                    </Text>
+                    </View>
+                </View>
+            </Pressable>
+        </Modal>
+        
         <View style={styles.container}>
             <TouchableOpacity 
                 onPress={()=>navigation.goBack()}
@@ -35,6 +71,7 @@ function Notice(){
             <View style={styles.horizonalLine}/>
             <TouchableOpacity
                 style={{marginTop:'5%',marginLeft:30,flexDirection:'row',alignItems:'center'}}
+                onPress={()=>setnoticeModalVisible(true)}
             >
                 <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_notice_02.png')}/>
                 <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] v 1.1 업데이트 되었습니다.</Text>
@@ -46,6 +83,7 @@ function Notice(){
                 />
             </SafeAreaView>
         </View>
+        </>
     )
 }
 

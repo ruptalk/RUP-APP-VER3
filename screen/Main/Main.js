@@ -3,9 +3,8 @@ import {
     View,
     Image,
     Dimensions,
-    StyleSheet,
-    Alert,
-    BackHandler,
+    Modal,
+    Pressable,
     Text,
     ImageBackground,
     TouchableOpacity
@@ -13,6 +12,7 @@ import {
 import { useNavigation,useIsFocused } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv'
 import BottomSheet_Main from './BottomSheet_Main';
+import { Calendar } from "react-native-calendars";
 import styles from './style';
 
 export const storage = new MMKV()
@@ -40,10 +40,75 @@ function Main(){
     const [modalVisible,setModalVisible]=useState(false)
     console.log(userObject)
     console.log(jsonUser)
-
-    useEffect(() => {}, [isFocused]); //isFocused로 화면 전환시 리렌더링
+    useEffect(() => {}, [isFocused]);
+    const [calendarsmodalVisible, setcalendarModalVisible] = useState(false);
+    const success =[
+      "2022-08-01", "2022-08-14"
+    ];
         
       return(
+        <>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={calendarsmodalVisible}
+        onRequestClose={() => {
+          setcalendarModalVisible(false);
+        }}
+      > 
+      <Pressable style={styles.centeredView}
+      onPress={() => setcalendarModalVisible(false)}
+      >
+        <View style={styles.modalView}>           
+            <Image 
+              style={styles.exitlogo}
+              source={require('../../imageResource/icon/ic_close.png')}
+            />
+            <Calendar
+                style={styles.calendar}
+                theme={{
+                monthTextColor: 'black',
+                arrowColor: '#d1e5cd',
+                textDayFontSize: 16,
+                textMonthFontSize: 30,
+                textDayHeaderFontSize: 0
+              }}
+
+              dayComponent={({date, state}) => {
+                
+                if (success.includes(date.dateString)){
+                  var dateimg = date.dateString.replace(/\-/g,"")
+                  if((dateimg*1)%2==0){
+                    return(
+                      <Image
+                        style={styles.facelogo}
+                        source={require('../../imageResource/icon/ic_face_01.png')}
+                      />
+                    )
+                  }
+                  else{
+                    return(
+                      <Image 
+                        style={styles.facelogo}
+                        source={require('../../imageResource/icon/ic_face_02.png')}
+                      />
+                    )
+                  }
+                }
+                else{
+                  return(
+                    <View>
+                      <Text style={{textAlign: 'center', color: state === 'disabled' ? 'white' : 'black'}}>
+                        {date.day}
+                      </Text>
+                    </View>
+                  )
+                }
+              }}
+            /> 
+        </View>
+      </Pressable>
+    </Modal>
         <View style={{flex:1}}>
             <ImageBackground 
                 style={{
@@ -73,10 +138,14 @@ function Main(){
                         </View>
                         <View style={styles.calenderAndNoticeBoxContainer}>
                             <View style={styles.calenderAndNoticeBox}>
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={()=>setcalendarModalVisible(true)}
+                                >
                                     <Image 
                                         style={{marginRight:'15%'}}
-                                        source={require('../../imageResource/icon/ic_calendar.png')}/>
+                                        source={require('../../imageResource/icon/ic_calendar.png')}
+                                    />
+                                    
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
                                     <Image source={require('../../imageResource/icon/ic_notice.png')}/>
@@ -100,6 +169,7 @@ function Main(){
                 />
             </ImageBackground>
         </View>
+        </>
     )
 }
 
