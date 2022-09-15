@@ -65,24 +65,24 @@ function InFullBloom(){
                         <View style={{height:'45%', backgroundColor:'green'}}/>
 
                         <View style={{height:'10%',flexDirection:"row"}}>
-                            <Image style={{width:40,height:40,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:40,height:40,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
                         </View>
                         
                         <View style={{height:'10%', flexDirection:"row", backgroundColor:'red'}}>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
                         </View>
 
                         <View style={{height:'10%', flexDirection:"row"}}>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
                         </View>
-                        
+        
                         <View style={{height:'25%', backgroundColor:'green'}}/>
                         
                         
@@ -91,7 +91,7 @@ function InFullBloom(){
 
                     <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                            <Text style={styles.QrText}>QR코드</Text>
+                            <Image style={{width:40,height:40}} source={require('../../../imageResource/icon/qrcode.png')}/>
                         </TouchableOpacity>
                     </View>
                 </View>

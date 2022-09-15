@@ -46,6 +46,8 @@ function Main(){
       "2022-08-01", "2022-08-14"
     ];
         
+
+    
       return(
         <>
         <Modal
@@ -66,12 +68,12 @@ function Main(){
             />
             <Calendar
                 style={styles.calendar}
-                theme={{
-                monthTextColor: 'black',
-                arrowColor: '#d1e5cd',
-                textDayFontSize: 16,
-                textMonthFontSize: 30,
-                textDayHeaderFontSize: 0
+                  theme={{
+                  monthTextColor: 'black',
+                  arrowColor: '#d1e5cd',
+                  textDayFontSize: 16,
+                  textMonthFontSize: 30,
+                  textDayHeaderFontSize: 0
               }}
 
               dayComponent={({date, state}) => {
@@ -159,7 +161,7 @@ function Main(){
                     </View>
                     <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                            <Text style={styles.QrText}>QR코드</Text>
+                        <Image style={{width:40,height:40}} source={require('../../imageResource/icon/qrcode.png')}/>
                         </TouchableOpacity>
                     </View>
                 </View>
