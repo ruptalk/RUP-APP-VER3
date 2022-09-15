@@ -8,7 +8,7 @@ import {
     BackHandler,
     Alert
 } from 'react-native';
-import BottomSheet_login from './BottomSheet_login';
+import BottomSheet_login from './BottomSheet_login.js';
 import styles from './style.js';
 
 // import { MMKV } from 'react-native-mmkv'
