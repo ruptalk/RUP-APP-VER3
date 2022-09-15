@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native'
+import {screenHeight,screenWidth} from '../../Main/fullScreenValue'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        marginTop:'25%',
+        backgroundColor:'#f9f8e8',
     },
     
     ////////////////BottomSheet_login style//////////////////////////////
@@ -81,6 +82,43 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch',
         alignItems: 'center',
     },
+    searchUniversity: {
+        borderWidth: 0.5,
+        borderColor: '#777777',
+        height: 40,
+        borderRadius: 20,
+        marginTop: 7,
+        marginBottom: 7,
+        width:200,
+        marginBottom:4,
+        backgroundColor:'white',
+        paddingLeft:15,
+        justifyContent:'center',
+    },
+    searchMajor: {
+        borderWidth: 0.5,
+        borderColor: '#777777',
+        height: 40,
+        borderRadius: 20,
+        marginTop: 7,
+        marginBottom: 7,
+        width:100,
+        marginBottom:4,
+        backgroundColor:'white',
+        paddingLeft:15,
+        justifyContent:'center'
+    },
     ////////////////BottomSheet_login style//////////////////////////////
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+    universityModalView: {
+        height:screenHeight, 
+        width: screenWidth,
+        backgroundColor: "white",
+    },
 })
 export default styles
