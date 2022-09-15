@@ -15,6 +15,7 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import KakaoSDK from '@actbase/react-kakaosdk'
 import styles from './style'
 
 const BottomSheet_login = (props) => {
@@ -29,6 +30,13 @@ const BottomSheet_login = (props) => {
     const [userPw,setUserPw]=useState('')
     const [userPwAgain,setUserPwAgain]=useState('')
 
+    const signInWithKakao=async()=>{
+        await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
+        const tokens = await KakaoSDK.login();
+        console.log(tokens)
+        setModalVisible(false)
+        navigation.reset({routes:[{name:'Main'}]})
+      }
 
     const isBlank=()=>{
         let cnt = 0
@@ -77,22 +85,11 @@ const BottomSheet_login = (props) => {
     console.log(screenHeight)
     const Login=()=>(       //Login 아이콘 클릭시 띄울 화면
         <>
-            <ScrollView>
-                <TextInput
-                placeholder='카톡 1초 로그인'/>
-                <TextInput
-                placeholder='카톡 2초 로그인'/>
-                <TextInput
-                placeholder='카톡 3초 로그인'/>
-                <TextInput
-                placeholder='카톡 4초 로그인'/>
-                <TextInput
-                placeholder='카톡 5초 로그인'/>
-                <TextInput
-                placeholder='카톡 6초 로그인'/>
-                <TextInput
-                placeholder='카톡 6초 로그인'/>
-            </ScrollView>
+            <View>
+                <TouchableOpacity onPress={signInWithKakao}>
+                    <Image source={require('../../../imageResource/jobDaHan/kakao_login_medium_narrow.png')}/>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity 
                 onPress={()=>
                 {
