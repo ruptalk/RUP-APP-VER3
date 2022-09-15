@@ -113,7 +113,7 @@ const BottomSheet_login = (props) => {
                         />
                     <View style={{flexDirection:'row'}}>
                         <TouchableOpacity 
-                            style={styles.searchUniversityStyle}
+                            style={styles.searchUniversity}
                             onPress={()=>pressButton2()}
                         >
                             <View style={{flexDirection:'row'}}>
@@ -121,7 +121,7 @@ const BottomSheet_login = (props) => {
                                 <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.searchUniversityStyle2}>
+                        <TouchableOpacity style={styles.searchMajor}>
                             <View style={{flexDirection:'row'}}>   
                                 <Text >학과</Text>
                                 <Image style={{resizeMode:'contain',height:'90%',width:'80%'}} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
