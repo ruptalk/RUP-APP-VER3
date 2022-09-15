@@ -3,7 +3,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        marginTop:'25%',
+        backgroundColor:'#f9f8e8',
     },
     
     ////////////////BottomSheet_login style//////////////////////////////

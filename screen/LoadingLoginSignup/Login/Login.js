@@ -24,6 +24,7 @@ const Login = (props) => {
 
     return (
         <View style={styles.container}>
+            <View style={{marginTop:'25%'}}/>
             <Image source = {require('../../../imageResource/logo/logo_main.png')}/>
             <View style={{padding:20}}></View>
             <TouchableOpacity  
