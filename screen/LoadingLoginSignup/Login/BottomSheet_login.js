@@ -56,20 +56,39 @@ const BottomSheet_login = (props) => {
     }
 
     const Login=()=>(       //Login 아이콘 클릭시 띄울 화면
-        <>
+        <>  
             <View>
-                <TouchableOpacity onPress={signInWithKakao}>
-                    <Image source={require('../../../imageResource/jobDaHan/kakao_login_medium_narrow.png')}/>
+                <TextInput
+                    placeholder='이메일'
+                    style={styles.sectionStyle}
+                    onChangeText={name => setName(name)}
+                />
+                <TextInput
+                    placeholder='비밀번호'
+                    style={styles.sectionStyle}
+                    onChangeText={name => setName(name)}
+                />
+                <TouchableOpacity
+                    onPress={()=>
+                        {
+                            setModalVisible(false)
+                            navigation.reset({routes:[{name:'Main'}]})
+                        }}
+                    style={styles.signUp}
+                >
+                    <Text style={styles.signUpText}>로그인</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity 
-                onPress={()=>
-                {
-                    setModalVisible(false)
-                    navigation.reset({routes:[{name:'Main'}]})
-                }}>
-                <Text style={styles.passwordPage}>로그인</Text>
-            </TouchableOpacity>
+            {/* <View style={{margin:'5%'}}/> */}
+            <View>
+                <TouchableOpacity onPress={signInWithKakao} style={styles.kakaoLogin}>
+                    <View style={styles.twentyPercent}/>
+                    <View style={styles.kakaoLoginText}>
+                        <Text>카카오 로그인</Text>
+                    </View>
+                    <View style={styles.twentyPercent}/>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity 
                 onPress={()=>
                 {
@@ -78,6 +97,7 @@ const BottomSheet_login = (props) => {
                 }}>
                 <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
             </TouchableOpacity>
+            
         </>
     )
 
@@ -115,7 +135,7 @@ const BottomSheet_login = (props) => {
                         defaultValue={pwAgain}
                         secureTextEntry={true}
                         />
-                    <View style={{flexDirection:'row'}}>    
+                    <View style={styles.rowDirection}>    
                         <TouchableOpacity                                                  
                             style={styles.searchUniversity}
                             onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain)}
