@@ -19,6 +19,7 @@ import KakaoSDK from '@actbase/react-kakaosdk'
 import { useToast } from "react-native-toast-notifications";
 import {validateNickName,validateEmail,validatePw} from '../../../validate.js'
 import SearchUniversity from './SearchUniversity.js';
+import SearchMajor from './SearchMajor.js'
 import styles from './style'
 
 const BottomSheet_login = (props) => {
@@ -28,14 +29,16 @@ const BottomSheet_login = (props) => {
     const [selectedTab, setSelectedTab] = useState('Login');
     const [isNameBlank,setIsNameBlank]=useState('NotBlankName')
     const navigation = useNavigation()
-    const [userName,setUsername]=useState(null)
-    const [userEmail,setUserEmail]=useState(null)
-    const [userPw,setUserPw]=useState(null)
-    const [userPwAgain,setUserPwAgain]=useState(null)
+    const [userName,setUsername]=useState('')
+    const [userEmail,setUserEmail]=useState('')
+    const [userPw,setUserPw]=useState('')
+    const [userPwAgain,setUserPwAgain]=useState('')
     const [userUniversity,setUserUniversity]=useState('학교찾기')
+    const [userMajor,setUserMajor]=useState('학과')
     const [universityModal, setUniversityModal] = useState(false);
+    const [majorModal, setMajorModal] = useState(false);
+    const [openToastMessage,setOpenToastMessage]=useState(0)
     const toast = useToast();
-
     const signInWithKakao=async()=>{
         await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
         const tokens = await KakaoSDK.login();
@@ -115,16 +118,19 @@ const BottomSheet_login = (props) => {
                     <View style={{flexDirection:'row'}}>    
                         <TouchableOpacity                                                  
                             style={styles.searchUniversity}
-                            onPress={()=>pressButton2()}
+                            onPress={()=>userUniversityModalOpen()}
                         >
                             <View style={{flexDirection:'row'}}>
                                 <Text>{userUniversity}</Text>
                                 <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.searchMajor}>
+                        <TouchableOpacity 
+                            style={styles.searchMajor}
+                            onPress={()=>userMajorModalOpen()}
+                        >
                             <View style={{flexDirection:'row'}}>   
-                                <Text >학과</Text>
+                                <Text >{userMajor}</Text>
                                 <Image style={{resizeMode:'contain',height:'90%',width:'80%'}} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
                             </View>
                         </TouchableOpacity>
@@ -144,20 +150,22 @@ const BottomSheet_login = (props) => {
         setUserEmail(email)
         setUserPw(pw)
         setUserPwAgain(pwAgain)
+        setOpenToastMessage(openToastMessage+1)
     }
+    useEffect(() => {
+        if(openToastMessage!==0){
+            validation_nickName()
+        }
+    }, [openToastMessage]);
     const validation_nickName=()=>{                    //닉네임 유효성 검사
         if(validateNickName(userName)){
+            console.log(userName)
             return validation_email()
         }
         else{
             return showToast("닉네임은 2~16자 입니다.")
         }
     }
-    useEffect(() => {
-        if(userName!==null||userEmail!==null||userPw!==null||userPwAgain!==null){
-            validation_nickName()
-        }
-    }, [userPwAgain,userPw,userEmail,userName]);
     const validation_university=()=>{                   //대학 유효성 검사
         if(university===''){                            
             return validation_department()
@@ -252,8 +260,11 @@ const BottomSheet_login = (props) => {
             setModalVisible(false);
         })
     }
-    const pressButton2=()=>{
+    const userUniversityModalOpen=()=>{
         setUniversityModal(true);
+    }
+    const userMajorModalOpen=()=>{
+        setMajorModal(true);
     }
     return (
         <>
@@ -304,6 +315,11 @@ const BottomSheet_login = (props) => {
                 universityModal={universityModal}
                 setUniversityModal={setUniversityModal}
                 setUserUniversity={setUserUniversity}
+            />
+            <SearchMajor
+                majorModal={majorModal}
+                setMajorModal={setMajorModal}
+                setUserMajor={setUserMajor}
             />
         </>
     )
