@@ -118,7 +118,7 @@ const BottomSheet_login = (props) => {
                     <View style={{flexDirection:'row'}}>    
                         <TouchableOpacity                                                  
                             style={styles.searchUniversity}
-                            onPress={()=>userUniversityModalOpen()}
+                            onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain)}
                         >
                             <View style={{flexDirection:'row'}}>
                                 <Text>{userUniversity}</Text>
@@ -127,7 +127,7 @@ const BottomSheet_login = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={styles.searchMajor}
-                            onPress={()=>userMajorModalOpen()}
+                            onPress={()=>userMajorModalOpen(name,email,pw,pwAgain)}
                         >
                             <View style={{flexDirection:'row'}}>   
                                 <Text >{userMajor}</Text>
@@ -151,6 +151,13 @@ const BottomSheet_login = (props) => {
         setUserPw(pw)
         setUserPwAgain(pwAgain)
         setOpenToastMessage(openToastMessage+1)
+    }
+    const userDefaultValue=(name,email,pw,pwAgain)=>{
+        console.log(name)
+        setUsername(name)
+        setUserEmail(email)
+        setUserPw(pw)
+        setUserPwAgain(pwAgain)
     }
     useEffect(() => {
         if(openToastMessage!==0){
@@ -211,7 +218,7 @@ const BottomSheet_login = (props) => {
             type:'custom',
             duration:1500,
             animationType:'zoom-in',
-            placement:'top'
+            placement:'top',
         })
     }
 
@@ -260,10 +267,12 @@ const BottomSheet_login = (props) => {
             setModalVisible(false);
         })
     }
-    const userUniversityModalOpen=()=>{
+    const userUniversityModalOpen=(name,email,pw,pwAgain)=>{
+        userDefaultValue(name,email,pw,pwAgain)
         setUniversityModal(true);
     }
-    const userMajorModalOpen=()=>{
+    const userMajorModalOpen=(name,email,pw,pwAgain)=>{
+        userDefaultValue(name,email,pw,pwAgain)
         setMajorModal(true);
     }
     return (
