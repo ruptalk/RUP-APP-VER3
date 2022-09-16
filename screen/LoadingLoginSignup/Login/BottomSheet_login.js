@@ -42,6 +42,7 @@ const BottomSheet_login = (props) => {
     const signInWithKakao=async()=>{
         await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
         const tokens = await KakaoSDK.login();
+        console.log(tokens)
         setModalVisible(false)
         navigation.reset({routes:[{name:'Main'}]})
       }
@@ -82,9 +83,11 @@ const BottomSheet_login = (props) => {
             {/* <View style={{margin:'5%'}}/> */}
             <View>
                 <TouchableOpacity onPress={signInWithKakao} style={styles.kakaoLogin}>
-                    <View style={styles.twentyPercent}/>
-                    <View style={styles.kakaoLoginText}>
-                        <Text>카카오 로그인</Text>
+                    <View style={styles.twentyPercent}>
+                        <Image style={styles.kakaoSymbolImage} source={require('../../../imageResource/jobDaHan/kakao_login_symbol.png')}/>
+                    </View>
+                    <View style={styles.kakaoLoginTextView}>
+                        <Text style={styles.kakaoLoginText}>카카오 로그인</Text>
                     </View>
                     <View style={styles.twentyPercent}/>
                 </TouchableOpacity>

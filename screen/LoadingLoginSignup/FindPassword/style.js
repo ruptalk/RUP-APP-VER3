@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
         margin: 7,
         width:300,
         marginBottom:4,
-        backgroundColor:'white'
+        backgroundColor:'white',
+        paddingLeft:15
     },
     signUp: {
         borderWidth: 0.5,

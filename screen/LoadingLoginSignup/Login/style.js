@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#FEE500',
         height: 40,
-        borderRadius: 20,
+        borderRadius: 12,
         margin: 10,
         alignItems:'center',
         justifyContent:'center',
@@ -126,13 +126,22 @@ const styles = StyleSheet.create({
         backgroundColor:'#FEE500',
         flexDirection:'row'
     },
-    kakaoLoginText:{
-        color:'#000000',
+    kakaoLoginTextView:{
         width:'60%',
         alignItems:'center'
     },
+    kakaoLoginText:{
+        color:'#000000',
+        fontWeight:'bold'
+    },
     twentyPercent:{
-        width:'20%'
+        width:'20%',
+        alignItems:'center'
+    },
+    kakaoSymbolImage:{
+        resizeMode:'contain',
+        width:'40%',
+        height:'40%'
     },
     ////////////////BottomSheet_login style//////////////////////////////
     centeredView: {
