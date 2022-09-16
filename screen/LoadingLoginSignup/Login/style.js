@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 20,
         margin: 7,
-        width:300,
+        width:'96%',
         marginBottom:4,
         paddingLeft:15,
     },
@@ -120,5 +120,17 @@ const styles = StyleSheet.create({
         width: screenWidth,
         backgroundColor: "white",
     },
+    item: {
+        marginTop:'4%',
+        marginLeft:'5%',
+        marginRight:'5%',
+        borderBottomColor: '#e9e9e8',
+        borderBottomWidth: 0.8,
+    },
+    major:{
+        fontWeight:'bold',
+        fontsize:12,
+        marginLeft:'7%'
+    }
 })
 export default styles

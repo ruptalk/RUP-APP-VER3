@@ -32,6 +32,7 @@ const BottomSheet_login = (props) => {
     const [userEmail,setUserEmail]=useState(null)
     const [userPw,setUserPw]=useState(null)
     const [userPwAgain,setUserPwAgain]=useState(null)
+    const [userUniversity,setUserUniversity]=useState('학교찾기')
     const [universityModal, setUniversityModal] = useState(false);
     const toast = useToast();
 
@@ -111,13 +112,13 @@ const BottomSheet_login = (props) => {
                         defaultValue={pwAgain}
                         secureTextEntry={true}
                         />
-                    <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity 
+                    <View style={{flexDirection:'row'}}>    
+                        <TouchableOpacity                                                  
                             style={styles.searchUniversity}
                             onPress={()=>pressButton2()}
                         >
                             <View style={{flexDirection:'row'}}>
-                                <Text>학교찾기</Text>
+                                <Text>{userUniversity}</Text>
                                 <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/>
                             </View>
                         </TouchableOpacity>
@@ -302,6 +303,7 @@ const BottomSheet_login = (props) => {
             <SearchUniversity
                 universityModal={universityModal}
                 setUniversityModal={setUniversityModal}
+                setUserUniversity={setUserUniversity}
             />
         </>
     )
