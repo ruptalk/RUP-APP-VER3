@@ -11,6 +11,7 @@ import {
 import { MMKV } from 'react-native-mmkv'
 import { useNavigation } from '@react-navigation/native';
 import { useToast } from "react-native-toast-notifications";
+import KakaoSDK from '@actbase/react-kakaosdk'
 import styles from './style.js'
 
 export const storage = new MMKV()
@@ -92,8 +93,8 @@ const ProfileInfo=()=>{
                 </View>
                 <View>
                     <TouchableOpacity 
-                        onPress={()=>{
-                            storage.clearAll()
+                        onPress={async()=>{
+                            await KakaoSDK.logout()
                             navigation.reset({routes:[{name:'Login'}]})
                         }}
                         style={styles.secretSignUp}>

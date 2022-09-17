@@ -41,9 +41,15 @@ const BottomSheet_login = (props) => {
     const toast = useToast();
     const signInWithKakao=async()=>{
         await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
-        const tokens = await KakaoSDK.login();
-        setModalVisible(false)
-        navigation.reset({routes:[{name:'Main'}]})
+        try{
+            const token = await KakaoSDK.login();
+            setModalVisible(false)
+            navigation.reset({routes:[{name:'Main'}]})
+        }catch(err){
+            if(err.message==='user cancelled.')
+                console.log('toast message 카카오 로그인 취소하셨습니다')
+            console.log(err.message)
+        }
       }
 
     const loginSignUpSelectedTab = () => {    
@@ -56,20 +62,41 @@ const BottomSheet_login = (props) => {
     }
 
     const Login=()=>(       //Login 아이콘 클릭시 띄울 화면
-        <>
+        <>  
             <View>
-                <TouchableOpacity onPress={signInWithKakao}>
-                    <Image source={require('../../../imageResource/jobDaHan/kakao_login_medium_narrow.png')}/>
+                <TextInput
+                    placeholder='이메일'
+                    style={styles.sectionStyle}
+                    onChangeText={name => setName(name)}
+                />
+                <TextInput
+                    placeholder='비밀번호'
+                    style={styles.sectionStyle}
+                    onChangeText={name => setName(name)}
+                />
+                <TouchableOpacity
+                    onPress={()=>
+                        {
+                            setModalVisible(false)
+                            navigation.reset({routes:[{name:'Main'}]})
+                        }}
+                    style={styles.signUp}
+                >
+                    <Text style={styles.signUpText}>로그인</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity 
-                onPress={()=>
-                {
-                    setModalVisible(false)
-                    navigation.reset({routes:[{name:'Main'}]})
-                }}>
-                <Text style={styles.passwordPage}>로그인</Text>
-            </TouchableOpacity>
+            {/* <View style={{margin:'5%'}}/> */}
+            <View>
+                <TouchableOpacity onPress={signInWithKakao} style={styles.kakaoLogin}>
+                    <View style={styles.twentyPercent}>
+                        <Image style={styles.kakaoSymbolImage} source={require('../../../imageResource/jobDaHan/kakao_login_symbol.png')}/>
+                    </View>
+                    <View style={styles.kakaoLoginTextView}>
+                        <Text style={styles.kakaoLoginText}>카카오 로그인</Text>
+                    </View>
+                    <View style={styles.twentyPercent}/>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity 
                 onPress={()=>
                 {
@@ -78,6 +105,7 @@ const BottomSheet_login = (props) => {
                 }}>
                 <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
             </TouchableOpacity>
+            
         </>
     )
 
@@ -115,10 +143,10 @@ const BottomSheet_login = (props) => {
                         defaultValue={pwAgain}
                         secureTextEntry={true}
                         />
-                    <View style={{flexDirection:'row'}}>    
+                    <View style={styles.rowDirection}>    
                         <TouchableOpacity                                                  
                             style={styles.searchUniversity}
-                            onPress={()=>userUniversityModalOpen()}
+                            onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain)}
                         >
                             <View style={{flexDirection:'row'}}>
                                 <Text>{userUniversity}</Text>
@@ -127,7 +155,7 @@ const BottomSheet_login = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={styles.searchMajor}
-                            onPress={()=>userMajorModalOpen()}
+                            onPress={()=>userMajorModalOpen(name,email,pw,pwAgain)}
                         >
                             <View style={{flexDirection:'row'}}>   
                                 <Text >{userMajor}</Text>
@@ -151,6 +179,13 @@ const BottomSheet_login = (props) => {
         setUserPw(pw)
         setUserPwAgain(pwAgain)
         setOpenToastMessage(openToastMessage+1)
+    }
+    const userDefaultValue=(name,email,pw,pwAgain)=>{
+        console.log(name)
+        setUsername(name)
+        setUserEmail(email)
+        setUserPw(pw)
+        setUserPwAgain(pwAgain)
     }
     useEffect(() => {
         if(openToastMessage!==0){
@@ -211,7 +246,7 @@ const BottomSheet_login = (props) => {
             type:'custom',
             duration:1500,
             animationType:'zoom-in',
-            placement:'top'
+            placement:'top',
         })
     }
 
@@ -260,10 +295,12 @@ const BottomSheet_login = (props) => {
             setModalVisible(false);
         })
     }
-    const userUniversityModalOpen=()=>{
+    const userUniversityModalOpen=(name,email,pw,pwAgain)=>{
+        userDefaultValue(name,email,pw,pwAgain)
         setUniversityModal(true);
     }
-    const userMajorModalOpen=()=>{
+    const userMajorModalOpen=(name,email,pw,pwAgain)=>{
+        userDefaultValue(name,email,pw,pwAgain)
         setMajorModal(true);
     }
     return (
@@ -273,6 +310,7 @@ const BottomSheet_login = (props) => {
                 animationType={"fade"}
                 transparent
                 statusBarTranslucent
+                onRequestClose={()=>closeModal()}
             >
                 <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : 'height'}
