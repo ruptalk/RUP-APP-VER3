@@ -10,6 +10,14 @@ import styles from './style'
 
 const InputSeedNameModal=(props)=>{
     const { inputNameModalVisible, setInputNameModalVisible} = props;
+    const [seedName,setSeedName]=useState('')
+    const closeModal=()=>{
+        if(seedName!=='')
+            setInputNameModalVisible(false)
+        else{
+            console.log('toast message 이름을 입력해주세요!')
+        }
+    }
     return(
         <>
             <Modal
@@ -26,12 +34,13 @@ const InputSeedNameModal=(props)=>{
                             <TextInput
                                 placeholder="이름"
                                 style={{fontSize:30}}
+                                onChangeText={seedName=>setSeedName(seedName)}
                             />
                             <View style={{backgroundColor:'red'}}/>
                         </View>
                         <View style={styles.flexThree}>
                             <TouchableOpacity
-                                onPress={()=>setInputNameModalVisible(false)}
+                                onPress={()=>closeModal()}
                                 style={styles.selectSeedButton}>
                                 <Text style={styles.selectSeedText}>확인</Text>
                             </TouchableOpacity>
