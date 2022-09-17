@@ -41,10 +41,15 @@ const BottomSheet_login = (props) => {
     const toast = useToast();
     const signInWithKakao=async()=>{
         await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
-        const tokens = await KakaoSDK.login();
-        console.log(tokens)
-        setModalVisible(false)
-        navigation.reset({routes:[{name:'Main'}]})
+        try{
+            const token = await KakaoSDK.login();
+            setModalVisible(false)
+            navigation.reset({routes:[{name:'Main'}]})
+        }catch(err){
+            if(err.message==='user cancelled.')
+                console.log('toast message 카카오 로그인 취소하셨습니다')
+            console.log(err.message)
+        }
       }
 
     const loginSignUpSelectedTab = () => {    
@@ -305,6 +310,7 @@ const BottomSheet_login = (props) => {
                 animationType={"fade"}
                 transparent
                 statusBarTranslucent
+                onRequestClose={()=>closeModal()}
             >
                 <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : 'height'}
