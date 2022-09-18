@@ -71,6 +71,7 @@ const BottomSheet_Main = (props) => {
             animationType={"fade"}
             transparent
             statusBarTranslucent
+            onRequestClose={()=>closeModal()}
         >
             <View style={styles.overlay}>
                 <TouchableWithoutFeedback
