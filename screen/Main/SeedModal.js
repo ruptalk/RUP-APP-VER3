@@ -26,7 +26,7 @@ const SeedModal=(props)=>{
         }
         else{
             setInputNameModalVisible(true)
-            setTimeout(function() {  setSeedModalVisible(false) }, 1000);
+            setTimeout(function() {  setSeedModalVisible(false) }, 500);
             console.log(inputNameModalVisible)
         }
     }
