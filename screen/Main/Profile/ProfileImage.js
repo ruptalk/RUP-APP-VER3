@@ -73,7 +73,8 @@ const ProfileImage=()=>{
             const localUri = result.assets[0].uri;
             const uriPath = localUri.split("//").pop();
             setProfileImage("file://"+uriPath)
-            setPhoto("file://"+uriPath);
+            userObject.profileImage="file://"+uriPath
+            storage.set('user', JSON.stringify(userObject))
         }
     }
 
@@ -114,6 +115,7 @@ const ProfileImage=()=>{
                 animationType="fade"
                 transparent={true}
                 visible={modalVisible}
+                onRequestClose={()=>setModalVisible(false)}
             >
                 <Pressable  
                 style={styles.centeredView}
@@ -121,13 +123,13 @@ const ProfileImage=()=>{
             
                     <View style={styles.modalView}>
                         <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
-                            <TouchableOpacity onPress={galleryImagePick}>
+                            <TouchableOpacity onPress={()=>galleryImagePick()}>
                                 {platFormGalleryImage()}
                                 <Text>gallery</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
-                            <TouchableOpacity onPress={()=>setModalVisible(false)}>
+                            <TouchableOpacity onPress={()=>photoImagePick()}>
                                 {platFormCameraImage()}
                                 <Text>camera</Text>
                             </TouchableOpacity>
