@@ -12,7 +12,8 @@ import {
 import { useNavigation,useIsFocused } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv'
 import BottomSheet_Main from './BottomSheet_Main';
-import { Calendar } from "react-native-calendars";
+import CalendarModal from './CalenderModal'
+import SeedModal from './SeedModal'
 import styles from './style';
 
 export const storage = new MMKV()
@@ -44,10 +45,7 @@ function Main(){
     const [calendarsmodalVisible, setcalendarModalVisible] = useState(false);
     const success =[
       "2022-08-01", "2022-08-14"
-    ];
-        
-
-    
+    ];   
       return(
         <>
         <Modal
@@ -111,6 +109,7 @@ function Main(){
         </View>
       </Pressable>
     </Modal>
+    
         <View style={{flex:1}}>
             <ImageBackground 
                 style={{
@@ -141,7 +140,7 @@ function Main(){
                         <View style={styles.calenderAndNoticeBoxContainer}>
                             <View style={styles.calenderAndNoticeBox}>
                                 <TouchableOpacity
-                                    onPress={()=>setcalendarModalVisible(true)}
+                                    onPress={()=>setCalendarModalVisible(true)}
                                 >
                                     <Image 
                                         style={{marginRight:'15%'}}
@@ -166,13 +165,21 @@ function Main(){
                     </View>
                 </View>
                 <BottomSheet_Main
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
+                  modalVisible={modalVisible}
+                  setModalVisible={setModalVisible}
+                />
+                <CalendarModal
+                  calendarModalVisible={calendarModalVisible}
+                  setCalendarModalVisible={setCalendarModalVisible}
+                />
+                <SeedModal
+                  seedModalVisible={seedModalVisible}
+                  setSeedModalVisible={setSeedModalVisible}
                 />
             </ImageBackground>
         </View>
-        </>
-    )
+      </>
+  )
 }
 
 export default Main

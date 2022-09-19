@@ -11,80 +11,56 @@ import {
 import BigList from "react-native-big-list";
 import {useNavigation} from '@react-navigation/native';
 import styles from './style'
+import Notice_modal from './Notice_modal';
 function Notice(){
-    const navigation = useNavigation()
+  const navigation = useNavigation()
 
-    const renderItem = ({item}) => (
-        <Item date={item.date} point={item.point}/>
-    );
-    const Item = ({date,point}) => (
-        <View>
-            <View style={styles.horizonalLine}/>
-            <View style={{marginTop:'3.5%',marginLeft:30,flexDirection:'row',alignItems:'center'}}>
-                <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_point_notice.png')}/>
-                <Text style={{marginLeft:'5%',fontWeight:'bold',fontSize:15}}>{date} {point}point 적립되었습니다.</Text>
-            </View>
+  const renderItem = ({item}) => (
+      <Item date={item.date} point={item.point}/>
+  );
+  const Item = ({date,point}) => (
+    <View>
+        <View style={styles.horizonalLine}/>
+        <View style={{marginTop:'3.5%',marginLeft:30,flexDirection:'row',alignItems:'center'}}>
+          <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_point_notice.png')}/>
+          <Text style={{marginLeft:'5%',fontWeight:'bold',fontSize:15}}>{date} {point}point 적립되었습니다.</Text>
         </View>
-      );
-      const [noticemodalVisible, setnoticeModalVisible] = useState(false);
-    return(
-        <>
-         <Modal
-            animationType="slide"
-            transparent={true}
-            visible={noticemodalVisible}
-            onRequestClose={() => {
-            setnoticeModalVisible(false);
-            }}
-        >     
-            <Pressable 
-            style={styles.centeredView}
-            onPress={()=>setnoticeModalVisible(false)}
-            >
-
-                <View style={styles.modalView}>
-                    <Pressable
-                        style={{alignSelf: 'flex-end'}}
-                        onPress={() => setnoticeModalVisible(false)}
-                    >
-                        <Image 
-                            style={styles.exitlogo}
-                            source={require('../../../imageResource/icon/ic_close.png')}
-                        />
-                    </Pressable>
-                    <View style={styles.noticeText}>
-                    <Text style={{textAlign:"center"}}>
-                        ddddddddddddddddddddddddddd
-                    </Text>
-                    </View>
-                </View>
-            </Pressable>
-        </Modal>
-        
-        <View style={styles.container}>
-            <TouchableOpacity 
-                onPress={()=>navigation.goBack()}
-                style={{marginTop:'7%',marginLeft:30,width:40}}                
-            >
-                <Image source={require('../../../imageResource/icon/ic_arrow_left.png')}/>
-            </TouchableOpacity>
-            <View style={styles.horizonalLine}/>
-            <TouchableOpacity
-                style={{marginTop:'5%',marginLeft:30,flexDirection:'row',alignItems:'center'}}
-                onPress={()=>setnoticeModalVisible(true)}
-            >
-                <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_notice_02.png')}/>
-                <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] v 1.1 업데이트 되었습니다.</Text>
-            </TouchableOpacity>
-            <SafeAreaView style={{height:'80%'}}>
-                <BigList
-                    data={Data}
-                    renderItem={renderItem}
-                />
-            </SafeAreaView>
-        </View>
-        </>
-    )
+    </View>
+  );
+  const [noticemodalVisible, setnoticeModalVisible] = useState(false);
+  const [text, setText]=useState('공지사항')
+  return(
+    <>
+      <Notice_modal
+        noticemodalVisible={noticemodalVisible}
+        setnoticeModalVisible={setnoticeModalVisible}
+        text={text}
+      />
+    
+      <View style={styles.container}>
+        <TouchableOpacity 
+          onPress={()=>navigation.goBack()}
+          style={{marginTop:'7%',marginLeft:30,width:40}}                
+        >
+          <Image source={require('../../../imageResource/icon/ic_arrow_left.png')}/>
+        </TouchableOpacity>
+        <View style={styles.horizonalLine}/>
+        <TouchableOpacity
+          style={{marginTop:'5%',marginLeft:30,flexDirection:'row',alignItems:'center'}}
+          onPress={()=>setnoticeModalVisible(true)}
+        >
+          <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_notice_02.png')}/>
+          <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] v 1.1 업데이트 되었습니다.</Text>
+        </TouchableOpacity>
+        <SafeAreaView style={{height:'80%'}}>
+          <BigList
+            data={Data}
+            renderItem={renderItem}
+          />
+        </SafeAreaView>
+      </View>
+    </>
+  )
 }
 
 export default Notice

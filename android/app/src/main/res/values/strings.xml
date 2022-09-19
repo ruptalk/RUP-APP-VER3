@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">jolJakProjectTest</string>
+    <string name="kakao_app_key">e0dfba26b5bfa3667a1482cd64f4feaa</string>
 </resources>

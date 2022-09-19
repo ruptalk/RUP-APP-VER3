@@ -15,6 +15,11 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import KakaoSDK from '@actbase/react-kakaosdk'
+import { useToast } from "react-native-toast-notifications";
+import {validateNickName,validateEmail,validatePw} from '../../../validate.js'
+import SearchUniversity from './SearchUniversity.js';
+import SearchMajor from './SearchMajor.js'
 import styles from './style'
 
 const BottomSheet_login = (props) => {
@@ -28,20 +33,24 @@ const BottomSheet_login = (props) => {
     const [userEmail,setUserEmail]=useState('')
     const [userPw,setUserPw]=useState('')
     const [userPwAgain,setUserPwAgain]=useState('')
-
-
-    const isBlank=()=>{
-        let cnt = 0
-        if(userName===''){
-            setIsNameBlank('BlankName')
-            cnt++
+    const [userUniversity,setUserUniversity]=useState('학교찾기')
+    const [userMajor,setUserMajor]=useState('학과')
+    const [universityModal, setUniversityModal] = useState(false);
+    const [majorModal, setMajorModal] = useState(false);
+    const [openToastMessage,setOpenToastMessage]=useState(0)
+    const toast = useToast();
+    const signInWithKakao=async()=>{
+        await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
+        try{
+            const token = await KakaoSDK.login();
+            setModalVisible(false)
+            navigation.reset({routes:[{name:'Main'}]})
+        }catch(err){
+            if(err.message==='user cancelled.')
+                console.log('toast message 카카오 로그인 취소하셨습니다')
+            console.log(err.message)
         }
-        // if(userEmail===''){}
-        // if(userPw===''){}
-        // if(userPwAgain===''){}
-        if(cnt>0)return
-        else setSelectedTab('Login')
-    }
+      }
 
     const loginSignUpSelectedTab = () => {    
         switch(selectedTab){
@@ -51,56 +60,43 @@ const BottomSheet_login = (props) => {
                 return <SignUp />
         }
     }
-    const name = () => {    
-        switch(isNameBlank){
-            case 'BlankName':
-                return <BlankName />
-            case 'NotBlankName':
-                return <NotBlankName />
-        }
-    }
-    const BlankName=()=>(
-        <TextInput
-            placeholder='이름을 입력해 주세요.'
-            style={styles.sectionStyleBlank}
-            onChangeText={name => setUsername(name)}
-            />
-    )
-    const NotBlankName=()=>(
-        <TextInput
-            placeholder='이름을 입력해 주세요.'
-            style={styles.sectionStyle}
-            onChangeText={name => setUsername(name)}
-            />
-    )
 
-    console.log(screenHeight)
     const Login=()=>(       //Login 아이콘 클릭시 띄울 화면
-        <>
-            <ScrollView>
+        <>  
+            <View>
                 <TextInput
-                placeholder='카톡 1초 로그인'/>
+                    placeholder='이메일'
+                    style={styles.sectionStyle}
+                    onChangeText={name => setName(name)}
+                />
                 <TextInput
-                placeholder='카톡 2초 로그인'/>
-                <TextInput
-                placeholder='카톡 3초 로그인'/>
-                <TextInput
-                placeholder='카톡 4초 로그인'/>
-                <TextInput
-                placeholder='카톡 5초 로그인'/>
-                <TextInput
-                placeholder='카톡 6초 로그인'/>
-                <TextInput
-                placeholder='카톡 6초 로그인'/>
-            </ScrollView>
-            <TouchableOpacity 
-                onPress={()=>
-                {
-                    setModalVisible(false)
-                    navigation.reset({routes:[{name:'Main'}]})
-                }}>
-                <Text style={styles.passwordPage}>로그인</Text>
-            </TouchableOpacity>
+                    placeholder='비밀번호'
+                    style={styles.sectionStyle}
+                    onChangeText={name => setName(name)}
+                />
+                <TouchableOpacity
+                    onPress={()=>
+                        {
+                            setModalVisible(false)
+                            navigation.reset({routes:[{name:'Main'}]})
+                        }}
+                    style={styles.signUp}
+                >
+                    <Text style={styles.signUpText}>로그인</Text>
+                </TouchableOpacity>
+            </View>
+            {/* <View style={{margin:'5%'}}/> */}
+            <View>
+                <TouchableOpacity onPress={signInWithKakao} style={styles.kakaoLogin}>
+                    <View style={styles.twentyPercent}>
+                        <Image style={styles.kakaoSymbolImage} source={require('../../../imageResource/jobDaHan/kakao_login_symbol.png')}/>
+                    </View>
+                    <View style={styles.kakaoLoginTextView}>
+                        <Text style={styles.kakaoLoginText}>카카오 로그인</Text>
+                    </View>
+                    <View style={styles.twentyPercent}/>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity 
                 onPress={()=>
                 {
@@ -109,52 +105,151 @@ const BottomSheet_login = (props) => {
                 }}>
                 <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
             </TouchableOpacity>
+            
         </>
     )
 
-    const SignUp=()=>(    //SignUp 아이콘 클릭시 띄울 화면
-    <>
-        <ScrollView>
-            {name()}
-            <TextInput
-                placeholder='이메일을 입력해 주세요.'
-                style={styles.sectionStyle}
-                onChangeText={email => setUserEmail(email)}
-                />
-            <TextInput
-                placeholder='비밀번호를 입력해 주세요.'
-                style={styles.sectionStyle}
-                onChangeText={pw => setUserPw(pw)}
-                />
-            <TextInput
-                placeholder='비밀번호를 한번 더 입력해주세요.'
-                style={styles.sectionStyle}
-                onChangeText={pw => setUserPwAgain(pw)}
-                />
-            <TextInput
-                placeholder='비밀번호를 한번 더 입력해주세요2.'
-                style={styles.sectionStyle}
-                onChangeText={pw => setUserPwAgain(pw)}
-                />
-            <TextInput
-                placeholder='비밀번호를 한번 더 입력해주세요3.'
-                style={styles.sectionStyle}
-                onChangeText={pw => setUserPwAgain(pw)}
-                />
-            <TextInput
-                placeholder='비밀번호를 한번 더 입력해주세요4.'
-                style={styles.sectionStyle}
-                onChangeText={pw => setUserPwAgain(pw)}
-                />
-        </ScrollView>
-        <TouchableOpacity
-            onPress={()=>isBlank()}
-            style={styles.signUp}
-        >
-            <Text style={styles.signUpText}>가입하기</Text>
-        </TouchableOpacity>
-    </>
-    )
+    const SignUp=()=>{
+        const [name,setName] = useState(userName)
+        const [email,setEmail] = useState(userEmail)
+        const [pw,setPw] = useState(userPw)
+        const [pwAgain,setPwAgain] = useState(userPwAgain)
+        return(    //SignUp 아이콘 클릭시 띄울 화면
+            <>
+                <ScrollView>
+                    <TextInput
+                        placeholder='닉네임(2~16자)'
+                        style={styles.sectionStyle}
+                        onChangeText={name => setName(name)}
+                        defaultValue={userName}
+                        />
+                    <TextInput
+                        placeholder='이메일'
+                        style={styles.sectionStyle}
+                        onChangeText={email => setEmail(email)}
+                        defaultValue={email}
+                        />
+                    <TextInput
+                        placeholder='비밀번호(4자 이상)'
+                        style={styles.sectionStyle}
+                        onChangeText={pw => setPw(pw)}
+                        defaultValue={pw}
+                        secureTextEntry={true}
+                        />
+                    <TextInput
+                        placeholder='비밀번호 재입력'
+                        style={styles.sectionStyle}
+                        onChangeText={pwAgain => setPwAgain(pwAgain)}
+                        defaultValue={pwAgain}
+                        secureTextEntry={true}
+                        />
+                    <View style={styles.rowDirection}>    
+                        <TouchableOpacity                                                  
+                            style={styles.searchUniversity}
+                            onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain)}
+                        >
+                            <View style={{flexDirection:'row'}}>
+                                <Text>{userUniversity}</Text>
+                                <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.searchMajor}
+                            onPress={()=>userMajorModalOpen(name,email,pw,pwAgain)}
+                        >
+                            <View style={{flexDirection:'row'}}>   
+                                <Text >{userMajor}</Text>
+                                <Image style={{resizeMode:'contain',height:'90%',width:'80%'}} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <TouchableOpacity
+                    onPress={()=>signUp(name,email,pw,pwAgain)}
+                    style={styles.signUp}
+                >
+                    <Text style={styles.signUpText}>가입하기</Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
+    const signUp=async(name,email,pw,pwAgain)=>{
+        setUsername(name)
+        setUserEmail(email)
+        setUserPw(pw)
+        setUserPwAgain(pwAgain)
+        setOpenToastMessage(openToastMessage+1)
+    }
+    const userDefaultValue=(name,email,pw,pwAgain)=>{
+        console.log(name)
+        setUsername(name)
+        setUserEmail(email)
+        setUserPw(pw)
+        setUserPwAgain(pwAgain)
+    }
+    useEffect(() => {
+        if(openToastMessage!==0){
+            validation_nickName()
+        }
+    }, [openToastMessage]);
+    const validation_nickName=()=>{                    //닉네임 유효성 검사
+        if(validateNickName(userName)){
+            console.log(userName)
+            return validation_email()
+        }
+        else{
+            return showToast("닉네임은 2~16자 입니다.")
+        }
+    }
+    const validation_university=()=>{                   //대학 유효성 검사
+        if(university===''){                            
+            return validation_department()
+        }
+        else{
+            return showToast("대학을 선택해주세요")
+        }
+    }
+    const validation_department=(department)=>{                   //학과 유효성 검사
+        if(department===''){                            
+            return validation_email()
+        }
+        else{
+            return showToast("학과를 선택해주세요")
+        }
+    }
+    const validation_email=()=>{                       //이메일 유효성 검사
+        if(validateEmail(userEmail)){
+            return validation_pw()
+        }
+        else{
+            return showToast("이메일 형식이 맞지 않습니다.")
+        }
+    }
+    const validation_pw=()=>{                           //비밀번호 유효성 검사
+        if(validatePw(userPw)){
+            return matchPwAndPw2()
+        }
+        else{
+            return showToast("비밀번호는 4자 이상 입니다.")
+        }
+    }
+    const matchPwAndPw2=()=>{                           //비밀번호, 비밀번호 재입력 같은지 검사
+        if(userPw!==userPwAgain){
+           return showToast("비밀번호 불일치")
+        }
+        else{
+            return showToast("회원가입 완료!")
+        }
+    }
+    const showToast=(message)=>{                        //토스트 메세지
+        toast.show(message,{
+            type:'custom',
+            duration:1500,
+            animationType:'zoom-in',
+            placement:'top',
+        })
+    }
+
     const translateY_login = panY_login.interpolate({
         inputRange: [-1, 0, 1],
         outputRange: [0, 0, 1],
@@ -200,52 +295,71 @@ const BottomSheet_login = (props) => {
             setModalVisible(false);
         })
     }
-    console
+    const userUniversityModalOpen=(name,email,pw,pwAgain)=>{
+        userDefaultValue(name,email,pw,pwAgain)
+        setUniversityModal(true);
+    }
+    const userMajorModalOpen=(name,email,pw,pwAgain)=>{
+        userDefaultValue(name,email,pw,pwAgain)
+        setMajorModal(true);
+    }
     return (
-        
-        <Modal
-            visible={modalVisible}
-            animationType={"fade"}
-            transparent
-            statusBarTranslucent
-        >
-            <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : 'height'}
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={-120}
+        <>
+            <Modal
+                visible={modalVisible}
+                animationType={"fade"}
+                transparent
+                statusBarTranslucent
+                onRequestClose={()=>closeModal()}
             >
-                <View style={styles.overlay}>
-                    <TouchableWithoutFeedback
-                        onPress={closeModal}
-                    >
-                        <View style={styles.background}/>
-                    </TouchableWithoutFeedback>
-                    <Animated.View
-                        style={[{...styles.bottomSheetContainer,height:screenHeight/2, transform: [{ translateY: translateY_login }]}]}
-                        {...panResponders_login.panHandlers}
-                    >
-                        <View style={{padding:3}}/>
-                        <Image style={{width:100,height:3.5,borderRadius:50}} source={require('../../../imageResource/jobDaHan/modalBar.png')}/>
-                        <View style={styles.iconDirection}>
-                            <View style={{flex:1}}/>
-                            <TouchableOpacity
-                                onPress={()=>setSelectedTab('Login')}
-                                style={styles.iconLocation}>
-                                
-                                <Image source={require('../../../imageResource/icon/ic_login.png')}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={()=>setSelectedTab('SignUp')}
-                                style={styles.iconLocation}>
-                                <Image source={require('../../../imageResource/icon/ic_join.png')}/>
-                            </TouchableOpacity>
-                            <View style={{flex:1}}/>
-                        </View>
-                        {loginSignUpSelectedTab()}
-                    </Animated.View>
-                </View>
-            </KeyboardAvoidingView>
-        </Modal>
+                <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : 'height'}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={-120}
+                >
+                    <View style={styles.overlay}>
+                        <TouchableWithoutFeedback
+                            onPress={closeModal}
+                        >
+                            <View style={styles.background}/>
+                        </TouchableWithoutFeedback>
+                        <Animated.View
+                            style={[{...styles.bottomSheetContainer,height:screenHeight/2, transform: [{ translateY: translateY_login }]}]}
+                            {...panResponders_login.panHandlers}
+                        >
+                            <View style={{padding:3}}/>
+                            <Image style={{width:100,height:3.5,borderRadius:50}} source={require('../../../imageResource/jobDaHan/modalBar.png')}/>
+                            <View style={styles.iconDirection}>
+                                <View style={{flex:1}}/>
+                                <TouchableOpacity
+                                    onPress={()=>setSelectedTab('Login')}
+                                    style={styles.iconLocation}>
+                                    
+                                    <Image source={require('../../../imageResource/icon/ic_login.png')}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={()=>setSelectedTab('SignUp')}
+                                    style={styles.iconLocation}>
+                                    <Image source={require('../../../imageResource/icon/ic_join.png')}/>
+                                </TouchableOpacity>
+                                <View style={{flex:1}}/>
+                            </View>
+                            {loginSignUpSelectedTab()}
+                        </Animated.View>
+                    </View>
+                </KeyboardAvoidingView>
+            </Modal>
+            <SearchUniversity
+                universityModal={universityModal}
+                setUniversityModal={setUniversityModal}
+                setUserUniversity={setUserUniversity}
+            />
+            <SearchMajor
+                majorModal={majorModal}
+                setMajorModal={setMajorModal}
+                setUserMajor={setUserMajor}
+            />
+        </>
     )
 }
 

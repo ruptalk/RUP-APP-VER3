@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native'
+import {screenHeight,screenWidth} from '../../Main/fullScreenValue'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        marginTop:'25%',
+        backgroundColor:'#f9f8e8',
     },
     
     ////////////////BottomSheet_login style//////////////////////////////
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 20,
         margin: 7,
-        width:300,
+        width:screenWidth*0.81,
         marginBottom:4,
         paddingLeft:15,
     },
@@ -62,10 +63,10 @@ const styles = StyleSheet.create({
         borderColor: '#777777',
         height: 40,
         borderRadius: 20,
-        margin: 10,
+        margin: 7,
         alignItems:'center',
         justifyContent:'center',
-        width:300,
+        width:screenWidth*0.81,
         marginTop:10,
         backgroundColor:'#a8cd98',
     },
@@ -81,6 +82,90 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch',
         alignItems: 'center',
     },
+    searchUniversity: {
+        borderWidth: 0.5,
+        borderColor: '#777777',
+        height: 40,
+        borderRadius: 20,
+        marginTop: 7,
+        marginBottom: 7,
+        width:screenWidth*0.54,
+        marginBottom:4,
+        backgroundColor:'white',
+        paddingLeft:15,
+        justifyContent:'center',
+    },
+    searchMajor: {
+        borderWidth: 0.5,
+        borderColor: '#777777',
+        height: 40,
+        borderRadius: 20,
+        marginTop: 7,
+        marginBottom: 7,
+        width:screenWidth*0.27,
+        marginBottom:4,
+        backgroundColor:'white',
+        paddingLeft:15,
+        justifyContent:'center'
+    },
+    rowDirection:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginLeft:'2.5%'
+    },
+    kakaoLogin:{
+        borderWidth: 0.5,
+        borderColor: '#FEE500',
+        height: 40,
+        borderRadius: 12,
+        margin: 10,
+        alignItems:'center',
+        justifyContent:'center',
+        width:screenWidth*0.81,
+        marginTop:10,
+        backgroundColor:'#FEE500',
+        flexDirection:'row'
+    },
+    kakaoLoginTextView:{
+        width:'60%',
+        alignItems:'center'
+    },
+    kakaoLoginText:{
+        color:'#000000',
+        fontWeight:'bold'
+    },
+    twentyPercent:{
+        width:'20%',
+        alignItems:'center'
+    },
+    kakaoSymbolImage:{
+        resizeMode:'contain',
+        width:'40%',
+        height:'40%'
+    },
     ////////////////BottomSheet_login style//////////////////////////////
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+    universityModalView: {
+        height:screenHeight, 
+        width: screenWidth,
+        backgroundColor: "white",
+    },
+    item: {
+        marginTop:'4%',
+        marginLeft:'5%',
+        marginRight:'5%',
+        borderBottomColor: '#e9e9e8',
+        borderBottomWidth: 0.8,
+    },
+    major:{
+        fontWeight:'bold',
+        fontsize:12,
+        marginLeft:'7%'
+    }
 })
 export default styles

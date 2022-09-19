@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
-        alignItems: "center",
+        //alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -181,6 +181,31 @@ const styles = StyleSheet.create({
         marginTop: 50
       },
       //calendar
+      noticeText:{
+        alignContent:'center',
+        width:300,
+        height:400,
+        borderColor:'#eee',
+        borderBottomWidth:1,
+        borderTopWidth:1,
+        marginTop:10,
+        padding:5
+      },
+      flexThree:{
+        flex:3,
+        //backgroundColor:'red',
+        justifyContent:'center',
+        alignItems:'center'
+      },
+      flexSeven:{
+        flex:7,
+        //backgroundColor:'blue'
+      },
+      flexOne:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+      }
      
 })
 
