@@ -62,31 +62,27 @@ function InFullBloom(){
                     </View>
                     <View style={{height:'70%'}}>
 
-                        <View style={{height:'45%', backgroundColor:'green'}}/>
+                        <View style={{height:'35%', }}/>
 
-                        <View style={{height:'10%',flexDirection:"row"}}>
-                            <Image style={{width:40,height:40,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                        <View style={{height:'10%',flexDirection:"row",}}>
+
+                            <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flower1.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower8.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower4.png')}/>
                         </View>
                         
-                        <View style={{height:'10%', flexDirection:"row", backgroundColor:'red'}}>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:80,marginLeft:50}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
+                        <View style={{height:'10%', flexDirection:"row", }}>
+                            <Image style={{width:80,height:100,marginLeft:23}} source={require('../../../imageResource/flower/flower5.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower10.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower3.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower2.png')}/> 
                         </View>
 
-                        <View style={{height:'10%', flexDirection:"row"}}>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                            <Image style={{width:30,height:30,marginLeft:30,flex: 1}} source={require('../../../imageResource/flower/flower1/flower1.png')}/>
-                        </View>
-        
-                        <View style={{height:'25%', backgroundColor:'green'}}/>
-                        
-                        
-                            
+                         <View style={{height:'10%', flexDirection:"row",marginTop:10}}>
+                            <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flower6.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower7.png')}/>
+                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower9.png')}/> 
+                        </View>                    
                     </View>
 
                     <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
