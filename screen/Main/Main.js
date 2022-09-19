@@ -97,7 +97,7 @@ function Main(){
                     </View>
                     <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                            <Text style={styles.QrText}>QR코드</Text>
+                          <Image style={{width:40,height:40}} source={require('../../imageResource/icon/qrcode.png')}/>
                         </TouchableOpacity>
                     </View>
                 </View>
