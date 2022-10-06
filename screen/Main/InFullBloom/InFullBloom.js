@@ -88,7 +88,7 @@ function InFullBloom(){
                     <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
                         <View style={{height:'10%',}}/>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                            <Image style={{width:60,height:60}} source={require('../../../imageResource/icon/qrcode.png')}/>
+                            <Image style={{width:70,height:70}} source={require('../../../imageResource/icon/qrcode.png')}/>
                         </TouchableOpacity>
                     </View>
                 </View>
