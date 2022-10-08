@@ -7,7 +7,8 @@ import {
     Pressable,
     Text,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    Button
 } from 'react-native'
 import { useNavigation,useIsFocused } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv'
@@ -15,6 +16,8 @@ import BottomSheet_Main from './BottomSheet_Main';
 import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
+import KakaoSDK from '@actbase/react-kakaosdk'
+
 
 export const storage = new MMKV()
 
@@ -42,6 +45,10 @@ function Main(){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
+  const kaka=async()=>{
+    const ee = await KakaoSDK.getProfile()
+    console.log(ee)
+  }
   const success =[
     "2022-08-01", "2022-08-14"
   ];
@@ -65,6 +72,7 @@ function Main(){
                                         source={{uri:userObject.profileImage}}
                                         style={styles.profileImage}/>
                                 </TouchableOpacity>
+                                <Button onPress={kaka} title='dd'></Button>
                                 <View style={{justifyContent:'center',marginLeft:'5%',flexDirection:'column'}}>
                                     <Text style={styles.name}>{userObject.userName}</Text>
                                     <View style={styles.flexDirectionRow}>

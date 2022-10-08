@@ -94,7 +94,8 @@ const ProfileInfo=()=>{
                 <View>
                     <TouchableOpacity 
                         onPress={async()=>{
-                            await KakaoSDK.logout()
+                            await KakaoSDK.unlink()
+                            storage.clearAll()
                             navigation.reset({routes:[{name:'Login'}]})
                         }}
                         style={styles.secretSignUp}>

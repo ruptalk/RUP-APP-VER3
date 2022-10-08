@@ -21,7 +21,6 @@ const Login = (props) => {
     const pressButton=()=>{
         setModalVisible(true);
     }
-
     return (
         <View style={styles.container}>
             <View style={{marginTop:'25%'}}/>
