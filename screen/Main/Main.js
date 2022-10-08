@@ -102,10 +102,14 @@ function Main(){
                     <View style={{height:'10%'}}/>
                     <View style={{alignItems:'center',height:'55%'}}>
                         <Text style={styles.tulipText}>튤리비와 함께 N일째</Text>
+                        <Image 
+                            style={{width:300, height:400, marginLeft:5}}
+                            source={require('../../imageResource/flower/flower1.gif')}/>             
                     </View>
                     <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
-                        <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                            <Text style={styles.QrText}>QR코드</Text>
+                        <TouchableOpacity onPress={()=>setModalVisible(true)}>  
+                          <View style={{height:'45%'}}/>
+                          <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/>
                         </TouchableOpacity>
                     </View>
                 </View>
