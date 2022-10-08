@@ -7,35 +7,35 @@ import {
     TextInput
 } from 'react-native';
 import BigList from "react-native-big-list";
-import major from './Major.js'
+import univ from './Univ.js'
 import styles from './style'
 
 const SearchUniversity=(props)=>{
-    const masterData = major
-    const [filterData,setFilterData] = useState(major)
+    const masterData = univ
+    const [filterData,setFilterData] = useState(univ)
     const { universityModal, setUniversityModal,setUserUniversity } = props;
     
     const renderItem = ({ item}) => (
-        <Item major={item.major}/>
+        <Item univ={item.univ}/>
       );
-    const Item = ({ major }) => (
+    const Item = ({ univ }) => (
         <>
-            <TouchableOpacity onPress={()=>{selectUniversity(major)}}>
+            <TouchableOpacity onPress={()=>{selectUniversity(univ)}}>
                 <View style={{marginTop:'6%'}}>
-                    <Text style={styles.major}>{major}</Text>
+                    <Text style={styles.univ}>{univ}</Text>
                 </View>
             </TouchableOpacity>
             <View style={styles.item}/>
         </>
     );
-    const selectUniversity=(major)=>{
-        setUserUniversity(major)
+    const selectUniversity=(univ)=>{
+        setUserUniversity(univ)
         setUniversityModal(false)
     }
     const searchUniversity=(text)=>{
         if(text){
             const searchData = masterData.filter((item)=>{
-            return item.major.includes(text)
+            return item.univ.includes(text)
             })
             setFilterData(searchData)
         }
@@ -49,6 +49,7 @@ const SearchUniversity=(props)=>{
                 animationType="slide"
                 transparent={true}
                 visible={universityModal}
+                onRequestClose={()=>setUniversityModal(false)}
             >     
                 <View style={styles.universityModalView}>
                     <View style={{alignItems:'center'}}>

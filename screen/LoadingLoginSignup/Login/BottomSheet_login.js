@@ -40,7 +40,7 @@ const BottomSheet_login = (props) => {
     const [openToastMessage,setOpenToastMessage]=useState(0)
     const toast = useToast();
     const signInWithKakao=async()=>{
-        await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
+        await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
             const token = await KakaoSDK.login();
             setModalVisible(false)
@@ -315,7 +315,7 @@ const BottomSheet_login = (props) => {
                 <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : 'height'}
                 style={{ flex: 1 }}
-                keyboardVerticalOffset={-120}
+                keyboardVerticalOffset={-70}
                 >
                     <View style={styles.overlay}>
                         <TouchableWithoutFeedback
@@ -324,7 +324,7 @@ const BottomSheet_login = (props) => {
                             <View style={styles.background}/>
                         </TouchableWithoutFeedback>
                         <Animated.View
-                            style={[{...styles.bottomSheetContainer,height:screenHeight/2, transform: [{ translateY: translateY_login }]}]}
+                            style={[{...styles.bottomSheetContainer, transform: [{ translateY: translateY_login }]}]}
                             {...panResponders_login.panHandlers}
                         >
                             <View style={{padding:3}}/>

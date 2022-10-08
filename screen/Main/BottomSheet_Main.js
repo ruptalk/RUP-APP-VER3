@@ -8,7 +8,7 @@ import {
     TouchableWithoutFeedback,
     Dimensions,
     PanResponder,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import styles from './style'

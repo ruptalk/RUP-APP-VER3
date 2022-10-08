@@ -48,10 +48,12 @@ const CalendarModal=(props)=>{
                                 var dateimg = date.dateString.replace(/\-/g,"")
                                 if((dateimg*1)%2==0){
                                     return(
+                                        <View style={{justifyContent:'center',alignItems:'center'}}>
                                         <Image
                                             style={styles.facelogo}
                                             source={require('../../imageResource/icon/ic_face_01.png')}
                                         />
+                                        </View>
                                     )
                                 }
                                 else{
