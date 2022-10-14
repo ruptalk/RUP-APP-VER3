@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import {
     View,
     Image,
@@ -15,7 +15,7 @@ import BottomSheet_Main from './BottomSheet_Main';
 import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
-
+import Video from "react-native-video";
 export const storage = new MMKV()
 
 function Main(){
@@ -45,6 +45,15 @@ function Main(){
   const success =[
     "2022-08-01", "2022-08-14"
   ];
+
+ const player = useRef(null)
+
+
+    setInterval(()=>{
+       player.current.seek(0)
+       console.log("2")
+    },2000)
+
     return(
       <>
         <View style={{flex:1}}>
@@ -92,15 +101,28 @@ function Main(){
                         </View>
                     </View>
                     <View style={{height:'10%'}}/>
-                    <View style={{alignItems:'center',height:'55%'}}>
+                    <View style={{alignItems:'center',height:'60%'}}>
                         <Text style={styles.tulipText}>튤리비와 함께 N일째</Text>
-                        <Image 
-                            style={{width:300, height:400, marginLeft:5}}
-                            source={require('../../imageResource/flower/flower1.gif')}/>             
+                        <Video 
+                            ref={(ref)=>{
+                                player.current = ref
+                            }}
+                            source={require('../../imageResource/flower/flower1.mp4')}
+                            repeat={true}
+                            controls={false}
+                            
+                            style={{
+                                position: "absolute",
+                                top: 180,
+                                left: 120,
+                                bottom: 0,
+                                right: 0
+                            }}
+                        />    
                     </View>
-                    <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
+                    <View style={{alignItems:'center',height:'15%',justifyContent:'center'}}>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>  
-                          <View style={{height:'45%'}}/>
+                          <View style={{height:'20%'}}/>
                           <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/>
                         </TouchableOpacity>
                     </View>
