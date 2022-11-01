@@ -9,12 +9,16 @@ import {
 import styles from './style'
 
 const InputSeedNameModal=(props)=>{
-    const { inputNameModalVisible, setInputNameModalVisible} = props;
+    const { inputNameModalVisible, setInputNameModalVisible, setSeedName_mainPage} = props;
     const [seedName,setSeedName]=useState('')
     const closeModal=()=>{
         if(seedName!=='')
+        {
             setInputNameModalVisible(false)
-        else{
+            setSeedName_mainPage(seedName)
+        }
+        else
+        {
             console.log('toast message 이름을 입력해주세요!')
         }
     }
