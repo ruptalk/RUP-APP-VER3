@@ -12,13 +12,12 @@ import InputSeedNameModal from './InputSeedNameModal'
 import styles from './style'
 
 const SeedModal=(props)=>{
-    const { seedModalVisible, setSeedModalVisible, setSeedName_mainPage, seedColor,setSeedColor} = props;
+    const { seedModalVisible, setSeedModalVisible, setSeedName_mainPage,seedColor,setSeedColor} = props;
     const [pressChooseSeedButton,setPressChooseSeedButton] = useState('')
     const [inputNameModalVisible,setInputNameModalVisible]=useState(false)
     closeModal=()=>{
         setSeedModalVisible(false)
     }
-
     const isChoosenSeed=()=>{
         if(seedColor===''){
             console.log('toast message 씨앗을 선택하지 않았습니다!')

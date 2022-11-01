@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {View,TouchableOpacity,Image} from 'react-native'
 import styles from './style'
 const ChooseSeed=(props)=>{
+    const {seedColor,setSeedColor}=props
     const  brownSeedOff = require('../../imageResource/icon/ic_seed_brown_off.png')
     const  brownSeedOn = require('../../imageResource/icon/ic_seed_brown_on.png')
     const  greenSeedOff = require('../../imageResource/icon/ic_seed_green_off.png')
@@ -14,7 +15,6 @@ const ChooseSeed=(props)=>{
     const  purpleSeedOn = require('../../imageResource/icon/ic_seed_purple_on.png')
     const  yellowSeedOff = require('../../imageResource/icon/ic_seed_yellow_off.png')
     const  yellowSeedOn = require('../../imageResource/icon/ic_seed_yellow_on.png')
-    const {seedColor,setSeedColor}=props
     const [selectedTab, setSelectedTab] = useState('Nothing');
 
     const chooseSeedTab = () => {    
