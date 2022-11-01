@@ -140,7 +140,7 @@ function Main(){
                     </View>
                     <View style={{height:'10%'}}/>
                     <View style={{alignItems:'center',height:'55%'}}>
-                        {isSeedName()}
+                      <Text style={styles.tulipText}>튤리비와 함께 N일째</Text>
                     </View>
                     <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                         <TouchableOpacity onPress={()=>setModalVisible(true)}>
