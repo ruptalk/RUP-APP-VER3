@@ -12,22 +12,22 @@ import InputSeedNameModal from './InputSeedNameModal'
 import styles from './style'
 
 const SeedModal=(props)=>{
-    const { seedModalVisible, setSeedModalVisible,text} = props;
+    const { seedModalVisible, setSeedModalVisible, setSeedName_mainPage} = props;
     const [pressChooseSeedButton,setPressChooseSeedButton] = useState('')
-    const [seedName,setSeedName] = useState('')
+    const [seedColor,setSeedColor] = useState('')
     const [inputNameModalVisible,setInputNameModalVisible]=useState(false)
     closeModal=()=>{
         setSeedModalVisible(false)
     }
 
     const isChoosenSeed=()=>{
-        if(seedName===''){
+        if(seedColor===''){
             console.log('toast message 씨앗을 선택하지 않았습니다!')
         }
         else{
             setInputNameModalVisible(true)
             setTimeout(function() {  setSeedModalVisible(false) }, 500);
-            console.log(inputNameModalVisible)
+            //
         }
     }
 
@@ -48,8 +48,8 @@ const SeedModal=(props)=>{
                         </View>
                         <View style={styles.flexSeven}>
                             <ChooseSeed
-                                seedName={seedName}
-                                setSeedName={setSeedName}
+                                seedColor={seedColor}
+                                setSeedColor={setSeedColor}
                             />
                         </View>
                         <View style={styles.flexThree}>
@@ -65,6 +65,7 @@ const SeedModal=(props)=>{
             <InputSeedNameModal
                 inputNameModalVisible={inputNameModalVisible}
                 setInputNameModalVisible={setInputNameModalVisible}
+                setSeedName_mainPage={setSeedName_mainPage}
             />
         </>
     )

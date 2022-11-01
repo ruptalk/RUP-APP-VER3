@@ -14,7 +14,7 @@ const ChooseSeed=(props)=>{
     const  purpleSeedOn = require('../../imageResource/icon/ic_seed_purple_on.png')
     const  yellowSeedOff = require('../../imageResource/icon/ic_seed_yellow_off.png')
     const  yellowSeedOn = require('../../imageResource/icon/ic_seed_yellow_on.png')
-    const {seedName,setSeedName}=props
+    const {seedColor,setSeedColor}=props
     const [selectedTab, setSelectedTab] = useState('Nothing');
 
     const chooseSeedTab = () => {    
@@ -39,34 +39,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOff}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOff}/>
                     </TouchableOpacity>
                 </View>
@@ -77,34 +77,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOn}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOff}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOff}/>
                     </TouchableOpacity>
                 </View>
@@ -115,34 +115,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOn}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOff}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOff}/>
                     </TouchableOpacity>
                 </View>
@@ -153,34 +153,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOn}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOff}/>
                     </TouchableOpacity>
                 </View>
@@ -191,34 +191,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOff}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOn}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOff}/>
                     </TouchableOpacity>
                 </View>
@@ -229,34 +229,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOff}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOn}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOff}/>
                     </TouchableOpacity>
                 </View>
@@ -267,34 +267,34 @@ const ChooseSeed=(props)=>{
         <>
             <View style={{flex:1,flexDirection:'row'}}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedName('Pink')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Pink'),setSeedColor('Pink')}}>
                         <Image source={pinkSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedName('Brown')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Brown'),setSeedColor('Brown')}}>
                         <Image source={brownSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedName('Lavender')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Lavender'),setSeedColor('Lavender')}}>
                         <Image source={lavenderSeedOff}/>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={[styles.flexOne,{flexDirection:'row'}]}>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedName('Green')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Green'),setSeedColor('Green')}}>
                         <Image source={greenSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedName('Purple')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Purple'),setSeedColor('Purple')}}>
                         <Image source={purpleSeedOff}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexOne}>
-                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedName('Yellow')}}>
+                    <TouchableOpacity onPress={()=>{setSelectedTab('Yellow'),setSeedColor('Yellow')}}>
                         <Image source={yellowSeedOn}/>
                     </TouchableOpacity>
                 </View>

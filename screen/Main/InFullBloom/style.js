@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     bottomSheetContainer: {
         height:'50%',
         alignItems: "center",
-        backgroundColor: "#000000",
+        backgroundColor: "white",
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         shadowColor: "#000",
