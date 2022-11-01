@@ -122,6 +122,8 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     ////////////////BottomSheet_Main style//////////////////////////////
+    ////////////////Calender Modal style///////////////////////////////
+
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -168,8 +170,9 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
       },
       facelogo: {
-        width: 35,
-        height: 35,
+        width: 25,
+        height: 25,
+        resizeMode:'contain'
       },
       modalText: {
         marginBottom: 15,
@@ -180,8 +183,8 @@ const styles = StyleSheet.create({
         height: 350,
         marginTop: 50
       },
-      //calendar
-      noticeText:{
+    ////////////////Calender Modal style//////////////////////////////
+    noticeText:{
         alignContent:'center',
         width:300,
         height:400,

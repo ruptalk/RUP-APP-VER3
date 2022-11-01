@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     bottomSheetContainer: {
-        //height: '50%',        //높이 퍼센트로 지정시 keyboardAvoidngView적용안됨
+        height:screenHeight*0.55,       //높이 퍼센트로 지정시 keyboardAvoidngView적용안됨
         // justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#777777',
         height: 40,
-        borderRadius: 20,
+        borderRadius: 12,
         margin: 7,
         width:screenWidth*0.81,
         marginBottom:4,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#777777',
         height: 40,
-        borderRadius: 20,
+        borderRadius: 12,
         margin: 7,
         alignItems:'center',
         justifyContent:'center',
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#777777',
         height: 40,
-        borderRadius: 20,
+        borderRadius: 12,
         marginTop: 7,
         marginBottom: 7,
-        width:screenWidth*0.54,
+        width:screenWidth*0.81,
         marginBottom:4,
         backgroundColor:'white',
         paddingLeft:15,
@@ -99,19 +99,19 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#777777',
         height: 40,
-        borderRadius: 20,
+        borderRadius: 12,
         marginTop: 7,
         marginBottom: 7,
-        width:screenWidth*0.27,
+        width:screenWidth*0.81,
         marginBottom:4,
         backgroundColor:'white',
         paddingLeft:15,
         justifyContent:'center'
     },
     rowDirection:{
-        flexDirection:'row',
+        //flexDirection:'row',
         alignItems:'center',
-        marginLeft:'2.5%'
+        //marginLeft:'2.5%'
     },
     kakaoLogin:{
         borderWidth: 0.5,

@@ -49,6 +49,7 @@ const SearchUniversity=(props)=>{
                 animationType="slide"
                 transparent={true}
                 visible={majorModal}
+                onRequestClose={()=>setMajorModal(false)}
             >     
                 <View style={styles.universityModalView}>
                     <View style={{alignItems:'center'}}>

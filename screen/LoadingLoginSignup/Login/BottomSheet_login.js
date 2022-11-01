@@ -38,9 +38,11 @@ const BottomSheet_login = (props) => {
     const [universityModal, setUniversityModal] = useState(false);
     const [majorModal, setMajorModal] = useState(false);
     const [openToastMessage,setOpenToastMessage]=useState(0)
+    const [loginEmail,setLoginEmail]=useState('')
+    const [loginPw,setLoginPw]=useState('')
     const toast = useToast();
     const signInWithKakao=async()=>{
-        await KakaoSDK.init("e0dfba26b5bfa3667a1482cd64f4feaa")
+        await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
             const token = await KakaoSDK.login();
             setModalVisible(false)
@@ -61,54 +63,57 @@ const BottomSheet_login = (props) => {
         }
     }
 
-    const Login=()=>(       //Login 아이콘 클릭시 띄울 화면
-        <>  
-            <View>
-                <TextInput
-                    placeholder='이메일'
-                    style={styles.sectionStyle}
-                    onChangeText={name => setName(name)}
-                />
-                <TextInput
-                    placeholder='비밀번호'
-                    style={styles.sectionStyle}
-                    onChangeText={name => setName(name)}
-                />
-                <TouchableOpacity
+    const Login=()=>{
+        const [email,setEmail]=useState('')
+        const [pw,setPw]=useState('')
+        return(       //Login 아이콘 클릭시 띄울 화면
+            <>  
+                <View>
+                    <TextInput
+                        placeholder='이메일'
+                        style={styles.sectionStyle}
+                        onChangeText={email => setEmail(email)}
+                    />
+                    <TextInput
+                        placeholder='비밀번호'
+                        style={styles.sectionStyle}
+                        onChangeText={pw => setPw(pw)}
+                    />
+                    <TouchableOpacity
+                        onPress={()=>
+                            {
+                                setModalVisible(false)
+                                //navigation.reset({routes:[{name:'Main'}]})
+                                postLogin(email,pw)
+                            }}
+                        style={styles.signUp}
+                    >
+                        <Text style={styles.signUpText}>로그인</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* <View style={{margin:'5%'}}/> */}
+                <View>
+                    <TouchableOpacity onPress={signInWithKakao} style={styles.kakaoLogin}>
+                        <View style={styles.twentyPercent}>
+                            <Image style={styles.kakaoSymbolImage} source={require('../../../imageResource/jobDaHan/kakao_login_symbol.png')}/>
+                        </View>
+                        <View style={styles.kakaoLoginTextView}>
+                            <Text style={styles.kakaoLoginText}>카카오 로그인</Text>
+                        </View>
+                        <View style={styles.twentyPercent}/>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity 
                     onPress={()=>
-                        {
-                            setModalVisible(false)
-                            navigation.reset({routes:[{name:'Main'}]})
-                        }}
-                    style={styles.signUp}
-                >
-                    <Text style={styles.signUpText}>로그인</Text>
+                    {
+                        setModalVisible(false),
+                        navigation.navigate('FindPassword')
+                    }}>
+                    <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
                 </TouchableOpacity>
-            </View>
-            {/* <View style={{margin:'5%'}}/> */}
-            <View>
-                <TouchableOpacity onPress={signInWithKakao} style={styles.kakaoLogin}>
-                    <View style={styles.twentyPercent}>
-                        <Image style={styles.kakaoSymbolImage} source={require('../../../imageResource/jobDaHan/kakao_login_symbol.png')}/>
-                    </View>
-                    <View style={styles.kakaoLoginTextView}>
-                        <Text style={styles.kakaoLoginText}>카카오 로그인</Text>
-                    </View>
-                    <View style={styles.twentyPercent}/>
-                </TouchableOpacity>
-            </View>
-            <TouchableOpacity 
-                onPress={()=>
-                {
-                    setModalVisible(false),
-                    navigation.navigate('FindPassword')
-                }}>
-                <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
-            </TouchableOpacity>
-            
-        </>
-    )
-
+            </>
+        )
+    }
     const SignUp=()=>{
         const [name,setName] = useState(userName)
         const [email,setEmail] = useState(userEmail)
@@ -238,7 +243,7 @@ const BottomSheet_login = (props) => {
            return showToast("비밀번호 불일치")
         }
         else{
-            return showToast("회원가입 완료!")
+            return showToast("회원가입 완료!"),setSelectedTab('Login')
         }
     }
     const showToast=(message)=>{                        //토스트 메세지
@@ -248,6 +253,21 @@ const BottomSheet_login = (props) => {
             animationType:'zoom-in',
             placement:'top',
         })
+    }
+    const postSignUp=()=>{
+        fetch()
+    }
+    const postLogin=(email,pw)=>{
+        // fetch('http://3.36.132.101:8080/login',{
+        //     method:'POST',
+        //     headers:{'Content-Type':'application/json'},
+        //     body:JSON.stringify({
+        //       email: email,
+        //       password: pw
+        //     })
+        // })
+        // .then(res=>res.text().then(data=>console.log(data)))
+        navigation.reset({routes:[{name:'Main'}]})
     }
 
     const translateY_login = panY_login.interpolate({
@@ -315,7 +335,7 @@ const BottomSheet_login = (props) => {
                 <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : 'height'}
                 style={{ flex: 1 }}
-                keyboardVerticalOffset={-120}
+                keyboardVerticalOffset={-70}
                 >
                     <View style={styles.overlay}>
                         <TouchableWithoutFeedback
@@ -324,7 +344,7 @@ const BottomSheet_login = (props) => {
                             <View style={styles.background}/>
                         </TouchableWithoutFeedback>
                         <Animated.View
-                            style={[{...styles.bottomSheetContainer,height:screenHeight/2, transform: [{ translateY: translateY_login }]}]}
+                            style={[{...styles.bottomSheetContainer, transform: [{ translateY: translateY_login }]}]}
                             {...panResponders_login.panHandlers}
                         >
                             <View style={{padding:3}}/>
