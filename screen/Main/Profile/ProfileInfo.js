@@ -79,7 +79,9 @@ const ProfileInfo=()=>{
                     placeholder={placeHolderPw}
                     style={styles.sectionStyle}
                     onChangeText={pw => setPw(pw)}
-                    defaultValue={placeHolderPw}/>
+                    defaultValue={placeHolderPw}
+                    secureTextEntry={true}/>
+
             </View>
             <View style={{marginTop:'4%'}}/>
             <View style={styles.middle}>
@@ -94,7 +96,7 @@ const ProfileInfo=()=>{
                 <View>
                     <TouchableOpacity 
                         onPress={async()=>{
-                            await KakaoSDK.unlink()
+                            //await KakaoSDK.unlink()
                             storage.clearAll()
                             //await KakaoSDK.logout()
                             navigation.reset({routes:[{name:'Login'}]})
