@@ -69,14 +69,12 @@ function Main(){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
-
+  
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
   }
-  const success =[
-    "2022-08-01", "2022-08-14"
-  ];
+
   const isSeedName=()=>{
     if(seedName_mainPage!=='')
         return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
@@ -91,8 +89,54 @@ function Main(){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
-  const [flowerUri, setFloweruri]=useState("require('../../imageResource/flower/flowerB/flowerA_1.gif')")
-  console.log(flowerUri)
+  // const [flowerUri, setFloweruri]=useState(require('../../imageResource/flower/flowerA/flowerA_1.gif'))
+  // const [flowerUri2, setFloweruri2]=useState(require('../../imageResource/icon/ic_point.png'))
+  // const [bool, setbool]=useState(true)
+
+  // useEffect(()=>{
+  //       setFloweruri(require(flowerUri))
+  // },[flowerUri])  
+  
+  const flower = [
+    {
+        flowername: 'flowerA',
+        uri1: require('../../imageResource/flower/flowerA/flowerA_1.gif'),
+        uri2: require('../../imageResource/flower/flowerA/flowerA_2.gif'),
+        uri3: require('../../imageResource/flower/flowerA/flowerA_3.gif'),
+        uri4: require('../../imageResource/flower/flowerA/flowerA_4.gif'),
+        uri5: require('../../imageResource/flower/flowerA/flowerA_5.gif')
+    },
+]
+
+const FlowerGIF =()=>{
+  console.log(seedColor,"좋아요")
+  switch(seedColor){
+     
+      case 'Pink':
+        var tmp = flower[0].uri2
+          
+      case 'Brown':
+          
+      case 'Lavender':
+          
+      case 'Green':
+          
+      case 'Purple':
+         
+      case 'Yellow':
+      
+      defalut:
+        return (
+          <Image 
+            source={tmp} 
+            style={{width:300, height:400, marginLeft:5}}
+          />
+      )
+  }
+}
+
+  
+  
   return(
     <>
       <View style={{flex:1}}>
@@ -142,12 +186,7 @@ function Main(){
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
                       {isSeedName()}
-                      <Image
-                          source={{flowerUri}}
-                          style={{width:300, height:400, marginLeft:5}}
-                          
-                                                      
-                      />          
+                      <FlowerGIF/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
@@ -170,7 +209,6 @@ function Main(){
                   setSeedName_mainPage={setSeedName_mainPage}
                   seedColor={seedColor}
                   setSeedColor={setSeedColor}
-                  setFloweruri={setFloweruri}
               />
           </ImageBackground>
       </View>
