@@ -27,77 +27,77 @@ function InFullBloom(){
     const [recycle,setRecycle]=useState(userObject.recycle)
     const [point,setPoint]=useState(userObject.point)
     useEffect(() => {}, [isFocused]); //isFocused로 화면 전환시 리렌더링
-    return(
-        <View style={{flex:1}}>
-            <ImageBackground style={{
-                    flex: 1
-                }}
-                source={require('../../../imageResource/background/bg_06.png')}>
-                <View>
-                    <View style={{flexDirection:'row',height:'15%'}}>
-                        <View style={{width:'62%',justifyContent:'center'}}>
-                            <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity 
-                                    onPress={()=>navigation.navigate('Profile')}
-                                    style={styles.profileImageContainer}>
-                                    <Image 
-                                        source={{uri:userObject.profileImage}}
-                                        style={styles.profileImage}/>
-                                </TouchableOpacity>
-                                <View style={{justifyContent:'center',marginLeft:'5%'}}>
-                                    <Text style={styles.name}>{userObject.userName}</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{width:'38%',flexDirection:'row'}}>
-                            <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
-                                <Image style ={{width:30,height:30}} source={require('../../../imageResource/icon/ic_recycle_0.png')}/>
-                                <Text style={styles.name}>+{recycle}</Text>
-                            </View>
-                            <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column',marginRight:'20%'}}>
-                                <Image style ={{width:30,height:30,}} source={require('../../../imageResource/icon/ic_point.png')}/>
-                                <Text style={styles.name}>{point}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{height:'70%'}}>
+    return(<Text>"test중입니다"</Text>
+        // <View style={{flex:1}}>
+        //     <ImageBackground style={{
+        //             flex: 1
+        //         }}
+        //         source={require('../../../imageResource/background/bg_06.png')}>
+        //         <View>
+        //             <View style={{flexDirection:'row',height:'15%'}}>
+        //                 <View style={{width:'62%',justifyContent:'center'}}>
+        //                     <View style={{flexDirection:'row'}}>
+        //                         <TouchableOpacity 
+        //                             onPress={()=>navigation.navigate('Profile')}
+        //                             style={styles.profileImageContainer}>
+        //                             <Image 
+        //                                 source={{uri:userObject.profileImage}}
+        //                                 style={styles.profileImage}/>
+        //                         </TouchableOpacity>
+        //                         <View style={{justifyContent:'center',marginLeft:'5%'}}>
+        //                             <Text style={styles.name}>{userObject.userName}</Text>
+        //                         </View>
+        //                     </View>
+        //                 </View>
+        //                 <View style={{width:'38%',flexDirection:'row'}}>
+        //                     <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
+        //                         <Image style ={{width:30,height:30}} source={require('../../../imageResource/icon/ic_recycle_0.png')}/>
+        //                         <Text style={styles.name}>+{recycle}</Text>
+        //                     </View>
+        //                     <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column',marginRight:'20%'}}>
+        //                         <Image style ={{width:30,height:30,}} source={require('../../../imageResource/icon/ic_point.png')}/>
+        //                         <Text style={styles.name}>{point}</Text>
+        //                     </View>
+        //                 </View>
+        //             </View>
+        //             <View style={{height:'70%'}}>
 
-                        <View style={{height:'35%', }}/>
+        //                 <View style={{height:'35%', }}/>
 
-                        <View style={{height:'10%',flexDirection:"row",}}>
+        //                 <View style={{height:'10%',flexDirection:"row",}}>
 
-                            <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flower1.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower8.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower4.png')}/>
-                        </View>
+        //                     <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flower1.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower8.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower4.png')}/>
+        //                 </View>
                         
-                        <View style={{height:'10%', flexDirection:"row", }}>
-                            <Image style={{width:80,height:100,marginLeft:23}} source={require('../../../imageResource/flower/flower5.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower10.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower3.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower2.png')}/> 
-                        </View>
+        //                 <View style={{height:'10%', flexDirection:"row", }}>
+        //                     <Image style={{width:80,height:100,marginLeft:23}} source={require('../../../imageResource/flower/flower5.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower10.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower3.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flower2.png')}/> 
+        //                 </View>
 
-                         <View style={{height:'10%', flexDirection:"row",marginTop:10}}>
-                            <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flower6.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower7.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower9.png')}/> 
-                        </View>                    
-                    </View>
+        //                  <View style={{height:'10%', flexDirection:"row",marginTop:10}}>
+        //                     <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flower6.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower7.png')}/>
+        //                     <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flower9.png')}/> 
+        //                 </View>                    
+        //             </View>
 
-                    <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
-                        <View style={{height:'10%',}}/>
-                        <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                            <Image style={{width:70,height:70}} source={require('../../../imageResource/icon/qrcode.png')}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <BottomSheet_InFullBloom
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
-                />
-            </ImageBackground>
-        </View>
+        //             <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
+        //                 <View style={{height:'10%',}}/>
+        //                 <TouchableOpacity onPress={()=>setModalVisible(true)}>
+        //                     <Image style={{width:70,height:70}} source={require('../../../imageResource/icon/qrcode.png')}/>
+        //                 </TouchableOpacity>
+        //             </View>
+        //         </View>
+        //         <BottomSheet_InFullBloom
+        //             modalVisible={modalVisible}
+        //             setModalVisible={setModalVisible}
+        //         />
+        //     </ImageBackground>
+        // </View>
     )
 }
 export default InFullBloom
