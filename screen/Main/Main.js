@@ -20,6 +20,26 @@ import KakaoSDK from '@actbase/react-kakaosdk'
 
 export const storage = new MMKV()
 
+function useInterval(callback, delay) {
+    const savedCallback = useRef();
+  
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+  
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
 function Main(){
   if(storage.getString('user')===undefined){  //user정보 캐싱되지 않았다면 서버 통해서 user정보 return,캐싱
       const user = {
@@ -42,6 +62,9 @@ function Main(){
   const userObject = JSON.parse(jsonUser)
   const [seedName_mainPage,setSeedName_mainPage]=useState('')
   const [seedColor,setSeedColor]=useState('')
+  const [currentTime,setCurrentTime]=useState(new Date())
+  const [seedTime,setSeedTime]=useState(new Date())
+  const [flowerDate,setFlowerDate]=useState('')
   const [modalVisible,setModalVisible]=useState(false)
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
@@ -53,7 +76,20 @@ function Main(){
   const success =[
     "2022-08-01", "2022-08-14"
   ];
-
+  const isSeedName=()=>{
+    if(seedName_mainPage!=='')
+        return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
+    else
+        return 
+  }
+  useInterval(()=>{
+    setCurrentTime(new Date())
+  },60000)
+  useEffect(()=>{
+    let date = Math.floor(currentTime.getTime()/1000) - Math.floor(seedTime.getTime()/1000)
+    setFlowerDate(date)
+    console.log(date)
+  },[currentTime])
   return(
     <>
       <View style={{flex:1}}>
@@ -74,6 +110,7 @@ function Main(){
                       source={{uri:userObject.profileImage}}
                       style={styles.profileImage}/>
                   </TouchableOpacity>
+                  <Button onPress={kaka} title='dd'></Button>
                   <View style={{justifyContent:'center',marginLeft:'5%',flexDirection:'column'}}>
                     <Text style={styles.name}>{userObject.userName}</Text>
                     <View style={styles.flexDirectionRow}>
@@ -85,9 +122,6 @@ function Main(){
               </View>
               <View style={styles.calenderAndNoticeBoxContainer}>
                 <View style={styles.calenderAndNoticeBox}>
-                  <TouchableOpacity>
-                    {/* onPress={()=>navigation.navigate('UnivRanking')} */}
-                  </TouchableOpacity>
                   <TouchableOpacity
                     onPress={()=>setCalendarModalVisible(true)}
                   >
@@ -105,10 +139,10 @@ function Main(){
             </View>
             <View style={{height:'10%'}}/>
             <View style={{alignItems:'center',height:'55%'}}>
+              <Text style={styles.tulipText}>튤리비와 함께 N일째</Text>
             </View>
             <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
               <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                {/* <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/> */}
                 <Text style={styles.QrText}>QR코드</Text>
               </TouchableOpacity>
             </View>

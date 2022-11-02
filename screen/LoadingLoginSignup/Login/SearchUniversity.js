@@ -22,7 +22,7 @@ const SearchUniversity=(props)=>{
         <>
             <TouchableOpacity onPress={()=>{selectUniversity(univ)}}>
                 <View style={{marginTop:'6%'}}>
-                    <Text style={styles.major}>{univ}</Text>
+                    <Text style={styles.univ}>{univ}</Text>
                 </View>
             </TouchableOpacity>
             <View style={styles.item}/>

@@ -78,7 +78,6 @@ const BottomSheet_login = (props) => {
                         placeholder='비밀번호'
                         style={styles.sectionStyle}
                         onChangeText={pw => setPw(pw)}
-                        secureTextEntry={true}
                     />
                     <TouchableOpacity
                         onPress={()=>
@@ -110,7 +109,7 @@ const BottomSheet_login = (props) => {
                         setModalVisible(false),
                         navigation.navigate('FindPassword')
                     }}>
-                    <Text style={styles.passwordPage}>비밀번호를 잊으셨나요</Text>
+                    <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
                 </TouchableOpacity>
             </>
         )
@@ -156,7 +155,7 @@ const BottomSheet_login = (props) => {
                         >
                             <View style={{flexDirection:'row'}}>
                                 <Text>{userUniversity}</Text>
-                                {/* <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/> */}
+                                <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity 
@@ -165,7 +164,7 @@ const BottomSheet_login = (props) => {
                         >
                             <View style={{flexDirection:'row'}}>   
                                 <Text >{userMajor}</Text>
-                                {/* <Image style={{resizeMode:'contain',height:'90%',width:'80%'}} source={require('../../../imageResource/jobDaHan/triangle.png')}/> */}
+                                <Image style={{resizeMode:'contain',height:'90%',width:'80%'}} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -204,7 +203,7 @@ const BottomSheet_login = (props) => {
             return validation_email()
         }
         else{
-            return showToast("닉네임은 2~16자 입니다")
+            return showToast("닉네임은 2~16자 입니다.")
         }
     }
     const validation_university=()=>{                   //대학 유효성 검사
@@ -228,7 +227,7 @@ const BottomSheet_login = (props) => {
             return validation_pw()
         }
         else{
-            return showToast("이메일 형식이 맞지 않습니다")
+            return showToast("이메일 형식이 맞지 않습니다.")
         }
     }
     const validation_pw=()=>{                           //비밀번호 유효성 검사
@@ -236,31 +235,15 @@ const BottomSheet_login = (props) => {
             return matchPwAndPw2()
         }
         else{
-            return showToast("비밀번호는 4자 이상 입니다")
+            return showToast("비밀번호는 4자 이상 입니다.")
         }
     }
     const matchPwAndPw2=()=>{                           //비밀번호, 비밀번호 재입력 같은지 검사
-        if(userPw===userPwAgain){
-           return isUniv()
+        if(userPw!==userPwAgain){
+           return showToast("비밀번호 불일치")
         }
         else{
-            return showToast("비밀번호 불일치")
-        }
-    }
-    const isUniv=()=>{
-        if(userUniversity!=='학교찾기'){
-            return isMajor()
-        }
-        else{
-            return showToast("대학(교)을 선택 해주세요")
-        }
-    }
-    const isMajor=()=>{
-        if(userMajor!=='학과'){
-            return showToast('회원가입 완료!'),setSelectedTab('Login')
-        }
-        else{
-            return showToast('학과를 선택 해주세요')
+            return showToast("회원가입 완료!"),setSelectedTab('Login')
         }
     }
     const showToast=(message)=>{                        //토스트 메세지
