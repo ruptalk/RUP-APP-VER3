@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import {
     View,
     Image,
@@ -11,11 +11,12 @@ import {
     Button
 } from 'react-native'
 import { useNavigation,useIsFocused } from '@react-navigation/native';
-import { MMKV } from 'react-native-mmkv';
+import { MMKV } from 'react-native-mmkv'
 import BottomSheet_Main from './BottomSheet_Main';
 import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
+import KakaoSDK from '@actbase/react-kakaosdk'
 
 export const storage = new MMKV()
 
@@ -28,7 +29,7 @@ function Main(){
           pw:'123456',
           profileImage:'https://image.fnnews.com/resource/media/image/2022/07/16/202207160834208420_l.jpg',
           point:0,
-          recycle:0
+          recycle:0,
           //
           }      
       storage.set('user', JSON.stringify(user))
@@ -104,7 +105,6 @@ function Main(){
             </View>
             <View style={{height:'10%'}}/>
             <View style={{alignItems:'center',height:'55%'}}>
-              {isSeedName()}
             </View>
             <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
               <TouchableOpacity onPress={()=>setModalVisible(true)}>
