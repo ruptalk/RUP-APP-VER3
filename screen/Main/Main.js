@@ -44,8 +44,8 @@ function Main(){
   const [seedModalVisible,setSeedModalVisible] = useState(true)
   const [seedColor,setSeedColor]=useState('')
   const [seedName_mainPage,setSeedName_mainPage]=useState('')
-  const [flowerUri, setFloweruri]=useState('../../imageResource/icon/ic_notice.png')
-  console.log(flowerUri,"maintest")
+  const [flowerUri, setFloweruri]=useState("require('../../imageResource/flower/flowerB/flowerA_1.gif')")
+  console.log(flowerUri)
     return(
       <>
         <View style={{flex:1}}>
@@ -96,7 +96,7 @@ function Main(){
                     <View style={{alignItems:'center',height:'55%'}}>
                         <Text style={styles.tulipText}>{seedName_mainPage} 함께 N일째</Text>
                         <Image
-                        source={{flowerUri}}
+                            source={{flowerUri}}
                             style={{width:300, height:400, marginLeft:5}}
                             
                                                         
@@ -130,5 +130,5 @@ function Main(){
       </>
   )
 }
-
+//for merge
 export default Main
