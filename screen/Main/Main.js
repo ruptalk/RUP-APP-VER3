@@ -69,6 +69,7 @@ function Main(){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
+  
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -90,82 +91,91 @@ function Main(){
     setFlowerDate(date)
     console.log(date)
   },[currentTime])
+  const [flowerUri, setFloweruri]=useState("require('../../imageResource/flower/flowerB/flowerA_1.gif')")
+  console.log(flowerUri)
   return(
     <>
       <View style={{flex:1}}>
-        <ImageBackground 
-          style={{
-            height: '100%',
-            width: '100%',
-          }}
-          source={require('../../imageResource/background/bg_04.png')}>
-          <View >
-            <View style={styles.topLineContainer}>
-              <View style={styles.topLineLeft}>
-                <View style={styles.flexDirectionRow}>
-                  <TouchableOpacity 
-                    onPress={()=>navigation.navigate('InFullBloom')}
-                    style={styles.profileImageContainer}>
-                    <Image 
-                      source={{uri:userObject.profileImage}}
-                      style={styles.profileImage}/>
-                  </TouchableOpacity>
-                  <Button onPress={kaka} title='dd'></Button>
-                  <View style={{justifyContent:'center',marginLeft:'5%',flexDirection:'column'}}>
-                    <Text style={styles.name}>{userObject.userName}</Text>
-                    <View style={styles.flexDirectionRow}>
-                      <Image source={require('../../imageResource/icon/ic_point.png')}/>
-                      <Text style={{marginLeft:'8%'}}>{userObject.point}</Text>
-                    </View>
+          <ImageBackground 
+              style={{
+                  height: '100%',
+                  width: '100%',
+              }}
+              source={require('../../imageResource/background/bg_04.png')}>
+              <View >
+                  <View style={styles.topLineContainer}>
+                      <View style={styles.topLineLeft}>
+                          <View style={styles.flexDirectionRow}>
+                              <TouchableOpacity 
+                                  onPress={()=>navigation.navigate('InFullBloom')}
+                                  style={styles.profileImageContainer}>
+                                  <Image 
+                                      source={{uri:userObject.profileImage}}
+                                      style={styles.profileImage}/>
+                              </TouchableOpacity>
+                              <View style={{justifyContent:'center',marginLeft:'5%',flexDirection:'column'}}>
+                                  <Text style={styles.name}>{userObject.userName}</Text>
+                                  <View style={styles.flexDirectionRow}>
+                                      <Image source={require('../../imageResource/icon/ic_point.png')}/>
+                                      <Text style={{marginLeft:'8%'}}>{userObject.point}</Text>
+                                  </View>
+                              </View>
+                          </View>
+                      </View>
+                      <View style={styles.calenderAndNoticeBoxContainer}>
+                          <View style={styles.calenderAndNoticeBox}>
+                              <TouchableOpacity
+                                  onPress={()=>setCalendarModalVisible(true)}
+                              >
+                                  <Image 
+                                      style={{marginRight:'15%'}}
+                                      source={require('../../imageResource/icon/ic_calendar.png')}
+                                  />
+                                  
+                              </TouchableOpacity>
+                              <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
+                                  <Image source={require('../../imageResource/icon/ic_notice.png')}/>
+                              </TouchableOpacity>  
+                          </View>
+                      </View>
                   </View>
-                </View>
+                  <View style={{height:'10%'}}/>
+                  <View style={{alignItems:'center',height:'55%'}}>
+                      <Text style={styles.tulipText}>{seedName_mainPage} 함께 N일째</Text>
+                      <Image
+                          source={{flowerUri}}
+                          style={{width:300, height:400, marginLeft:5}}
+                          
+                                                      
+                      />          
+                  </View>
+                  <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
+                      <TouchableOpacity onPress={()=>setModalVisible(true)}>  
+                        <View style={{height:'45%'}}/>
+                        <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/>
+                      </TouchableOpacity>
+                  </View>
               </View>
-              <View style={styles.calenderAndNoticeBoxContainer}>
-                <View style={styles.calenderAndNoticeBox}>
-                  <TouchableOpacity
-                    onPress={()=>setCalendarModalVisible(true)}
-                  >
-                    <Image 
-                      style={{marginRight:'15%'}}
-                      source={require('../../imageResource/icon/ic_calendar.png')}
-                    />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
-                    <Image source={require('../../imageResource/icon/ic_notice.png')}/>
-                  </TouchableOpacity>  
-                </View>
-              </View>
-            </View>
-            <View style={{height:'10%'}}/>
-            <View style={{alignItems:'center',height:'55%'}}>
-              <Text style={styles.tulipText}>튤리비와 함께 N일째</Text>
-            </View>
-            <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
-              <TouchableOpacity onPress={()=>setModalVisible(true)}>
-                <Text style={styles.QrText}>QR코드</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <BottomSheet_Main
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
-          <CalendarModal
-            calendarModalVisible={calendarModalVisible}
-            setCalendarModalVisible={setCalendarModalVisible}
-          />
-          <SeedModal
-            seedModalVisible={seedModalVisible}
-            setSeedModalVisible={setSeedModalVisible}
-            setSeedName_mainPage={setSeedName_mainPage}
-            seedColor={seedColor}
-            setSeedColor={setSeedColor}
-          />
-        </ImageBackground>
+              <BottomSheet_Main
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+              />
+              <CalendarModal
+                calendarModalVisible={calendarModalVisible}
+                setCalendarModalVisible={setCalendarModalVisible}
+              />
+              <SeedModal
+                  seedModalVisible={seedModalVisible}
+                  setSeedModalVisible={setSeedModalVisible}
+                  setSeedName_mainPage={setSeedName_mainPage}
+                  seedColor={seedColor}
+                  setSeedColor={setSeedColor}
+                  setFloweruri={setFloweruri}
+              />
+          </ImageBackground>
       </View>
     </>
-  )
+)
 }
-
+//for merge
 export default Main
