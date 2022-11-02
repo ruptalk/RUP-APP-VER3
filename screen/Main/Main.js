@@ -69,7 +69,7 @@ function Main(){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
-  
+
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -87,8 +87,8 @@ function Main(){
     setCurrentTime(new Date())
   },60000)
   useEffect(()=>{
-    let date = Math.floor(currentTime.getTime()/1000) - Math.floor(seedTime.getTime()/1000)
-    setFlowerDate(date)
+    let date = currentTime.getTime() - seedTime.getTime()
+    setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
   const [flowerUri, setFloweruri]=useState("require('../../imageResource/flower/flowerB/flowerA_1.gif')")
@@ -141,7 +141,7 @@ function Main(){
                   </View>
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
-                      <Text style={styles.tulipText}>{seedName_mainPage} 함께 N일째</Text>
+                      {isSeedName()}
                       <Image
                           source={{flowerUri}}
                           style={{width:300, height:400, marginLeft:5}}
