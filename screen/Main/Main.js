@@ -17,9 +17,7 @@ import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
 import KakaoSDK from '@actbase/react-kakaosdk'
-import Lottie from 'lottie-react-native';
-
-
+//import Lottie from 'lottie-react-native';
 export const storage = new MMKV()
 
 function useInterval(callback, delay) {
@@ -79,7 +77,6 @@ function Main(){
     animationRef.current?.play(1, timeGif[0]);
   }, [])
  
-
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -110,7 +107,8 @@ function Main(){
         uri3: require('../../imageResource/flower/flowerA/flowerA_3.gif'),
         uri4: require('../../imageResource/flower/flowerA/flowerA_4.gif'),
         uri5: require('../../imageResource/flower/flowerA/flowerA_5.gif')
-    },    
+    },
+    
     {
         flowername: 'flowerB',
         uri1: require('../../imageResource/flower/flowerB/flowerB_1.gif'),
@@ -192,7 +190,6 @@ function Main(){
     }
   ]
 
-
 const FlowerGIF =()=>{
   console.log(seedColor,"좋아요")
   var tmp = ''
@@ -251,22 +248,26 @@ const FlowerGIF =()=>{
                           </View>
                       </View>
                       <View style={styles.calenderAndNoticeBoxContainer}>
-                          <TouchableOpacity onPress={()=>navigation.navigate('UnivRanking')}>
-                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
-                          </TouchableOpacity>
-                          <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%'}}>
-                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
-                          </TouchableOpacity>
-                          <TouchableOpacity onPress={()=>navigation.navigate('Notice')} style={{marginLeft:'10%',marginRight:'10%'}}>  
-                              <Image source={require('../../imageResource/icon/ic_notice.png')}/>
-                          </TouchableOpacity>  
+                          <View style={styles.calenderAndNoticeBox}>
+                              <TouchableOpacity
+                                  onPress={()=>setCalendarModalVisible(true)}
+                              >
+                                  <Image 
+                                      style={{marginRight:'15%'}}
+                                      source={require('../../imageResource/icon/ic_calendar.png')}
+                                  />
+                                  
+                              </TouchableOpacity>
+                              <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
+                                  <Image source={require('../../imageResource/icon/ic_notice.png')}/>
+                              </TouchableOpacity>  
+                          </View>
                       </View>
                   </View>
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
                     
                       {isSeedName()}
-
                       {/* <View style={{height:'45%'}}/>  */}
                       {/* <FlowerGIF/> */}
                       
@@ -277,7 +278,6 @@ const FlowerGIF =()=>{
                         speed={0.6}
                         style={{marginTop:20,height:380}}
                       />
-
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
