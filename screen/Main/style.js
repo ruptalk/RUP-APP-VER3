@@ -23,9 +23,7 @@ const styles = StyleSheet.create({
     calenderAndNoticeBoxContainer:{
         width:'38%',
         justifyContent:'center',
-        alignItems:'center'
-    },
-    calenderAndNoticeBox:{
+        alignItems:'center',
         flexDirection:'row',
     },
     tulipText:{

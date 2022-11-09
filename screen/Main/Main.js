@@ -17,6 +17,8 @@ import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
 import KakaoSDK from '@actbase/react-kakaosdk'
+import Lottie from 'lottie-react-native';
+
 
 export const storage = new MMKV()
 
@@ -69,7 +71,8 @@ function Main(){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
-  
+  const animationRef = useRef(null)
+
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -107,7 +110,9 @@ function Main(){
         uri5: require('../../imageResource/flower/flowerA/flowerA_5.gif')
     },
 ]
-
+useEffect(()=>{
+  animationRef.current?.play(5, 8);
+},[])
 const FlowerGIF =()=>{
   console.log(seedColor,"좋아요")
   switch(seedColor){
@@ -167,26 +172,26 @@ const FlowerGIF =()=>{
                           </View>
                       </View>
                       <View style={styles.calenderAndNoticeBoxContainer}>
-                          <View style={styles.calenderAndNoticeBox}>
-                              <TouchableOpacity
-                                  onPress={()=>setCalendarModalVisible(true)}
-                              >
-                                  <Image 
-                                      style={{marginRight:'15%'}}
-                                      source={require('../../imageResource/icon/ic_calendar.png')}
-                                  />
-                                  
-                              </TouchableOpacity>
-                              <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
-                                  <Image source={require('../../imageResource/icon/ic_notice.png')}/>
-                              </TouchableOpacity>  
-                          </View>
+                          <TouchableOpacity onPress={()=>navigation.navigate('UnivRanking')}>
+                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
+                          </TouchableOpacity>
+                          <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%'}}>
+                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
+                          </TouchableOpacity>
+                          <TouchableOpacity onPress={()=>navigation.navigate('Notice')} style={{marginLeft:'10%',marginRight:'10%'}}>  
+                              <Image source={require('../../imageResource/icon/ic_notice.png')}/>
+                          </TouchableOpacity>  
                       </View>
                   </View>
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
                       {isSeedName()}
-                      <FlowerGIF/>
+                      <Lottie 
+                          source={require('../../imageResource/flower/식물_01_v5_lottie.json')} 
+                          autoPlay
+                          loop
+                          speed={4} 
+                          ref={animationRef}/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
