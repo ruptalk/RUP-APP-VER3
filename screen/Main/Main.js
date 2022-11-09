@@ -167,20 +167,15 @@ const FlowerGIF =()=>{
                           </View>
                       </View>
                       <View style={styles.calenderAndNoticeBoxContainer}>
-                          <View style={styles.calenderAndNoticeBox}>
-                              <TouchableOpacity
-                                  onPress={()=>setCalendarModalVisible(true)}
-                              >
-                                  <Image 
-                                      style={{marginRight:'15%'}}
-                                      source={require('../../imageResource/icon/ic_calendar.png')}
-                                  />
-                                  
-                              </TouchableOpacity>
-                              <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
-                                  <Image source={require('../../imageResource/icon/ic_notice.png')}/>
-                              </TouchableOpacity>  
-                          </View>
+                          <TouchableOpacity onPress={()=>navigation.navigate('UnivRanking')}>
+                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
+                          </TouchableOpacity>
+                          <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%'}}>
+                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
+                          </TouchableOpacity>
+                          <TouchableOpacity onPress={()=>navigation.navigate('Notice')} style={{marginLeft:'10%',marginRight:'10%'}}>  
+                              <Image source={require('../../imageResource/icon/ic_notice.png')}/>
+                          </TouchableOpacity>  
                       </View>
                   </View>
                   <View style={{height:'10%'}}/>
