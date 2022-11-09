@@ -17,17 +17,15 @@ import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
 import KakaoSDK from '@actbase/react-kakaosdk'
-
+//import Lottie from 'lottie-react-native';
 export const storage = new MMKV()
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
-  
     // Remember the latest callback.
     useEffect(() => {
       savedCallback.current = callback;
     }, [callback]);
-  
     // Set up the interval.
     useEffect(() => {
       function tick() {
@@ -70,6 +68,15 @@ function Main(){
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
   
+  const animationRef = useRef(null)
+  const timeGif=[2,4,6,8,10]
+    
+  
+  useEffect(() => {
+    animationRef.current?.play()
+    animationRef.current?.play(1, timeGif[0]);
+  }, [])
+ 
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -89,13 +96,8 @@ function Main(){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
-  // const [flowerUri, setFloweruri]=useState(require('../../imageResource/flower/flowerA/flowerA_1.gif'))
-  // const [flowerUri2, setFloweruri2]=useState(require('../../imageResource/icon/ic_point.png'))
-  // const [bool, setbool]=useState(true)
 
-  // useEffect(()=>{
-  //       setFloweruri(require(flowerUri))
-  // },[flowerUri])  
+ 
   
   const flower = [
     {
@@ -215,8 +217,6 @@ const FlowerGIF =()=>{
   )
 
 }
-
-  
   
   return(
     <>
@@ -266,8 +266,18 @@ const FlowerGIF =()=>{
                   </View>
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
+                    
                       {isSeedName()}
-                      <FlowerGIF/>
+                      {/* <View style={{height:'45%'}}/>  */}
+                      {/* <FlowerGIF/> */}
+                      
+                        <Lottie 
+                        ref = {animationRef}
+                        source={require('../../imageResource/flower/flower1.json')} 
+                        autoPlay loop 
+                        speed={0.6}
+                        style={{marginTop:20,height:380}}
+                      />
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
