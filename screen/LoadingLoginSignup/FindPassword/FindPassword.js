@@ -1,11 +1,24 @@
-import React ,{useEffect,useState}from 'react'
-import {View, Image, StyleSheet,TouchableOpacity,Text,TextInput } from 'react-native'
+import React ,{useEffect,useState,useRef}from 'react'
+import {View, Image, StyleSheet,TouchableOpacity,Text,TextInput,Keyboard } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { useToast } from "react-native-toast-notifications";
+import {validateEmail} from '../../../validate.js'
+import RNSmtpMailer from "react-native-smtp-mailer";
+import SearchUniversity from '../SearchUniversity.js';
+import SearchMajor from '../SearchMajor.js'
 import styles from './style.js';
 
 function FindPassword(){
     const navigation = useNavigation()
+    const emailRef = useRef(null)
+    const [email,setEmail]=useState(null)
     const [findPw,setFindPw]=useState('')
+    const [univ,setUniv]=useState('학교찾기')
+    const [major,setMajor]=useState('학과')
+    const [universityModal, setUniversityModal] = useState(false);
+    const [majorModal, setMajorModal] = useState(false);
+    const toast = useToast();
+
     const findPwTab = () => {    
         if(findPw==='비밀번호 찾기 버튼 클릭'){
             return <FindPw/>
@@ -21,6 +34,78 @@ function FindPassword(){
             </TouchableOpacity>
         </>
     )
+    const showToast=(message)=>{                        //토스트 메세지
+        toast.show(message,{
+            type:'custom',
+            duration:1500,
+            animationType:'zoom-in',
+            placement:'bottom',
+            style:{
+                marginBottom:'30%'
+            }
+        })
+    }
+    const getUserUid=()=>{
+        fetch('http://13.124.80.15/user/find-pw-before-email',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                email : email,
+                college : univ,
+                major : major
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            if(data.uid==="-1"){
+                showToast('존재하지 않는 회원정보입니다.')
+            }else{
+                console.log(Math.floor(Math.random() * (999999-100000)) + 100000) // 100000 ~ 999999
+                sendEmail2()              
+            }
+        })
+        //.catch(error=>console.log('ERROR'))
+    }
+    console.log(email)
+    const sendEmail2=()=>{
+        RNSmtpMailer.sendMail({
+            mailhost: "smtp.gmail.com",
+            port: "465",
+            ssl: true, // optional. if false, then TLS is enabled. Its true by default in android. In iOS TLS/SSL is determined automatically, and this field doesn't affect anything
+            username: email,
+            password: "jyp5648123*",
+            fromName: email, // optional
+            replyTo: email, // optional
+            recipients: email,
+            subject: "subject",
+            htmlBody: "<h1>header</h1><p>body</p>",
+          })
+            .then(success => console.log(success))
+            .catch(err => console.log('err'));  
+    }
+    useEffect(()=>{
+        emailRef.current?.focus()
+    },[])
+    ////////////////////////////////////////// 이메일 입력 완료 시 학교,학과 모달 자동 띄우기 //////////////////
+    useEffect(()=>{
+        if(major==='학과'&&univ!=='학교찾기'){
+            setMajorModal(true)
+        }
+    },[univ])
+    emailOnSubmitEditing=()=>{
+        if(validateEmail(email))
+            return modalOpen()
+        else
+            showToast('이메일 오류')
+    }
+    modalOpen=()=>{
+        if(univ==='학교찾기')
+            return setUniversityModal(true)
+        if(major==='학과')
+            return setMajorModal(true)
+        return getUserUid()
+    }
+    ////////////////////////////////////////// 이메일 입력 완료 시 학교,학과 모달 자동 띄우기 //////////////////
     return(
         <View style={styles.container}>
             <TouchableOpacity 
@@ -32,18 +117,44 @@ function FindPassword(){
             <View style={{flex:1,alignItems:'center',marginTop:'30%'}}>
                 <Text style={styles.passwordText}>비밀번호 찾기</Text>
                 <TextInput 
-                    placeholder='이름을 입력해 주세요.'
-                    style={styles.sectionStyle}/>
-                    <TextInput 
                     placeholder='이메일을 입력해 주세요.'
-                    style={styles.sectionStyle}/>
+                    style={styles.sectionStyle}
+                    onChangeText={email=>setEmail(email)}
+                    ref={emailRef}
+                    onSubmitEditing={()=>emailOnSubmitEditing()}
+                />
+                <TouchableOpacity
+                    style={[styles.sectionStyle,{justifyContent:'center'}]}
+                    onPress={()=>setUniversityModal(true)}    
+                >
+                    <Text>{univ}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.sectionStyle,{justifyContent:'center'}]}    
+                    onPress={()=>setMajorModal(true)}
+                >
+                    <Text>{major}</Text>
+                </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={()=>setFindPw('비밀번호 찾기 버튼 클릭')}
+                    onPress={()=>{
+                        //setFindPw('비밀번호 찾기 버튼 클릭')
+                        emailOnSubmitEditing()
+                    }}
                     style={styles.signUp}>
                     <Text style={styles.signUpText}>비밀번호 찾기</Text>
                 </TouchableOpacity>
                 {findPwTab()}
             </View>
+            <SearchUniversity
+                universityModal={universityModal}
+                setUniversityModal={setUniversityModal}
+                setUserUniversity={setUniv}
+            />
+            <SearchMajor
+                majorModal={majorModal}
+                setMajorModal={setMajorModal}
+                setUserMajor={setMajor}
+            />
         </View>
     )
 }
