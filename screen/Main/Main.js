@@ -17,7 +17,7 @@ import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
 import KakaoSDK from '@actbase/react-kakaosdk'
-//import Lottie from 'lottie-react-native';
+import Lottie from 'lottie-react-native';
 export const storage = new MMKV()
 
 function useInterval(callback, delay) {
@@ -71,10 +71,9 @@ function Main(){
   const animationRef = useRef(null)
   const timeGif=[2,4,6,8,10]
     
-  
   useEffect(() => {
     animationRef.current?.play()
-    animationRef.current?.play(1, timeGif[0]);
+    animationRef.current?.play(1, timeGif[4]);
   }, [])
  
   const kaka=async()=>{
@@ -96,8 +95,6 @@ function Main(){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
-
- 
   
   const flower = [
     {
@@ -271,13 +268,14 @@ const FlowerGIF =()=>{
                       {/* <View style={{height:'45%'}}/>  */}
                       {/* <FlowerGIF/> */}
                       
-                        <Lottie 
+                      <Lottie 
                         ref = {animationRef}
-                        source={require('../../imageResource/flower/flower1.json')} 
+                        source={require('../../imageResource/flower/flower2.json')} 
                         autoPlay loop 
                         speed={0.6}
-                        style={{marginTop:20,height:380}}
-                      />
+                        style={{marginTop:20,height:380}} 
+                        />
+
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
@@ -306,5 +304,5 @@ const FlowerGIF =()=>{
     </>
 )
 }
-//for merge
+
 export default Main
