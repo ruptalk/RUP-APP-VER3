@@ -18,8 +18,9 @@ import { useNavigation } from '@react-navigation/native';
 import KakaoSDK from '@actbase/react-kakaosdk'
 import { useToast } from "react-native-toast-notifications";
 import {validateNickName,validateEmail,validatePw} from '../../../validate.js'
-import SearchUniversity from './SearchUniversity.js';
-import SearchMajor from './SearchMajor.js'
+import SearchUniversity from '../SearchUniversity.js';
+import SearchMajor from '../SearchMajor.js'
+import uuid from 'react-native-uuid';
 import styles from './style'
 
 const BottomSheet_login = (props) => {
@@ -29,7 +30,8 @@ const BottomSheet_login = (props) => {
     const [selectedTab, setSelectedTab] = useState('Login');
     const [isNameBlank,setIsNameBlank]=useState('NotBlankName')
     const navigation = useNavigation()
-    const [userName,setUsername]=useState('')
+    const [userName,setUserName]=useState(null)
+    const [nameCheke,setNameCheck]=useState(false)
     const [userEmail,setUserEmail]=useState('')
     const [userPw,setUserPw]=useState('')
     const [userPwAgain,setUserPwAgain]=useState('')
@@ -40,6 +42,7 @@ const BottomSheet_login = (props) => {
     const [openToastMessage,setOpenToastMessage]=useState(0)
     const [loginEmail,setLoginEmail]=useState('')
     const [loginPw,setLoginPw]=useState('')
+    const [uid,setUid]=useState(null)
     const toast = useToast();
     const signInWithKakao=async()=>{
         await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
@@ -82,7 +85,6 @@ const BottomSheet_login = (props) => {
                     <TouchableOpacity
                         onPress={()=>
                             {
-                                setModalVisible(false)
                                 //navigation.reset({routes:[{name:'Main'}]})
                                 postLogin(email,pw)
                             }}
@@ -122,12 +124,20 @@ const BottomSheet_login = (props) => {
         return(    //SignUp 아이콘 클릭시 띄울 화면
             <>
                 <ScrollView>
-                    <TextInput
-                        placeholder='닉네임(2~16자)'
-                        style={styles.sectionStyle}
-                        onChangeText={name => setName(name)}
-                        defaultValue={userName}
-                        />
+                    <View style={{flexDirection:'row'}}>
+                        <TextInput
+                            placeholder='닉네임(2~16자)'
+                            style={styles.sectionStyle2}
+                            onChangeText={name => setName(name)}
+                            defaultValue={userName}
+                            />
+                        <TouchableOpacity 
+                            onPress={()=>validation_nickName(name)}
+                            style={styles.nickNameCheck}
+                        >
+                            <Text style={{fontSize:12,color:'white'}}>중복 확인</Text>
+                        </TouchableOpacity>
+                    </View>
                     <TextInput
                         placeholder='이메일'
                         style={styles.sectionStyle}
@@ -150,22 +160,18 @@ const BottomSheet_login = (props) => {
                         />
                     <View style={styles.rowDirection}>    
                         <TouchableOpacity                                                  
-                            style={styles.searchUniversity}
+                            style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                             onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain)}
                         >
-                            <View style={{flexDirection:'row'}}>
-                                <Text>{userUniversity}</Text>
-                                <Image style={{resizeMode:'contain',height:'90%',width:'80%',marginLeft:'20%'}} source={require('../../../imageResource/jobDaHan/search.png')}/>
-                            </View>
+                            <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/search.png')}/>
+                            <Text>{userUniversity}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
-                            style={styles.searchMajor}
+                            style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                             onPress={()=>userMajorModalOpen(name,email,pw,pwAgain)}
                         >
-                            <View style={{flexDirection:'row'}}>   
-                                <Text >{userMajor}</Text>
-                                <Image style={{resizeMode:'contain',height:'90%',width:'80%'}} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
-                            </View>
+                            <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
+                            <Text >{userMajor}</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -179,7 +185,7 @@ const BottomSheet_login = (props) => {
         )
     }
     const signUp=async(name,email,pw,pwAgain)=>{
-        setUsername(name)
+        setUserName(name)
         setUserEmail(email)
         setUserPw(pw)
         setUserPwAgain(pwAgain)
@@ -187,39 +193,57 @@ const BottomSheet_login = (props) => {
     }
     const userDefaultValue=(name,email,pw,pwAgain)=>{
         console.log(name)
-        setUsername(name)
+        setUserName(name)
         setUserEmail(email)
         setUserPw(pw)
         setUserPwAgain(pwAgain)
     }
     useEffect(() => {
         if(openToastMessage!==0){
-            validation_nickName()
+            isName()
         }
     }, [openToastMessage]);
-    const validation_nickName=()=>{                    //닉네임 유효성 검사
-        if(validateNickName(userName)){
-            console.log(userName)
-            return validation_email()
+    useEffect(()=>{
+        if(uid!==null){
+            console.log(uid)
+            postSignUp()
+        }
+    },[uid])
+    const validation_nickName=(name)=>{                    //닉네임 유효성 검사
+        if(validateNickName(name)){
+            return nickToServer(name)
         }
         else{
             return showToast("닉네임은 2~16자 입니다.")
         }
     }
-    const validation_university=()=>{                   //대학 유효성 검사
-        if(university===''){                            
-            return validation_department()
-        }
-        else{
-            return showToast("대학을 선택해주세요")
-        }
+    const nickToServer=(name)=>{
+        fetch('http://13.124.80.15/user/nickname-check',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+              nickname:name
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            console.log(data)
+            if(data.success===true){
+                showToast('중복 확인 완료')
+                setUserName(name)
+                setNameCheck(true)
+            }else{
+                showToast('이미 존재하는 닉네임 입니다.')
+            }
+        })
+        .catch(error=>console.log('ERROR'))
     }
-    const validation_department=(department)=>{                   //학과 유효성 검사
-        if(department===''){                            
+    const isName=()=>{
+        if(nameCheke===false){
+            showToast('닉네임 중복확인을 해주세요')
+        }else{
+            console.log(userName)
             return validation_email()
-        }
-        else{
-            return showToast("학과를 선택해주세요")
         }
     }
     const validation_email=()=>{                       //이메일 유효성 검사
@@ -239,11 +263,27 @@ const BottomSheet_login = (props) => {
         }
     }
     const matchPwAndPw2=()=>{                           //비밀번호, 비밀번호 재입력 같은지 검사
-        if(userPw!==userPwAgain){
-           return showToast("비밀번호 불일치")
+        if(userPw===userPwAgain){
+           return validation_university()
         }
         else{
-            return showToast("회원가입 완료!"),setSelectedTab('Login')
+            return showToast("비밀번호 불일치")
+        }
+    }
+    const validation_university=()=>{                           //비밀번호 유효성 검사
+        if(userUniversity!=='학교찾기'){
+            return validation_major()
+        }
+        else{
+            return showToast("학교를 선택해주세요!")
+        }
+    }
+    const validation_major=()=>{                           //비밀번호 유효성 검사
+        if(userMajor!=='학과'){
+            return setUid(uuid.v4())
+        }
+        else{
+            return showToast("학과를 선택해주세요!")
         }
     }
     const showToast=(message)=>{                        //토스트 메세지
@@ -255,19 +295,52 @@ const BottomSheet_login = (props) => {
         })
     }
     const postSignUp=()=>{
-        fetch()
+        fetch('http://13.124.80.15/user/add-new-user',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                uid:uid, // 필수
+                email:userEmail, // 필수
+                password:userPw,
+                nickname: userName,
+                sex : "M",
+                birth: "1999-04-05",
+                college: userUniversity,
+                major:userMajor
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            console.log(data)
+            if(data.success===true){
+                showToast('회원가입 완료!')
+                setSelectedTab('Login')
+            }else{
+                showToast('회원가입 안됨')
+            }
+        })
+        .catch(error=>console.log('ERROR'))
     }
     const postLogin=(email,pw)=>{
-        // fetch('http://3.36.132.101:8080/login',{
-        //     method:'POST',
-        //     headers:{'Content-Type':'application/json'},
-        //     body:JSON.stringify({
-        //       email: email,
-        //       password: pw
-        //     })
-        // })
-        // .then(res=>res.text().then(data=>console.log(data)))
-        navigation.reset({routes:[{name:'Main'}]})
+        fetch('http://13.124.80.15/user/login',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+              email: email,
+              password: pw
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            console.log(data)
+            if(data.success===true){
+                navigation.reset({routes:[{name:'Main'}]})
+                setModalVisible(false)
+            }else{
+                showToast('이메일 또는 비밀번호가 틀렸습니다.')
+            }
+        })
+        .catch(error=>console.log('ERROR'))
     }
 
     const translateY_login = panY_login.interpolate({

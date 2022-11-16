@@ -5871,6 +5871,11 @@ react-native-safe-modules@^1.0.3:
   dependencies:
     dedent "^0.6.0"
 
+react-native-smtp-mailer@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-smtp-mailer/-/react-native-smtp-mailer-1.2.5.tgz#ab9f5dcece1664a7a2f9cc71c140a664e62a95a8"
+  integrity sha512-okpZTA9xS4Gf3trlHjQ3W8/xmB1QAPGesGieesxdjO5S+rdBrvJSnNd3SOODJcUjFRX1aM7R5xZ7VOW17JQKsg==
+
 react-native-svg@^12.4.1:
   version "12.4.1"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.4.1.tgz#f639a2f4f2fe7efd818edaf54ef7c245e98aa0ce"
@@ -5888,6 +5893,11 @@ react-native-toast-notifications@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/react-native-toast-notifications/-/react-native-toast-notifications-3.3.1.tgz#c3d6f3b63a4df81c2912560d27878ea056672981"
   integrity sha512-yc1Q2nOdIYvAf0GAIlmg8q42hiwpEHnLxkxJ6P+tN6jpcKZ1qzMXlgnmNdyF9cm9VOyHQexEP8952IKNAv1Olw==
+
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
 
 react-native-video@^5.2.1:
   version "5.2.1"

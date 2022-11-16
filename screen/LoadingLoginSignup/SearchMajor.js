@@ -7,8 +7,8 @@ import {
     TextInput
 } from 'react-native';
 import BigList from "react-native-big-list";
-import major from './Major.js'
-import styles from './style'
+import major from './Login/Major.js'
+import styles from './Login/style'
 
 const SearchUniversity=(props)=>{
     const masterData = major
@@ -35,7 +35,7 @@ const SearchUniversity=(props)=>{
     const searchUniversity=(text)=>{
         if(text){
             const searchData = masterData.filter((item)=>{
-            return item.major.includes(text)
+                return item.major.includes(text)
             })
             setFilterData(searchData)
         }

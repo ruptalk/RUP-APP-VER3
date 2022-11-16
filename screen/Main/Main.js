@@ -57,8 +57,6 @@ function Main(){
       storage.set('user', JSON.stringify(user))
   }
   const isFocused = useIsFocused();
-  const screenHeight = Dimensions.get("screen").height;   //phone 높이,폭 px
-  const screenWidth = Dimensions.get("screen").width;
   const navigation = useNavigation()
   const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
   const userObject = JSON.parse(jsonUser)

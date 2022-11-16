@@ -7,8 +7,8 @@ import {
     TextInput
 } from 'react-native';
 import BigList from "react-native-big-list";
-import univ from './Univ.js'
-import styles from './style'
+import univ from './Login/Univ.js'
+import styles from './Login/style'
 
 const SearchUniversity=(props)=>{
     const masterData = univ
@@ -22,7 +22,7 @@ const SearchUniversity=(props)=>{
         <>
             <TouchableOpacity onPress={()=>{selectUniversity(univ)}}>
                 <View style={{marginTop:'6%'}}>
-                    <Text style={styles.univ}>{univ}</Text>
+                    <Text style={styles.major}>{univ}</Text>
                 </View>
             </TouchableOpacity>
             <View style={styles.item}/>
@@ -35,7 +35,7 @@ const SearchUniversity=(props)=>{
     const searchUniversity=(text)=>{
         if(text){
             const searchData = masterData.filter((item)=>{
-            return item.univ.includes(text)
+                return item.univ.includes(text)
             })
             setFilterData(searchData)
         }
