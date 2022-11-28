@@ -17,19 +17,14 @@ import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
 import KakaoSDK from '@actbase/react-kakaosdk'
-import Lottie from 'lottie-react-native';
-
-
 export const storage = new MMKV()
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
-  
     // Remember the latest callback.
     useEffect(() => {
       savedCallback.current = callback;
     }, [callback]);
-  
     // Set up the interval.
     useEffect(() => {
       function tick() {
@@ -68,9 +63,7 @@ function Main(){
   const [modalVisible,setModalVisible]=useState(false)
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-  const [seedModalVisible,setSeedModalVisible] = useState(true)
-  const animationRef = useRef(null)
-
+  const [seedModalVisible,setSeedModalVisible] = useState(true) 
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -90,13 +83,6 @@ function Main(){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
-  // const [flowerUri, setFloweruri]=useState(require('../../imageResource/flower/flowerA/flowerA_1.gif'))
-  // const [flowerUri2, setFloweruri2]=useState(require('../../imageResource/icon/ic_point.png'))
-  // const [bool, setbool]=useState(true)
-
-  // useEffect(()=>{
-  //       setFloweruri(require(flowerUri))
-  // },[flowerUri])  
   
   const flower = [
     {
@@ -107,38 +93,115 @@ function Main(){
         uri4: require('../../imageResource/flower/flowerA/flowerA_4.gif'),
         uri5: require('../../imageResource/flower/flowerA/flowerA_5.gif')
     },
-]
-useEffect(()=>{
-  animationRef.current?.play(5, 8);
-},[])
+    
+    {
+        flowername: 'flowerB',
+        uri1: require('../../imageResource/flower/flowerB/flowerB_1.gif'),
+        uri2: require('../../imageResource/flower/flowerB/flowerB_2.gif'),
+        uri3: require('../../imageResource/flower/flowerB/flowerB_3.gif'),
+        uri4: require('../../imageResource/flower/flowerB/flowerB_4.gif'),
+        uri5: require('../../imageResource/flower/flowerB/flowerB_5.gif')
+    },
+    
+    {
+        flowername: 'flowerC',
+        uri1: require('../../imageResource/flower/flowerC/flowerC_1.gif'),
+        uri2: require('../../imageResource/flower/flowerC/flowerC_2.gif'),
+        uri3: require('../../imageResource/flower/flowerC/flowerC_3.gif'),
+        uri4: require('../../imageResource/flower/flowerC/flowerC_4.gif'),
+        uri5: require('../../imageResource/flower/flowerC/flowerC_5.gif')
+    },
+    
+    {
+        flowername: 'flowerD',
+        uri1: require('../../imageResource/flower/flowerD/flowerD_1.gif'),
+        uri2: require('../../imageResource/flower/flowerD/flowerD_2.gif'),
+        uri3: require('../../imageResource/flower/flowerD/flowerD_3.gif'),
+        uri4: require('../../imageResource/flower/flowerD/flowerD_4.gif'),
+        uri5: require('../../imageResource/flower/flowerD/flowerD_5.gif')
+    },
+    
+    {
+        flowername: 'flowerE',
+        uri1: require('../../imageResource/flower/flowerE/flowerE_1.gif'),
+        uri2: require('../../imageResource/flower/flowerE/flowerE_2.gif'),
+        uri3: require('../../imageResource/flower/flowerE/flowerE_3.gif'),
+        uri4: require('../../imageResource/flower/flowerE/flowerE_4.gif'),
+        uri5: require('../../imageResource/flower/flowerE/flowerE_5.gif')
+    },
+    
+    {
+        flowername: 'flowerF',
+        uri1: require('../../imageResource/flower/flowerF/flowerF_1.gif'),
+        uri2: require('../../imageResource/flower/flowerF/flowerF_2.gif'),
+        uri3: require('../../imageResource/flower/flowerF/flowerF_3.gif'),
+        uri4: require('../../imageResource/flower/flowerF/flowerF_4.gif'),
+        uri5: require('../../imageResource/flower/flowerF/flowerF_5.gif')
+    },
+    
+    {
+        flowername: 'flowerG',
+        uri1: require('../../imageResource/flower/flowerG/flowerG_1.gif'),
+        uri2: require('../../imageResource/flower/flowerG/flowerG_2.gif'),
+        uri3: require('../../imageResource/flower/flowerG/flowerG_3.gif'),
+        uri4: require('../../imageResource/flower/flowerG/flowerG_4.gif'),
+        uri5: require('../../imageResource/flower/flowerG/flowerG_5.gif')
+    },
+    
+    {
+        flowername: 'flowerH',
+        uri1: require('../../imageResource/flower/flowerH/flowerH_1.gif'),
+        uri2: require('../../imageResource/flower/flowerH/flowerH_2.gif'),
+        uri3: require('../../imageResource/flower/flowerH/flowerH_3.gif'),
+        uri4: require('../../imageResource/flower/flowerH/flowerH_4.gif'),
+        uri5: require('../../imageResource/flower/flowerH/flowerH_5.gif')
+    },
+    
+    {
+        flowername: 'flowerI',
+        uri1: require('../../imageResource/flower/flowerI/flowerI_1.gif'),
+        uri2: require('../../imageResource/flower/flowerI/flowerI_2.gif'),
+        uri3: require('../../imageResource/flower/flowerI/flowerI_3.gif'),
+        uri4: require('../../imageResource/flower/flowerI/flowerI_4.gif'),
+        uri5: require('../../imageResource/flower/flowerI/flowerI_5.gif')
+    },
+    {
+        flowername: 'flowerJ',
+        uri1: require('../../imageResource/flower/flowerJ/flowerJ_1.gif'),
+        uri2: require('../../imageResource/flower/flowerJ/flowerJ_2.gif'),
+        uri3: require('../../imageResource/flower/flowerJ/flowerJ_3.gif'),
+        uri4: require('../../imageResource/flower/flowerJ/flowerJ_4.gif'),
+        uri5: require('../../imageResource/flower/flowerJ/flowerJ_5.gif')
+    }
+  ]
+
 const FlowerGIF =()=>{
   console.log(seedColor,"좋아요")
+  var tmp = ''
   switch(seedColor){
-     
       case 'Pink':
-        var tmp = flower[0].uri2
-          
+        tmp = flower[0].uri1
+        break;
       case 'Brown':
-          
+        break;
       case 'Lavender':
-          
+        break; 
       case 'Green':
-          
+        break;
       case 'Purple':
-         
+         break;
       case 'Yellow':
-      
-      defalut:
-        return (
-          <Image 
-            source={tmp} 
-            style={{width:300, height:400, marginLeft:5}}
-          />
-      )
+        tmp = flower[Math.floor(Math.random()*5)+5].uri1
+        break;
   }
-}
+  return (
+    <Image 
+      source={tmp} 
+      style={{width:300, height:400, marginLeft:5}}
+    />
+  )
 
-  
+}
   
   return(
     <>
@@ -170,26 +233,29 @@ const FlowerGIF =()=>{
                           </View>
                       </View>
                       <View style={styles.calenderAndNoticeBoxContainer}>
-                          <TouchableOpacity onPress={()=>navigation.navigate('UnivRanking')}>
-                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
-                          </TouchableOpacity>
-                          <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%'}}>
-                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
-                          </TouchableOpacity>
-                          <TouchableOpacity onPress={()=>navigation.navigate('Notice')} style={{marginLeft:'10%',marginRight:'10%'}}>  
-                              <Image source={require('../../imageResource/icon/ic_notice.png')}/>
-                          </TouchableOpacity>  
+                          <View style={styles.calenderAndNoticeBox}>
+                              <TouchableOpacity
+                                  onPress={()=>setCalendarModalVisible(true)}
+                              >
+                                  <Image 
+                                      style={{marginRight:'15%'}}
+                                      source={require('../../imageResource/icon/ic_calendar.png')}
+                                  />
+                                  
+                              </TouchableOpacity>
+                              <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
+                                  <Image source={require('../../imageResource/icon/ic_notice.png')}/>
+                              </TouchableOpacity>  
+                          </View>
                       </View>
                   </View>
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
+                    
                       {isSeedName()}
-                      <Lottie 
-                          source={require('../../imageResource/flower/식물_01_v5_lottie.json')} 
-                          autoPlay
-                          loop
-                          speed={4} 
-                          ref={animationRef}/>
+                      {/* <View style={{height:'45%'}}/>  */}
+                      <FlowerGIF/>
+                      
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
@@ -218,5 +284,5 @@ const FlowerGIF =()=>{
     </>
 )
 }
-//for merge
+
 export default Main
