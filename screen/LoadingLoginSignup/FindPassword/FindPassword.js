@@ -3,7 +3,7 @@ import {View, Image, StyleSheet,TouchableOpacity,Text,TextInput,Keyboard } from 
 import { useNavigation } from '@react-navigation/native';
 import { useToast } from "react-native-toast-notifications";
 import {validateEmail} from '../../../validate.js'
-import RNSmtpMailer from "react-native-smtp-mailer";
+import Clipboard from '@react-native-clipboard/clipboard';
 import SearchUniversity from '../SearchUniversity.js';
 import SearchMajor from '../SearchMajor.js'
 import styles from './style.js';
@@ -26,7 +26,7 @@ function FindPassword(){
     }
     const FindPw=()=>(
         <>
-            <Text style={styles.secretText}>사용자 이메일로 비밀번호를 전송 하였습니다.</Text>
+            <Text style={styles.secretText}>임시 비밀번호를 클립보드에 복사하였습니다!</Text>
             <TouchableOpacity
                 onPress={()=>navigation.goBack()}
                 style={styles.secretSignUp}>
@@ -60,28 +60,31 @@ function FindPassword(){
             if(data.uid==="-1"){
                 showToast('존재하지 않는 회원정보입니다.')
             }else{
-                console.log(Math.floor(Math.random() * (999999-100000)) + 100000) // 100000 ~ 999999
-                sendEmail2()              
+                const randomNum = (Math.floor(Math.random() * (999999-100000)) + 100000).toString() // 100000 ~ 999999
+                postTempPw(data.uid,randomNum)             
             }
         })
-        //.catch(error=>console.log('ERROR'))
+        .catch(error=>console.log('ERROR'))
     }
-    console.log(email)
-    const sendEmail2=()=>{
-        RNSmtpMailer.sendMail({
-            mailhost: "smtp.gmail.com",
-            port: "465",
-            ssl: true, // optional. if false, then TLS is enabled. Its true by default in android. In iOS TLS/SSL is determined automatically, and this field doesn't affect anything
-            username: email,
-            password: "jyp5648123*",
-            fromName: email, // optional
-            replyTo: email, // optional
-            recipients: email,
-            subject: "subject",
-            htmlBody: "<h1>header</h1><p>body</p>",
-          })
-            .then(success => console.log(success))
-            .catch(err => console.log('err'));  
+    const postTempPw=(uid,tempPw)=>{
+        fetch('http://13.124.80.15/user/find-pw-after-email',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                uid:uid,
+                tempPw:tempPw
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            if(data.success===true){
+                Clipboard.setString('1234')
+                setFindPw('비밀번호 찾기 버튼 클릭')
+            }else{
+                showToast('네트워크 오류')            
+            }
+        })
+        .catch(error=>console.log('ERROR'))
     }
     useEffect(()=>{
         emailRef.current?.focus()
@@ -92,6 +95,7 @@ function FindPassword(){
             setMajorModal(true)
         }
     },[univ])
+    // useEffect(()=>{},[isFocused])
     emailOnSubmitEditing=()=>{
         if(validateEmail(email))
             return modalOpen()
