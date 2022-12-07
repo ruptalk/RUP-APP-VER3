@@ -18,10 +18,15 @@ import { useNavigation } from '@react-navigation/native';
 import KakaoSDK from '@actbase/react-kakaosdk'
 import { useToast } from "react-native-toast-notifications";
 import {validateNickName,validateEmail,validatePw} from '../../../validate.js'
+import { MMKV } from 'react-native-mmkv'
+import { RadioButton } from 'react-native-paper';
+import axios from 'axios'
 import SearchUniversity from '../SearchUniversity.js';
 import SearchMajor from '../SearchMajor.js'
 import uuid from 'react-native-uuid';
 import styles from './style'
+
+export const storage = new MMKV()
 
 const BottomSheet_login = (props) => {
     const { modalVisible, setModalVisible } = props;
@@ -37,19 +42,21 @@ const BottomSheet_login = (props) => {
     const [userPwAgain,setUserPwAgain]=useState('')
     const [userUniversity,setUserUniversity]=useState('학교찾기')
     const [userMajor,setUserMajor]=useState('학과')
+    const [userSex,setUserSex]=useState(null)
+    const [userBirth,setUserBirth]=useState(null)
     const [universityModal, setUniversityModal] = useState(false);
     const [majorModal, setMajorModal] = useState(false);
     const [openToastMessage,setOpenToastMessage]=useState(0)
-    const [loginEmail,setLoginEmail]=useState('')
-    const [loginPw,setLoginPw]=useState('')
     const [uid,setUid]=useState(null)
     const toast = useToast();
+    const redStar = require('../../../imageResource/jobDaHan/redStar.png')
+
     const signInWithKakao=async()=>{
         await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
-            const token = await KakaoSDK.login();
-            setModalVisible(false)
-            navigation.reset({routes:[{name:'Main'}]})
+            await KakaoSDK.login()
+            const profile = await KakaoSDK.getProfile()
+            postKakaoLogin(profile)
         }catch(err){
             if(err.message==='user cancelled.')
                 console.log('toast message 카카오 로그인 취소하셨습니다')
@@ -74,20 +81,17 @@ const BottomSheet_login = (props) => {
                 <View>
                     <TextInput
                         placeholder='이메일'
-                        style={styles.sectionStyle}
+                        style={styles.sectionStyle3}
                         onChangeText={email => setEmail(email)}
                     />
                     <TextInput
                         placeholder='비밀번호'
-                        style={styles.sectionStyle}
+                        style={styles.sectionStyle3}
                         onChangeText={pw => setPw(pw)}
+                        secureTextEntry={true}
                     />
                     <TouchableOpacity
-                        onPress={()=>
-                            {
-                                //navigation.reset({routes:[{name:'Main'}]})
-                                postLogin(email,pw)
-                            }}
+                        onPress={()=> postLogin(email,pw,null,false)}
                         style={styles.signUp}
                     >
                         <Text style={styles.signUpText}>로그인</Text>
@@ -121,10 +125,15 @@ const BottomSheet_login = (props) => {
         const [email,setEmail] = useState(userEmail)
         const [pw,setPw] = useState(userPw)
         const [pwAgain,setPwAgain] = useState(userPwAgain)
+        const [sex,setSex]=useState(userSex)
+        const [birth,setBirth]=useState(userBirth)
         return(    //SignUp 아이콘 클릭시 띄울 화면
             <>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{flexDirection:'row'}}>
+                        <Image      
+                            style={styles.redStar} 
+                            source={redStar}/>
                         <TextInput
                             placeholder='닉네임(2~16자)'
                             style={styles.sectionStyle2}
@@ -138,45 +147,108 @@ const BottomSheet_login = (props) => {
                             <Text style={{fontSize:12,color:'white'}}>중복 확인</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{flexDirection:'row'}}>
+                        <Image      
+                            style={styles.redStar} 
+                            source={redStar}/>
+                        <TextInput
+                            placeholder='이메일'
+                            style={styles.sectionStyle}
+                            onChangeText={email => setEmail(email)}
+                            defaultValue={email}
+                            keyboardType={'email-address'}
+                            />
+                    </View>
+                    <View style={{flexDirection:'row'}}>
+                        <Image      
+                            style={styles.redStar} 
+                            source={redStar}/>
+                        <TextInput
+                            placeholder='비밀번호(4자 이상)'
+                            style={styles.sectionStyle}
+                            onChangeText={pw => setPw(pw)}
+                            defaultValue={pw}
+                            secureTextEntry={true}
+                            />
+                    </View>
+                    <View style={{flexDirection:'row'}}>
+                        <Image      
+                            style={styles.redStar} 
+                            source={redStar}/>
+                        <TextInput
+                            placeholder='비밀번호 재입력'
+                            style={styles.sectionStyle}
+                            onChangeText={pwAgain => setPwAgain(pwAgain)}
+                            defaultValue={pwAgain}
+                            secureTextEntry={true}
+                            />
+                    </View>
+                    <View style={styles.rowDirection}>
+                        <View style={{flexDirection:'row'}}> 
+                            <Image      
+                                style={styles.redStar} 
+                                source={redStar}/>   
+                            <TouchableOpacity                                                  
+                                style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
+                                onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain,sex,birth)}
+                            >
+                                <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/search.png')}/>
+                                <Text>{userUniversity}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row'}}>
+                            <Image      
+                                style={styles.redStar} 
+                                source={redStar}/>
+                            <TouchableOpacity 
+                                style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
+                                onPress={()=>userMajorModalOpen(name,email,pw,pwAgain,sex,birth)}
+                            >
+                                <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
+                                <Text >{userMajor}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.sectionStyle3}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Text>성별</Text>
+                            <View style={styles.sex}/>
+                            <Text>남</Text>
+                            <RadioButton
+                                value='M'
+                                status={ sex === 'M' ? 'checked' : 'unchecked' }
+                                onPress={() => setSex('M')}
+                            />
+                            <Text>여</Text>
+                            <RadioButton
+                                value='W'
+                                status={ sex === 'W' ? 'checked' : 'unchecked' }
+                                onPress={() => setSex('W')}
+                            />
+                        </View>
+                    </View>
                     <TextInput
-                        placeholder='이메일'
-                        style={styles.sectionStyle}
-                        onChangeText={email => setEmail(email)}
-                        defaultValue={email}
+                        placeholder='생년월일(ex.2000-01-01)'
+                        style={styles.sectionStyle3}
+                        onChangeText={birth => {
+                            if(birth.length===4){setBirth(birth.concat('-'))}
+                            else if(birth.length===7){setBirth(birth.concat('-'))}
+                            else if(birth.length===10){setBirth(birth)}
+                        }}
+                        defaultValue={birth}
+                        keyboardType={'number-pad'}
                         />
-                    <TextInput
-                        placeholder='비밀번호(4자 이상)'
-                        style={styles.sectionStyle}
-                        onChangeText={pw => setPw(pw)}
-                        defaultValue={pw}
-                        secureTextEntry={true}
-                        />
-                    <TextInput
-                        placeholder='비밀번호 재입력'
-                        style={styles.sectionStyle}
-                        onChangeText={pwAgain => setPwAgain(pwAgain)}
-                        defaultValue={pwAgain}
-                        secureTextEntry={true}
-                        />
-                    <View style={styles.rowDirection}>    
-                        <TouchableOpacity                                                  
-                            style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
-                            onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain)}
-                        >
-                            <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/search.png')}/>
-                            <Text>{userUniversity}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity 
-                            style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
-                            onPress={()=>userMajorModalOpen(name,email,pw,pwAgain)}
-                        >
-                            <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
-                            <Text >{userMajor}</Text>
-                        </TouchableOpacity>
+                    <View style={styles.rowDirection}>
+                    <View style={{flexDirection:'row'}}>
+                        <Image
+                            style={{width:5,height:5}} 
+                            source={redStar}/>
+                        <Text style={{color:'red'}}>(필수)</Text>
+                    </View>
                     </View>
                 </ScrollView>
                 <TouchableOpacity
-                    onPress={()=>signUp(name,email,pw,pwAgain)}
+                    onPress={()=>signUp(name,email,pw,pwAgain,sex,birth)}
                     style={styles.signUp}
                 >
                     <Text style={styles.signUpText}>가입하기</Text>
@@ -184,19 +256,23 @@ const BottomSheet_login = (props) => {
             </>
         )
     }
-    const signUp=async(name,email,pw,pwAgain)=>{
+
+    const signUp=(name,email,pw,pwAgain,sex,birth)=>{
         setUserName(name)
         setUserEmail(email)
         setUserPw(pw)
         setUserPwAgain(pwAgain)
+        setUserSex(sex)
+        setUserBirth(birth)
         setOpenToastMessage(openToastMessage+1)
     }
-    const userDefaultValue=(name,email,pw,pwAgain)=>{
-        console.log(name)
+    const userDefaultValue=(name,email,pw,pwAgain,sex,birth)=>{
         setUserName(name)
         setUserEmail(email)
         setUserPw(pw)
         setUserPwAgain(pwAgain)
+        setUserSex(sex)
+        setUserBirth(birth)
     }
     useEffect(() => {
         if(openToastMessage!==0){
@@ -214,6 +290,7 @@ const BottomSheet_login = (props) => {
             return nickToServer(name)
         }
         else{
+            console.log(name)
             return showToast("닉네임은 2~16자 입니다.")
         }
     }
@@ -302,9 +379,9 @@ const BottomSheet_login = (props) => {
                 uid:uid, // 필수
                 email:userEmail, // 필수
                 password:userPw,
-                nickname: userName,
-                sex : "M",
-                birth: "1999-04-05",
+                nickname: userName,// 필수
+                sex : userSex,
+                birth: userBirth,
                 college: userUniversity,
                 major:userMajor
             })
@@ -321,26 +398,105 @@ const BottomSheet_login = (props) => {
         })
         .catch(error=>console.log('ERROR'))
     }
-    const postLogin=(email,pw)=>{
+    const postLogin=(email,pw)=>{                                   /////이메일 로그인
+        // fetch('http://13.124.80.15/user/login',{
+        //     method:'POST',
+        //     headers:{'Content-Type':'application/json'},
+        //     body:JSON.stringify({
+        //         email: email,
+        //         password: pw
+        //     })
+        // })
+        // .then(res=>{return res.json()})
+        // .then(data=>{
+        //     if(data!=='-1'){
+        //         console.log(data)
+        //         getMainData(data)                              /////로그인 성공, MainData 가져오기
+        //     }else{
+        //         showToast('이메일 또는 비밀번호가 틀렸습니다.')
+        //     }
+        // })
+        // .catch(error=>console.log('ERROR'))
+
+        axios.post('http://13.124.80.15/user/login', {
+            email: email,
+            password: pw
+          })
+          .then(function (response) {
+            if(response.data.uid!=='-1'){
+                getMainData(response.data.uid)
+            }else{
+                showToast('이메일 또는 비밀번호가 틀렸습니다.')
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+    }
+    
+    const postKakaoLogin=(profile)=>{                                  ///////카카오 로그인
+        //console.log(profile)
+        
         fetch('http://13.124.80.15/user/login',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-              email: email,
-              password: pw
+                uid:profile.id
             })
         })
         .then(res=>{return res.json()})
         .then(data=>{
             console.log(data)
-            if(data.success===true){
-                navigation.reset({routes:[{name:'Main'}]})
-                setModalVisible(false)
+            if(data.uid!=='-1'){                                /////로그인 성공, MainData 가져오기
+                getMainData(profile.id)
             }else{
-                showToast('이메일 또는 비밀번호가 틀렸습니다.')
+                setModalVisible(false)
+                navigation.navigate('KakaoSignUp',profile)
             }
         })
         .catch(error=>console.log('ERROR'))
+
+    }
+
+    const getMainData=(uid)=>{
+        // fetch(`http://13.124.80.15/home/main?uid=${uid}`)
+        // .then(res=>{return res.json()})
+        // .then(data=>{
+        //     console.log(data)
+        //     setModalVisible(false)
+        //     navigation.reset({routes:[{name:'Main',data}]})
+        // })
+        // .catch(error=>console.log('ERROR'))
+
+        axios.get('http://13.124.80.15/home/main', {
+            params: {
+              uid: uid
+            }
+          })
+          .then(function (response) {
+            const user = {
+                uid:response.data.uid,
+                userName: response.data.nickname,
+                email: response.data.email,
+                password: response.data.password,
+                profileImage:'https://image.fnnews.com/resource/media/image/2022/07/16/202207160834208420_l.jpg',
+                point:0,
+                countRecycle:0,
+                calendarDate:response.data.calendarDate,
+                flowerRecord:response.data.flowerRecord,
+                birth:response.data.birth,
+                sex:response.data.sex,
+                univ:response.data.college,
+                major:response.data.major
+            }      
+            storage.set('user', JSON.stringify(user))
+            setModalVisible(false)
+            navigation.reset({routes:[{name:'Main'}]})
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     const translateY_login = panY_login.interpolate({
@@ -388,12 +544,12 @@ const BottomSheet_login = (props) => {
             setModalVisible(false);
         })
     }
-    const userUniversityModalOpen=(name,email,pw,pwAgain)=>{
-        userDefaultValue(name,email,pw,pwAgain)
+    const userUniversityModalOpen=(name,email,pw,pwAgain,sex,birth)=>{
+        userDefaultValue(name,email,pw,pwAgain,sex,birth)
         setUniversityModal(true);
     }
-    const userMajorModalOpen=(name,email,pw,pwAgain)=>{
-        userDefaultValue(name,email,pw,pwAgain)
+    const userMajorModalOpen=(name,email,pw,pwAgain,sex,birth)=>{
+        userDefaultValue(name,email,pw,pwAgain,sex,birth)
         setMajorModal(true);
     }
     return (
@@ -457,3 +613,20 @@ const BottomSheet_login = (props) => {
 }
 
 export default BottomSheet_login;
+
+
+
+
+
+
+//              "route": {
+//                         "key": "KakaoSignUp-BGhxDo4e_LYWSqbIwcC_C", 
+//                         "name": "KakaoSignUp", 
+//                         "params": {
+//                                     "connected_at": "2022-11-18 19:15:19", 
+//                                     "id": 2479352755, 
+//                                     "kakao_account": [Object], 
+//                                     "properties": [Object]
+//                                 }, 
+//                         "path": undefined
+//                         }
