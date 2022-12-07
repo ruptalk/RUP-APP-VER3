@@ -10,17 +10,31 @@ import {
 } from 'react-native';
 import BottomSheet_login from './BottomSheet_login.js';
 import styles from './style.js';
+import { useIsFocused } from '@react-navigation/native';
+
 
 // import { MMKV } from 'react-native-mmkv'
 // export const storage = new MMKV()
 
 const Login = (props) => {
     // storage.clearAll()
-    const [ modalVisible, setModalVisible ] = useState(true);
-
+    const [ modalVisible, setModalVisible ] = useState(false);
+    const [check,setCheck]=useState(0)
     const pressButton=()=>{
         setModalVisible(true);
     }
+    const isFocused = useIsFocused();
+    useEffect(()=>{                 ///비밀번호를 잊으셨나요 페이지 들어갔다 나와도 로그인모달 올라오게 하는 함수
+        if(check%2===0){
+            setCheck(check+1)
+            setModalVisible(true)
+        }
+        else{
+            setCheck(check+1)
+            setModalVisible(false)
+        }
+    },[isFocused])
+
     return (
         <View style={styles.container}>
             <View style={{marginTop:'25%'}}/>
