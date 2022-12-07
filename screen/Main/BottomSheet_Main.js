@@ -11,10 +11,16 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import { MMKV } from 'react-native-mmkv'
 import styles from './style'
 
+export const storage = new MMKV()
 
 const BottomSheet_Main = (props) => {
+    
+    const jsonUser = storage.getString('user')
+    const userObject = JSON.parse(jsonUser)
+  
     const { modalVisible, setModalVisible } = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -91,7 +97,7 @@ const BottomSheet_Main = (props) => {
                     <View style={{height:'15%'}}/>
                     <View style={styles.QrCodeContainer}>
                         <QRCode
-                            value='hiihihhihihihihihihihii'
+                            value={userObject.uid}
                             // style={{height:'40%',width:'40%'}}
                             size={140}
                         />
