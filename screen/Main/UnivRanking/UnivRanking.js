@@ -106,56 +106,56 @@ const arr = [
     {
         rank:1,
         univ:'동아대',
-        point:1003
+        point:0
     },
     {
         rank:2,
         univ:'부산대',
-        point:1003
+        point:0
     },
     {
         rank:3,
         univ:'부경대',
-        point:1003
+        point:0
     },
     {
         rank:4,
         univ:'해양대',
-        point:1003
+        point:0
     },
     {
         rank:5,
         univ:'경희대',
-        point:1003
+        point:0
     },
     {
         rank:6,
         univ:'서울시립대',
-        point:1003
+        point:0
     },
     {
         rank:7,
         univ:'중앙대',
-        point:1003
+        point:0
     },
     {
         rank:8,
         univ:'서강대',
-        point:1003
+        point:0
     },
     {
         rank:9,
         univ:'성균관대',
-        point:1003
+        point:0
     },
     {
         rank:10,
         univ:'서울대',
-        point:1003
+        point:0
     },
     {
         rank:11,
         univ:'한양대',
-        point:1003
+        point:0
     },
 ]
