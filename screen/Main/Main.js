@@ -17,18 +17,15 @@ import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
 import flower from './flower'
-
-
+import KakaoSDK from '@actbase/react-kakaosdk'
 export const storage = new MMKV()
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
-  
     // Remember the latest callback.
     useEffect(() => {
       savedCallback.current = callback;
     }, [callback]);
-  
     // Set up the interval.
     useEffect(() => {
       function tick() {
@@ -55,8 +52,11 @@ function Main(props){
   const [modalVisible,setModalVisible]=useState(false)
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-  const [seedModalVisible,setSeedModalVisible] = useState(true)
-
+  const [seedModalVisible,setSeedModalVisible] = useState(true) 
+  const kaka=async()=>{
+    const ee = await KakaoSDK.getProfile()
+    console.log(ee)
+  }
   const isSeedName=()=>{
     if(seedName_mainPage!=='')
         return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
@@ -83,41 +83,38 @@ function Main(props){
   // useEffect(()=>{
   //       setFloweruri(require(flowerUri))
   // },[flowerUri])  
-  
 
-const FlowerGIF =()=>{
-  console.log(seedColor,"좋아요")
-  var tmp = ''
-  switch(seedColor){
-      case 'Pink':
-        tmp = flower[0].uri1
-        break;
-      case 'Brown':
-        tmp = flower[1].uri1
-        break;
-      case 'Lavender':
-        tmp = flower[2].uri1
-        break; 
-      case 'Green':
-        tmp = flower[3].uri1
-        break;
-      case 'Purple':
-        tmp = flower[4].uri1
-         break;
-      case 'Yellow':
-        tmp = flower[Math.floor(Math.random()*5)+5].uri1
-        break;
+  const FlowerGIF =()=>{
+    console.log(seedColor,"좋아요")
+    var tmp = ''
+    switch(seedColor){
+        case 'Pink':
+          tmp = flower[0].uri1
+          break;
+        case 'Brown':
+          tmp = flower[1].uri1
+          break;
+        case 'Lavender':
+          tmp = flower[2].uri1
+          break; 
+        case 'Green':
+          tmp = flower[3].uri1
+          break;
+        case 'Purple':
+          tmp = flower[4].uri1
+          break;
+        case 'Yellow':
+          tmp = flower[Math.floor(Math.random()*5)+5].uri1
+          break;
+    }
+    return (
+      <Image 
+        source={tmp} 
+        style={{width:300, height:400, marginLeft:5}}
+      />
+    )
+
   }
-  return (
-    <Image 
-      source={tmp} 
-      style={{width:300, height:400, marginLeft:5}}
-    />
-  )
-
-}
-
-  
   
   return(
     <>
@@ -193,7 +190,7 @@ const FlowerGIF =()=>{
           </ImageBackground>
       </View>
     </>
-)
+  )
 }
-//for merge
+
 export default Main
