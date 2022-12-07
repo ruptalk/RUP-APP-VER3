@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ToastProvider } from 'react-native-toast-notifications'
 import Loading from './screen/LoadingLoginSignup/Loading/Loading.js'
 import Login from './screen/LoadingLoginSignup/Login/Login.js'
+import KakaoSignUp from './screen/LoadingLoginSignup/KakaoSignUp/KakaoSignUp.js';
 import FindPassword from './screen/LoadingLoginSignup/FindPassword/FindPassword.js';
 import Main from './screen/Main/Main.js'
 import Profile from './screen/Main/Profile/Profile.js'
@@ -21,6 +22,7 @@ function App(){
         <Stack.Navigator screenOptions={{ headerShown:false}}>
           <Stack.Screen name = 'Loading' component = {Loading}/>
           <Stack.Screen name = 'Login' component = {Login} />
+          <Stack.Screen name = 'KakaoSignUp' component = {KakaoSignUp} />
           <Stack.Screen name = 'FindPassword' component = {FindPassword}/>
           <Stack.Screen name = 'Main' component = {Main}/>
           <Stack.Screen name = 'InFullBloom' component = {InFullBloom}/>
