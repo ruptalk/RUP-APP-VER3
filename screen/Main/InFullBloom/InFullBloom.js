@@ -24,7 +24,7 @@ function InFullBloom(){
     const isFocused = useIsFocused();
     const navigation = useNavigation()
     const [modalVisible,setModalVisible]=useState(false)
-    const [recycle,setRecycle]=useState(userObject.recycle)
+    const [recycle,setRecycle]=useState(userObject.countRecycle)
     const [point,setPoint]=useState(userObject.point)
     useEffect(() => {}, [isFocused]); //isFocused로 화면 전환시 리렌더링
     return(
@@ -52,7 +52,7 @@ function InFullBloom(){
                         <View style={{width:'38%',flexDirection:'row'}}>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
                                 <Image style ={{width:30,height:30}} source={require('../../../imageResource/icon/ic_recycle_0.png')}/>
-                                <Text style={styles.name}>+{recycle}</Text>
+                                <Text style={styles.name}>{recycle}</Text>
                             </View>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column',marginRight:'20%'}}>
                                 <Image style ={{width:30,height:30,}} source={require('../../../imageResource/icon/ic_point.png')}/>
@@ -61,28 +61,7 @@ function InFullBloom(){
                         </View>
                     </View>
                     <View style={{height:'70%'}}>
-
-                        <View style={{height:'35%', }}/>
-
-                        <View style={{height:'10%',flexDirection:"row",}}>
-
-                            <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flowerA/flowerA.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flowerB/flowerB.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flowerC/flowerC.png')}/>
-                        </View>
-                        
-                        <View style={{height:'10%', flexDirection:"row", }}>
-                            <Image style={{width:80,height:100,marginLeft:23}} source={require('../../../imageResource/flower/flowerD/flowerD.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flowerE/flowerE.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flowerF/flowerF.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:10}} source={require('../../../imageResource/flower/flowerG/flowerG.png')}/> 
-                        </View>
-
-                         <View style={{height:'10%', flexDirection:"row",marginTop:10}}>
-                            <Image style={{width:80,height:100,marginLeft:50,}} source={require('../../../imageResource/flower/flowerH/flowerH.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flowerI/flowerI.png')}/>
-                            <Image style={{width:80,height:100,marginLeft:30,}} source={require('../../../imageResource/flower/flowerJ/flowerJ.png')}/> 
-                        </View>                    
+                  
                     </View>
 
                     <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>

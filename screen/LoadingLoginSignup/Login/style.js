@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         borderColor: '#777777',
         height: 40,
         borderRadius: 12,
-        margin: 7,
+        marginTop: 7,
+        marginRight:7,
         width:screenWidth*0.81,
         marginBottom:4,
         paddingLeft:15,
@@ -54,10 +55,22 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 12,
         marginTop: 7,
-        marginLeft:7,
+        //marginLeft:7,
         marginBottom:4,
         marginRight:7,
         width:screenWidth*0.6,
+        marginBottom:4,
+        paddingLeft:15,
+    },
+    sectionStyle3: {
+        borderWidth: 0.5,
+        borderColor: '#777777',
+        height: 40,
+        borderRadius: 12,
+        marginTop: 7,
+        marginRight:7,
+        marginLeft:7,
+        width:screenWidth*0.81,
         marginBottom:4,
         paddingLeft:15,
     },
@@ -100,7 +113,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         width:screenWidth*0.81,
-        marginTop:10,
+        marginTop:15,
         backgroundColor:'#a8cd98',
     },
     signUpText: {
@@ -176,6 +189,9 @@ const styles = StyleSheet.create({
         width:'40%',
         height:'40%'
     },
+    sex:{
+        marginRight:screenWidth*0.2
+    },
     ////////////////BottomSheet_login style//////////////////////////////
     centeredView: {
         flex: 1,
@@ -199,6 +215,11 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontsize:12,
         marginLeft:'7%'
+    },
+    redStar:{
+        //marginLeft:5,
+        width:5,
+        height:5
     }
 })
 export default styles

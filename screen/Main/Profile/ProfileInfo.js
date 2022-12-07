@@ -6,11 +6,14 @@ import {
     TouchableOpacity,
     Image,
     View,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    ScrollView
 } from 'react-native'
 import { MMKV } from 'react-native-mmkv'
 import { useNavigation } from '@react-navigation/native';
 import { useToast } from "react-native-toast-notifications";
+import SearchUniversity from '../../LoadingLoginSignup/SearchUniversity';
+import SearchMajor from '../../LoadingLoginSignup/SearchMajor'
 import KakaoSDK from '@actbase/react-kakaosdk'
 import styles from './style.js'
 
@@ -22,8 +25,13 @@ const ProfileInfo=()=>{
     const userObject = JSON.parse(jsonUser)
     const [name,setName] = useState(userObject.userName)
     const [email,setEmail] = useState(userObject.email)
-    const [phoneNumber,setPhoneNumber] = useState(userObject.phoneNumber)
-    const [pw,setPw]= useState(userObject.pw)
+    const [univ,setUniv] = useState(userObject.univ)
+    const [major,setMajor]= useState(userObject.major)
+    const [pw,setPw]= useState(userObject.password)
+    const [birth,setBirth]= useState(userObject.birth)
+    const [sex,setSex] = useState(userObject.sex)
+    const [universityModal, setUniversityModal] = useState(false);
+    const [majorModal, setMajorModal] = useState(false);
     const [placeHolderName,setPlaceHolderName] = useState(userObject.userName)
     const [placeHolderEmail,setPlaceHolderEmail] = useState(userObject.email)
     const [placeHolderPhoneNumber,setPlaceHolderPhoneNumber] = useState(userObject.phoneNumber)
@@ -31,14 +39,12 @@ const ProfileInfo=()=>{
     const editProfile=()=>{
         userObject.userName = name
         userObject.email = email
-        userObject.phoneNumber = phoneNumber
-        userObject.pw = pw
+        userObject.password = pw
         storage.set('user', JSON.stringify(userObject))
 
         setPlaceHolderName(name)
         setPlaceHolderEmail(email)
-        setPlaceHolderPhoneNumber(phoneNumber)
-        setPlaceHolderPw(pw)
+
     }
     const showToast = () => {
         toast.show("수정되었습니다!",{  //https://github.com/arnnis/react-native-toast-notifications
@@ -48,7 +54,7 @@ const ProfileInfo=()=>{
         })
       }
     return(
-        <View>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.profileText}>이름</Text>
             <View style={styles.middle}>
                 <TextInput 
@@ -65,22 +71,62 @@ const ProfileInfo=()=>{
                     onChangeText={email => setEmail(email)}
                     defaultValue={placeHolderEmail}/>
             </View>
-            <Text style={styles.profileText}>전화번호</Text>
+            <Text style={styles.profileText}>학교</Text>
             <View style={styles.middle}>
-                <TextInput 
-                    placeholder={placeHolderPhoneNumber}
-                    style={styles.sectionStyle}
-                    onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-                    defaultValue={placeHolderPhoneNumber}/>
+                <TouchableOpacity
+                    style={[styles.sectionStyle,{justifyContent:'center'}]}    
+                    onPress={()=>setUniversityModal(true)}
+                >
+                    <Text>{univ}</Text>
+                </TouchableOpacity>
             </View>
-            <Text style={styles.profileText}>비밀번호</Text>
+            <Text style={styles.profileText}>학과</Text>
             <View style={styles.middle}>
-                <TextInput 
-                    placeholder={placeHolderPw}
-                    style={styles.sectionStyle}
-                    onChangeText={pw => setPw(pw)}
-                    defaultValue={placeHolderPw}/>
+                <TouchableOpacity
+                    style={[styles.sectionStyle,{justifyContent:'center'}]}    
+                    onPress={()=>setMajorModal(true)}
+                >
+                    <Text>{major}</Text>
+                </TouchableOpacity>
             </View>
+            {userObject.sex===null && 
+                <>
+                    <Text style={styles.profileText}>성별</Text>
+                    <View style={styles.middle}>
+                        <TextInput
+                            style={styles.sectionStyle}
+                            placeholder='수정'
+                        />
+                    </View>
+                </>}
+            {userObject.sex!==null && 
+                <>
+                    <Text style={styles.profileText}>성별</Text>
+                    <View style={styles.middle}>
+                        <View style={[styles.sectionStyle,{justifyContent:'center'}]}>
+                            <Text>{userObject.sex==='M'?'남':'여'}</Text>
+                        </View>
+                    </View>
+                </>}
+            {userObject.birth===null && 
+                <>
+                    <Text style={styles.profileText}>생일</Text>
+                    <View style={styles.middle}>
+                        <TextInput
+                            style={styles.sectionStyle}
+                            placeholder='수정'
+                        />
+                    </View>
+                </>}
+            {userObject.sex!==null && 
+                <>
+                    <Text style={styles.profileText}>생일</Text>
+                    <View style={styles.middle}>
+                        <View style={[styles.sectionStyle,{justifyContent:'center'}]}>
+                            <Text>{userObject.birth}</Text>
+                        </View>
+                    </View>
+                </>}
             <View style={{marginTop:'4%'}}/>
             <View style={styles.middle}>
                 <View>
@@ -109,7 +155,17 @@ const ProfileInfo=()=>{
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+            <SearchUniversity
+                universityModal={universityModal}
+                setUniversityModal={setUniversityModal}
+                setUserUniversity={setUniv}
+            />
+            <SearchMajor
+                majorModal={majorModal}
+                setMajorModal={setMajorModal}
+                setUserMajor={setMajor}
+            />
+        </ScrollView>
     )
 }
 export default ProfileInfo
