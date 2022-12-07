@@ -16,8 +16,7 @@ import BottomSheet_Main from './BottomSheet_Main';
 import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
 import styles from './style';
-import KakaoSDK from '@actbase/react-kakaosdk'
-import Lottie from 'lottie-react-native';
+import flower from './flower'
 
 
 export const storage = new MMKV()
@@ -42,24 +41,12 @@ function useInterval(callback, delay) {
     }, [delay]);
   }
 
-function Main(){
-  if(storage.getString('user')===undefined){  //user정보 캐싱되지 않았다면 서버 통해서 user정보 return,캐싱
-      const user = {
-          userName: '박재연',
-          email: 'jaeyeon7531@gmail.com',
-          phoneNumber: '010-7151-1918',
-          pw:'123456',
-          profileImage:'https://image.fnnews.com/resource/media/image/2022/07/16/202207160834208420_l.jpg',
-          point:0,
-          recycle:0,
-          //
-          }      
-      storage.set('user', JSON.stringify(user))
-  }
+function Main(props){
   const isFocused = useIsFocused();
   const navigation = useNavigation()
   const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
   const userObject = JSON.parse(jsonUser)
+  const [point,setPoint]=useState(userObject.point)
   const [seedName_mainPage,setSeedName_mainPage]=useState('')
   const [seedColor,setSeedColor]=useState('')
   const [currentTime,setCurrentTime]=useState(new Date())
@@ -69,12 +56,6 @@ function Main(){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true)
-  const animationRef = useRef(null)
-
-  const kaka=async()=>{
-    const ee = await KakaoSDK.getProfile()
-    console.log(ee)
-  }
 
   const isSeedName=()=>{
     if(seedName_mainPage!=='')
@@ -90,6 +71,11 @@ function Main(){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
+  useEffect(()=>{
+    if(modalVisible===true){
+      setTimeout(()=>{setPoint(point+1)},3000)
+    }
+  },[modalVisible])
   // const [flowerUri, setFloweruri]=useState(require('../../imageResource/flower/flowerA/flowerA_1.gif'))
   // const [flowerUri2, setFloweruri2]=useState(require('../../imageResource/icon/ic_point.png'))
   // const [bool, setbool]=useState(true)
@@ -98,44 +84,37 @@ function Main(){
   //       setFloweruri(require(flowerUri))
   // },[flowerUri])  
   
-  const flower = [
-    {
-        flowername: 'flowerA',
-        uri1: require('../../imageResource/flower/flowerA/flowerA_1.gif'),
-        uri2: require('../../imageResource/flower/flowerA/flowerA_2.gif'),
-        uri3: require('../../imageResource/flower/flowerA/flowerA_3.gif'),
-        uri4: require('../../imageResource/flower/flowerA/flowerA_4.gif'),
-        uri5: require('../../imageResource/flower/flowerA/flowerA_5.gif')
-    },
-]
-useEffect(()=>{
-  animationRef.current?.play(5, 8);
-},[])
+
 const FlowerGIF =()=>{
   console.log(seedColor,"좋아요")
+  var tmp = ''
   switch(seedColor){
-     
       case 'Pink':
-        var tmp = flower[0].uri2
-          
+        tmp = flower[0].uri1
+        break;
       case 'Brown':
-          
+        tmp = flower[1].uri1
+        break;
       case 'Lavender':
-          
+        tmp = flower[2].uri1
+        break; 
       case 'Green':
-          
+        tmp = flower[3].uri1
+        break;
       case 'Purple':
-         
+        tmp = flower[4].uri1
+         break;
       case 'Yellow':
-      
-      defalut:
-        return (
-          <Image 
-            source={tmp} 
-            style={{width:300, height:400, marginLeft:5}}
-          />
-      )
+        tmp = flower[Math.floor(Math.random()*5)+5].uri1
+        break;
   }
+  return (
+    <Image 
+      source={tmp} 
+      style={{width:300, height:400, marginLeft:5}}
+    />
+  )
+
 }
 
   
@@ -171,7 +150,10 @@ const FlowerGIF =()=>{
                       </View>
                       <View style={styles.calenderAndNoticeBoxContainer}>
                           <TouchableOpacity onPress={()=>navigation.navigate('UnivRanking')}>
-                              <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
+                              <Image 
+                                source={require('../../imageResource/jobDaHan/rank.png')}
+                                style={{width:25,height:25}}
+                              />
                           </TouchableOpacity>
                           <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%'}}>
                               <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
@@ -184,12 +166,7 @@ const FlowerGIF =()=>{
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
                       {isSeedName()}
-                      <Lottie 
-                          source={require('../../imageResource/flower/식물_01_v5_lottie.json')} 
-                          autoPlay
-                          loop
-                          speed={4} 
-                          ref={animationRef}/>
+                      <FlowerGIF/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
