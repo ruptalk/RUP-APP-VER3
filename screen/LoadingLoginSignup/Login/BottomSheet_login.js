@@ -295,7 +295,7 @@ const BottomSheet_login = (props) => {
         }
     }
     const nickToServer=(name)=>{
-        fetch('http://13.124.80.15/user/nickname-check',{
+        fetch('http://152.67.193.99/user/nickname-check',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
@@ -372,7 +372,7 @@ const BottomSheet_login = (props) => {
         })
     }
     const postSignUp=()=>{
-        fetch('http://13.124.80.15/user/add-new-user',{
+        fetch('http://152.67.193.99/user/add-new-user',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
@@ -418,7 +418,7 @@ const BottomSheet_login = (props) => {
         // })
         // .catch(error=>console.log('ERROR'))
 
-        axios.post('http://13.124.80.15/user/login', {
+        axios.post('http://152.67.193.99/user/login', {
             email: email,
             password: pw
           })
@@ -468,8 +468,8 @@ const BottomSheet_login = (props) => {
         //     navigation.reset({routes:[{name:'Main',data}]})
         // })
         // .catch(error=>console.log('ERROR'))
-
-        axios.get('http://13.124.80.15/home/main', {
+        console.log(uid)
+        axios.get('http://152.67.193.99/home/main', {
             params: {
               uid: uid
             }
@@ -481,8 +481,8 @@ const BottomSheet_login = (props) => {
                 email: response.data.email,
                 password: response.data.password,
                 profileImage:'https://image.fnnews.com/resource/media/image/2022/07/16/202207160834208420_l.jpg',
-                point:0,
-                countRecycle:0,
+                point:response.data.point,
+                countRecycle:response.data.countRecycle,
                 calendarDate:response.data.calendarDate,
                 flowerRecord:response.data.flowerRecord,
                 birth:response.data.birth,
@@ -493,9 +493,11 @@ const BottomSheet_login = (props) => {
             storage.set('user', JSON.stringify(user))
             setModalVisible(false)
             navigation.reset({routes:[{name:'Main'}]})
+            console.log('suc')
           })
           .catch(function (error) {
             console.log(error);
+            console.log('fail')
           });
     }
 
