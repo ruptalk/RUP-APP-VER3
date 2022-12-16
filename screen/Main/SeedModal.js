@@ -10,10 +10,8 @@ import {
 import ChooseSeed from './ChooseSeed';
 import InputSeedNameModal from './InputSeedNameModal'
 import styles from './style'
-
 const SeedModal=(props)=>{
     const { seedModalVisible, setSeedModalVisible, setSeedName_mainPage,seedColor,setSeedColor} = props;
-    const [pressChooseSeedButton,setPressChooseSeedButton] = useState('')
     const [inputNameModalVisible,setInputNameModalVisible]=useState(false)
     closeModal=()=>{
         setSeedModalVisible(false)
