@@ -54,7 +54,7 @@ const SearchUniversity=(props)=>{
                 <View style={styles.universityModalView}>
                     <View style={{alignItems:'center'}}>
                         <TextInput
-                            placeholder='대학(교) 검색'
+                            placeholder='학과 검색'
                             style={styles.sectionStyle}
                             onChangeText={text => searchUniversity(text)}
                         />

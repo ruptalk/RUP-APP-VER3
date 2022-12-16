@@ -44,6 +44,7 @@ function Main(props){
   const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
   const userObject = JSON.parse(jsonUser)
   const [point,setPoint]=useState(userObject.point)
+  const [flowerRecord,setFlowerRecord]=useState(userObject.flowerRecord)
   const [seedName_mainPage,setSeedName_mainPage]=useState('')
   const [seedColor,setSeedColor]=useState('')
   const [currentTime,setCurrentTime]=useState(new Date())
@@ -71,11 +72,7 @@ function Main(props){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     console.log(date)
   },[currentTime])
-  useEffect(()=>{
-    if(modalVisible===true){
-      setTimeout(()=>{setPoint(point+1)},3000)
-    }
-  },[modalVisible])
+ 
   // const [flowerUri, setFloweruri]=useState(require('../../imageResource/flower/flowerA/flowerA_1.gif'))
   // const [flowerUri2, setFloweruri2]=useState(require('../../imageResource/icon/ic_point.png'))
   // const [bool, setbool]=useState(true)
@@ -83,9 +80,13 @@ function Main(props){
   // useEffect(()=>{
   //       setFloweruri(require(flowerUri))
   // },[flowerUri])  
-
+  useEffect(()=>{
+    
+    if(Array.isArray(flowerRecord) && flowerRecord.length == 0){
+      setSeedModalVisible(true)
+    }    
+  },[flowerRecord])
   const FlowerGIF =()=>{
-    console.log(seedColor,"좋아요")
     var tmp = ''
     switch(seedColor){
         case 'Pink':
@@ -140,7 +141,7 @@ function Main(props){
                                   <Text style={styles.name}>{userObject.userName}</Text>
                                   <View style={styles.flexDirectionRow}>
                                       <Image source={require('../../imageResource/icon/ic_point.png')}/>
-                                      <Text style={{marginLeft:'8%'}}>{userObject.point}</Text>
+                                      <Text style={{marginLeft:'8%'}}>{point}</Text>
                                   </View>
                               </View>
                           </View>
@@ -175,6 +176,7 @@ function Main(props){
               <BottomSheet_Main
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
+                setPoint={setPoint}
               />
               <CalendarModal
                 calendarModalVisible={calendarModalVisible}
