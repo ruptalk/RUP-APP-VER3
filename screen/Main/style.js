@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     calenderAndNoticeBoxContainer:{
         width:'38%',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        flexDirection:'row'
     },
     calenderAndNoticeBox:{
         flexDirection:'row',
