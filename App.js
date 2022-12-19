@@ -9,6 +9,7 @@ import FindPassword from './screen/LoadingLoginSignup/FindPassword/FindPassword.
 import Main from './screen/Main/Main.js'
 import Profile from './screen/Main/Profile/Profile.js'
 import UnivRanking from './screen/Main/UnivRanking/UnivRanking.js'
+import PersonalRanking from './screen/Main/UnivRanking/PersonalRanking.js';
 import Notice from './screen/Main/Notice/Notice.js'
 import ProfileImageFullSize from './screen/Main/Profile/ProfileImageFullSize.js'
 import InFullBloom from './screen/Main/InFullBloom/InFullBloom.js';
@@ -27,6 +28,7 @@ function App(){
           <Stack.Screen name = 'InFullBloom' component = {InFullBloom}/>
           <Stack.Screen name = 'Profile' component={Profile}/>          
           <Stack.Screen name = 'UnivRanking' component={UnivRanking}/>
+          <Stack.Screen name = 'PersonalRanking' component={PersonalRanking}/>
           <Stack.Screen name = 'Notice' component={Notice}/>
           <Stack.Screen name = 'ProfileImageFullSize' component={ProfileImageFullSize}/>
         </Stack.Navigator>
