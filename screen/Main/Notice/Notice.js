@@ -56,6 +56,7 @@ function Notice(){
           <BigList
             data={Data}
             renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
           />
         </SafeAreaView>
       </View>

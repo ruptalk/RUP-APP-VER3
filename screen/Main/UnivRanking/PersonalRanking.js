@@ -17,8 +17,8 @@ import ReactNativeAnimatedSearchbox from 'react-native-animated-searchbox';
 import styles from './style.js'
 import {screenHeight,screenWidth} from '../../Main/fullScreenValue'
 
-
-const UnivRanking=()=>{
+const PersonalRanking=(props)=>{
+    const univ = props.route.params.univ
     const refSearchBox=useRef()
     const [searchUnivText,setSearchUnivText] = useState(true)
     const [searchUnivBox,setSearchUnivBox] = useState(false)
@@ -30,9 +30,7 @@ const UnivRanking=()=>{
 
     const Item=({item})=>{
         return(
-            <TouchableOpacity 
-                style={dystyle().rank}
-                onPress={()=>navigation.navigate('PersonalRanking',{univ : item.univ})}>
+            <View style={dystyle().rank}>
                 <View style={styles.univLogoContainer}>
                     <Image 
                         source={require('../../../imageResource/jobDaHan/donga.png')}
@@ -48,7 +46,7 @@ const UnivRanking=()=>{
                 <View style={styles.itemPoint}>
                     <Text style={styles.itemFont}>{item.point} p</Text>
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
     const searchUniversity=(text)=>{
@@ -83,14 +81,14 @@ const UnivRanking=()=>{
                         style={styles.backButton}
                     />
                 </TouchableOpacity>
-                <Text style={styles.font}>랭킹 페이지</Text>
+                <Text style={styles.font}>{univ} 랭킹페이지</Text>
             </View>
             {searchUnivText && 
             <TouchableOpacity
                 onPress={()=>{setSearchUnivText(false),setSearchUnivBox(true)}}  
                 style={styles.searchUnivTextContainer}  
             >
-                <Text style={styles.searchUnivText}>우리학교 찾기</Text>
+                <Text style={styles.searchUnivText}>나의 순위 찾기</Text>
                 <Image 
                     source={require('../../../imageResource/jobDaHan/search_univ.png')}
                     style={styles.searchUnivImage}
@@ -98,13 +96,13 @@ const UnivRanking=()=>{
             </TouchableOpacity>}
             {searchUnivBox && <ReactNativeAnimatedSearchbox 
                 ref={refSearchBox} 
-                placeholder={"학교"}
+                placeholder={"닉네임"}
                 searchUniversity={searchUniversity}
                 searchUnivBox={searchUnivBox}
                 focusAfterOpened={true} 
             />}
             <View style={{marginBottom:screenHeight*0.0177725}}/>
-            <Text style={{marginLeft:screenWidth*0.0538461,fontSize:24,marginBottom:screenHeight*0.023696682,color:'black',fontWeight:'600'}}>학교순위</Text>
+            <Text style={{marginLeft:screenWidth*0.0538461,fontSize:24,marginBottom:screenHeight*0.023696682,color:'black',fontWeight:'600'}}>{univ} 순위</Text>
             <View>
                 <FlatList
                     data={filterData}
@@ -117,7 +115,7 @@ const UnivRanking=()=>{
     )
 }
 
-export default UnivRanking
+export default PersonalRanking
 
 const dystyle=()=>StyleSheet.create({
     rank:{

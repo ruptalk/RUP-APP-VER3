@@ -6,26 +6,44 @@ const styles = StyleSheet.create({
         backgroundColor:'#f9f8e8'
     },
     topLine:{
-        marginTop:30,
-        marginLeft:30,
+        marginTop:26,
+        marginLeft:14,
         flexDirection:'row'
     },
-    backButtonPosition:{
-        marginTop:20
+    backButton:{
+        width:30,
+        height:30,
+        marginBottom:13
     },
     font:{
         marginLeft:10,
-        fontSize:40,
+        fontSize:20,
         color:'black',
-        fontWeight:'bold'
+        fontWeight:'700'
+    },
+    searchUnivTextContainer:{
+        flexDirection:'row',
+        marginLeft:screenWidth*0.451282051,
+    },
+    searchUnivText:{
+        color:'#AA9585',
+        fontSize:24,
+        fontWeight:'bold',
+        marginTop:9
+    },
+    searchUnivImage:{
+        width:screenWidth*0.128,
+        height:screenWidth*0.128
     },
     univSearch:{
         borderColor:'#a8ce9e',
         borderWidth:3,
+        marginTop:13,
         marginLeft:10,
         marginRight:10,
         borderRadius:10,
-        paddingLeft:screenWidth*0.05
+        paddingLeft:screenWidth*0.05,
+        backgroundColor:'red'
     },
     rank:{
         marginLeft:10,
@@ -39,24 +57,28 @@ const styles = StyleSheet.create({
         backgroundColor:'gray'
         //alignItems:'center',
     },
+    univLogoContainer:{
+        marginLeft:screenWidth*0.0410256
+    },
+    univLogo:{
+        width:screenWidth*0.1692307,
+        height:screenWidth*0.1692307,
+        marginRight:screenWidth*0.0384615
+    },
     itemRank:{
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center'
+        marginRight:screenWidth*0.0435897
     },
     itemUniv:{
-        flex:3,
-        alignItems:'center',
-        justifyContent:'center'
+        width:screenWidth*0.410256,
     },
     itemPoint:{
-        flex:2,
-        alignItems:'center',
-        justifyContent:'center'
+        width:screenWidth*0.2,
+        alignItems:'flex-end',
+        paddingRight:screenWidth*0.05,
     },
     itemFont:{
         fontSize:screenHeight*0.022,
-        color:'white'
+        color:'black'
     }
 })
 export default styles
