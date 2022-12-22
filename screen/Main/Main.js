@@ -172,7 +172,7 @@ function Main(props){
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
                       {isSeedName()}
-                      <Iosview/>
+                      {/* <Iosview/> */}
                       <FlowerGIF/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
