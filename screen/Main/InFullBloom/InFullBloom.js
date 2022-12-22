@@ -3,32 +3,36 @@ import {
     View,
     Image,
     Dimensions,
-    StyleSheet,
-    Alert,
-    BackHandler,
     Text,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    SafeAreaView
 } from 'react-native'
 import { useNavigation,useIsFocused } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv'
 import BottomSheet_InFullBloom from './BottomSheet_InFullBloom';
 import styles from './style';
+import flower from '../flower'
+import { rgb } from 'color-convert';
 
 export const storage = new MMKV()
 function InFullBloom(){
     const screenHeight = Dimensions.get("screen").height //phone 높이,폭 px
     const screenWidth = Dimensions.get("screen").width
-    const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
-    const userObject = JSON.parse(jsonUser)
+    const [jsonUser,setJsonUser] = useState(storage.getString('user')) // { 'userName': '박재연', 'point': 0 }
+    const [userObject,setUserObject] = useState(JSON.parse(jsonUser))
     const isFocused = useIsFocused();
     const navigation = useNavigation()
     const [modalVisible,setModalVisible]=useState(false)
     const [recycle,setRecycle]=useState(userObject.countRecycle)
     const [point,setPoint]=useState(userObject.point)
+    const caching = ()=>{
+        setJsonUser(storage.getString('user'))
+        setUserObject(JSON.parse(jsonUser))
+    }
     useEffect(() => {}, [isFocused]); //isFocused로 화면 전환시 리렌더링
     return(
-        <View style={{flex:1}}>
+        <SafeAreaView style={{flex:1, backgroundColor:"rgb(253,246,234)"}}>
             <ImageBackground style={{
                     flex: 1
                 }}
@@ -61,7 +65,24 @@ function InFullBloom(){
                         </View>
                     </View>
                     <View style={{height:'70%'}}>
-                  
+                        <View style={{height:'34%',}}/>
+                        
+                        <View style={{height:'10%',flexDirection:"row",}}>
+                            <Image style={{width:80,height:110,marginLeft:50,}} source={userObject.flowerUri[0]!=-1 ? flower[userObject.flowerUri[0]].upng :{uri: undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:30,}} source={userObject.flowerUri[1]!=-1 ? flower[userObject.flowerUri[1]].upng :{uri: undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:30,}} source={userObject.flowerUri[2]!=-1 ? flower[userObject.flowerUri[2]].upng :{uri: undefined}}/>
+                        </View>
+                        <View style={{height:'10%', flexDirection:"row",marginTop:-2}}>
+                            <Image style={{width:80,height:110,marginLeft:23}} source={userObject.flowerUri[3]!=-1 ? flower[userObject.flowerUri[3]].upng :{uri:undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:10}} source={userObject.flowerUri[4]!=-1 ? flower[userObject.flowerUri[4]].upng :{uri:undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:10}} source={userObject.flowerUri[5]!=-1 ? flower[userObject.flowerUri[5]].upng :{uri:undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:10}} source={userObject.flowerUri[6]!=-1 ? flower[userObject.flowerUri[6]].upng :{uri:undefined}}/> 
+                        </View>
+                        <View style={{height:'10%', flexDirection:"row",}}>
+                            <Image style={{width:80,height:110,marginLeft:50,}} source={userObject.flowerUri[7]!=-1 ? flower[userObject.flowerUri[7]].upng :{uri:undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:30,}} source={userObject.flowerUri[8]!=-1 ? flower[userObject.flowerUri[8]].upng :{uri:undefined}}/>
+                            <Image style={{width:80,height:110,marginLeft:30,}} source={userObject.flowerUri[9]!=-1 ? flower[userObject.flowerUri[9]].upng :{uri:undefined}}/> 
+                        </View>
                     </View>
 
                     <View style={{height:'15%',justifyContent:'center',alignItems:'center'}}>
@@ -76,7 +97,7 @@ function InFullBloom(){
                     setModalVisible={setModalVisible}
                 />
             </ImageBackground>
-        </View>
+        </SafeAreaView>
     )
 }
 export default InFullBloom

@@ -6,7 +6,9 @@ import {
     TouchableOpacity,
     Image,
     View,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import ProfileImage from './ProfileImage.js'
@@ -18,7 +20,7 @@ function Profile(photo){
     const navigation = useNavigation()
     return(
         
-        <View style={[styles.container]}>
+        <SafeAreaView style={[styles.container]}>
             <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : 'height'}
             style={{ flex: 1 }}
@@ -37,7 +39,7 @@ function Profile(photo){
                     <ProfileInfo/>
                 </View>
             </KeyboardAvoidingView>
-        </View>
+        </SafeAreaView>
     )
 }
 

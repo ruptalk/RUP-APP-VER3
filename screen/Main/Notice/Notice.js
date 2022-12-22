@@ -37,7 +37,7 @@ function Notice(){
         text={text}
       />
     
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <TouchableOpacity 
           onPress={()=>navigation.goBack()}
           style={{marginTop:'7%',marginLeft:30,width:40}}                
@@ -59,7 +59,7 @@ function Notice(){
             showsVerticalScrollIndicator={false}
           />
         </SafeAreaView>
-      </View>
+      </SafeAreaView>
     </>
   )
 }
