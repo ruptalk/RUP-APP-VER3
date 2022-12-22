@@ -52,9 +52,8 @@ function Main(props){
   const [seedTime,setSeedTime]=useState(new Date())
   const [flowerDate,setFlowerDate]=useState('')
   const [modalVisible,setModalVisible]=useState(false)
-  useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-  const [seedModalVisible,setSeedModalVisible] = useState(true) 
+  const [seedModalVisible,setSeedModalVisible] = useState(false) 
   const [finishSeed,setfinishSeed] = useState(false) 
   const [asking,setasking] = useState(1)
   
@@ -63,17 +62,21 @@ function Main(props){
     console.log(ee)
   }
   const isSeedName=()=>{
-    if(seedName_mainPage!=='')
-        return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
+    if(userObject.nowFlowerName!='')
+        return <Text style={styles.tulipText}>{userObject.nowFlowerName}와 함께 {flowerDate}일째</Text>
   }
-
+  useEffect(() => {
+    if( userObject.nowFlowerName=="") setSeedModalVisible(true)
+    console.log(userObject.nowFlowerName,"isFocused")
+  }, [isFocused]);
+  
   useEffect(()=>{
     if(userObject.point%30==0 && userObject.point!=0 && asking==1){
       setfinishSeed(true)
       setasking(0)
     }
   })
-
+  
   useInterval(()=>{{
     setCurrentTime(new Date())
     setasking(1)
@@ -85,11 +88,13 @@ function Main(props){
     //console.log(date)
   },[currentTime])
 
-  useEffect(()=>{  
-    if(Array.isArray(flowerRecord) && flowerRecord.length == 0){
-      setSeedModalVisible(true)
-    }    
-  },[flowerRecord])
+  // useEffect(()=>{  
+  //   if(Array.isArray(flowerRecord) && flowerRecord.length == 0){
+  //     setSeedModalVisible(true)
+  //   }    
+  // },[flowerRecord])
+
+
 
   const FlowerGIF =()=>{
     var tmp =''
