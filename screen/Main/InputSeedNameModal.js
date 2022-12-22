@@ -7,15 +7,22 @@ import {
     TouchableOpacity
 } from 'react-native';
 import styles from './style'
+import { MMKV } from 'react-native-mmkv'
+export const storage = new MMKV()
 
 const InputSeedNameModal=(props)=>{
     const { inputNameModalVisible, setInputNameModalVisible, setSeedName_mainPage} = props;
     const [seedName,setSeedName]=useState('')
+    const jsonUser = storage.getString('user') 
+    const userObject = JSON.parse(jsonUser)
+
     const closeModal=()=>{
         if(seedName!=='')
         {
             setInputNameModalVisible(false)
             setSeedName_mainPage(seedName)
+            userObject.nowFlowerName=seedName
+            storage.set('user',JSON.stringify(userObject))
         }
         else
         {

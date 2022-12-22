@@ -491,6 +491,7 @@ const BottomSheet_login = (props) => {
                 univ:response.data.college,
                 major:response.data.major,
                 nowFlowerSeed:10, 
+                nowFlowerName:'',
                 flowerUri:{
                   "0" : -1,
                   "1" : -1,
