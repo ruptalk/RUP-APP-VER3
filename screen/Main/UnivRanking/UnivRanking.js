@@ -7,7 +7,8 @@ import {
     Image,
     View,
     KeyboardAvoidingView,
-    FlatList
+    FlatList,
+    SafeAreaView
 } from 'react-native'
 import { MMKV } from 'react-native-mmkv'
 import { useNavigation } from '@react-navigation/native';
@@ -25,8 +26,8 @@ const UnivRanking=()=>{
     const [filterData,setFilterData] = useState(arr)
     const navigation = useNavigation()
     const renderItem=({item})=>{
-        return (<Item item={item} backgroundColor={'#a8ce9e'} />)      
-    }
+            return (<Item item={item} backgroundColor={'#a8ce9e'} />)
+        }        
 
     const Item=({item})=>{
         return(
@@ -73,7 +74,7 @@ const UnivRanking=()=>{
         console.log('hi')
     },[refSearchBox.current]) 
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.topLine}>
                 <TouchableOpacity 
                     onPress={()=>navigation.goBack()}
@@ -94,7 +95,7 @@ const UnivRanking=()=>{
                 <Image 
                     source={require('../../../imageResource/jobDaHan/search_univ.png')}
                     style={styles.searchUnivImage}
-                />
+            />
             </TouchableOpacity>}
             {searchUnivBox && <ReactNativeAnimatedSearchbox 
                 ref={refSearchBox} 
@@ -113,7 +114,7 @@ const UnivRanking=()=>{
                     showsVerticalScrollIndicator={false}
                 />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -189,4 +190,3 @@ const arr = [
         point:0
     },
 ]
-/* 화살표 1 */

@@ -10,9 +10,15 @@ import {
 import ChooseSeed from './ChooseSeed';
 import InputSeedNameModal from './InputSeedNameModal'
 import styles from './style'
+import { MMKV } from 'react-native-mmkv'
+export const storage = new MMKV()
+
 const SeedModal=(props)=>{
     const { seedModalVisible, setSeedModalVisible, setSeedName_mainPage,seedColor,setSeedColor} = props;
     const [inputNameModalVisible,setInputNameModalVisible]=useState(false)
+    const jsonUser = storage.getString('user') 
+    const userObject = JSON.parse(jsonUser)
+
     closeModal=()=>{
         setSeedModalVisible(false)
     }
@@ -21,12 +27,32 @@ const SeedModal=(props)=>{
             console.log('toast message 씨앗을 선택하지 않았습니다!')
         }
         else{
+            switch(seedColor){
+                case 'Pink':
+                    userObject.nowFlowerSeed = 0
+                  break;
+                case 'Brown':
+                    userObject.nowFlowerSeed = 1
+                  break;
+                case 'Lavender':
+                    userObject.nowFlowerSeed = 2
+                  break; 
+                case 'Green':
+                    userObject.nowFlowerSeed = 3
+                  break;
+                case 'Purple':
+                    userObject.nowFlowerSeed = 4
+                  break;
+                case 'Yellow':
+                  userObject.nowFlowerSeed = (Math.floor(Math.random()*5)+5)
+                  break;
+            }
+            storage.set('user',JSON.stringify(userObject))
+            console.log(storage.getString('user'),"seedmodal")
             setInputNameModalVisible(true)
-            setTimeout(function() {  setSeedModalVisible(false) }, 500);
-            //
+            setSeedModalVisible(false)
         }
     }
-
     return(
         <>
             <Modal

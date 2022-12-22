@@ -32,7 +32,8 @@ const BottomSheet_login = (props) => {
     const { modalVisible, setModalVisible } = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY_login = useRef(new Animated.Value(screenHeight)).current;
-    const [selectedTab, setSelectedTab] = useState('Login');
+    const [loginSelectedTab, setLoginSelectedTab] = useState(true);
+    const [SignUpSelectedTab, setSignUpSelectedTab] = useState(false);
     const [isNameBlank,setIsNameBlank]=useState('NotBlankName')
     const navigation = useNavigation()
     const [userName,setUserName]=useState(null)
@@ -91,7 +92,7 @@ const BottomSheet_login = (props) => {
                         secureTextEntry={true}
                     />
                     <TouchableOpacity
-                        onPress={()=> postLogin(email,pw,null,false)}
+                        onPress={()=> postLogin(email,pw,null,false)} //navigation.reset({routes:[{name:'Main'}]})
                         style={styles.signUp}
                     >
                         <Text style={styles.signUpText}>로그인</Text>
@@ -468,7 +469,7 @@ const BottomSheet_login = (props) => {
         //     navigation.reset({routes:[{name:'Main',data}]})
         // })
         // .catch(error=>console.log('ERROR'))
-        console.log(uid)
+
         axios.get('http://152.67.193.99/home/main', {
             params: {
               uid: uid
@@ -488,12 +489,25 @@ const BottomSheet_login = (props) => {
                 birth:response.data.birth,
                 sex:response.data.sex,
                 univ:response.data.college,
-                major:response.data.major
+                major:response.data.major,
+                nowFlowerSeed:10, 
+                flowerUri:{
+                  "0" : -1,
+                  "1" : -1,
+                  "2" : -1,
+                  "3" : -1,
+                  "4" : -1,
+                  "5" : -1,
+                  "6" : -1,
+                  "7" : -1,
+                  "8" : -1,
+                  "9" : -1
             }      
+            }      
+            
             storage.set('user', JSON.stringify(user))
             setModalVisible(false)
             navigation.reset({routes:[{name:'Main'}]})
-            console.log('suc')
           })
           .catch(function (error) {
             console.log(error);
@@ -583,19 +597,20 @@ const BottomSheet_login = (props) => {
                             <View style={styles.iconDirection}>
                                 <View style={{flex:1}}/>
                                 <TouchableOpacity
-                                    onPress={()=>setSelectedTab('Login')}
+                                    onPress={()=>{setSignUpSelectedTab(false),setLoginSelectedTab(true)}}
                                     style={styles.iconLocation}>
                                     
                                     <Image source={require('../../../imageResource/icon/ic_login.png')}/>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    onPress={()=>setSelectedTab('SignUp')}
+                                    onPress={()=>{setLoginSelectedTab(false),setSignUpSelectedTab(true)}}
                                     style={styles.iconLocation}>
                                     <Image source={require('../../../imageResource/icon/ic_join.png')}/>
                                 </TouchableOpacity>
                                 <View style={{flex:1}}/>
                             </View>
-                            {loginSignUpSelectedTab()}
+                            {loginSelectedTab && <Login/>}
+                            {SignUpSelectedTab && <SignUp/>}
                         </Animated.View>
                     </View>
                 </KeyboardAvoidingView>

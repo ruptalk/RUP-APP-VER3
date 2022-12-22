@@ -2,22 +2,23 @@ import React,{useEffect,useState,useRef} from 'react'
 import {
     View,
     Image,
-    Dimensions,
-    Modal,
-    Pressable,
     Text,
     ImageBackground,
     TouchableOpacity,
-    Button
+    Platform,
+    SafeAreaView
 } from 'react-native'
-import { useNavigation,useIsFocused } from '@react-navigation/native';
+
+import { useNavigation,useIsFocused } from '@react-navigation/native'
 import { MMKV } from 'react-native-mmkv'
-import BottomSheet_Main from './BottomSheet_Main';
+import BottomSheet_Main from './BottomSheet_Main'
 import CalendarModal from './CalenderModal'
 import SeedModal from './SeedModal'
-import styles from './style';
+import Seedfinish from './SeedFinish'
+import styles from './style'
 import flower from './flower'
 import KakaoSDK from '@actbase/react-kakaosdk'
+
 export const storage = new MMKV()
 
 function useInterval(callback, delay) {
@@ -54,6 +55,9 @@ function Main(props){
   useEffect(() => {}, [isFocused]);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState(true) 
+  const [finishSeed,setfinishSeed] = useState(false) 
+  const [asking,setasking] = useState(1)
+  
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -61,25 +65,25 @@ function Main(props){
   const isSeedName=()=>{
     if(seedName_mainPage!=='')
         return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
-    else
-        return 
   }
-  useInterval(()=>{
+
+  useEffect(()=>{
+    if(userObject.point%30==0 && userObject.point!=0 && asking==1){
+      setfinishSeed(true)
+      setasking(0)
+    }
+  })
+
+  useInterval(()=>{{
     setCurrentTime(new Date())
-  },60000)
+    setasking(1)
+    }},60000)
+
   useEffect(()=>{
     let date = currentTime.getTime() - seedTime.getTime()
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
-    console.log(date)
+    //console.log(date)
   },[currentTime])
- 
-  // const [flowerUri, setFloweruri]=useState(require('../../imageResource/flower/flowerA/flowerA_1.gif'))
-  // const [flowerUri2, setFloweruri2]=useState(require('../../imageResource/icon/ic_point.png'))
-  // const [bool, setbool]=useState(true)
-
-  // useEffect(()=>{
-  //       setFloweruri(require(flowerUri))
-  // },[flowerUri])  
   useEffect(()=>{
     
     if(Array.isArray(flowerRecord) && flowerRecord.length == 0){
@@ -87,39 +91,39 @@ function Main(props){
     }    
   },[flowerRecord])
   const FlowerGIF =()=>{
-    var tmp = ''
-    switch(seedColor){
-        case 'Pink':
-          tmp = flower[0].uri1
-          break;
-        case 'Brown':
-          tmp = flower[1].uri1
-          break;
-        case 'Lavender':
-          tmp = flower[2].uri1
-          break; 
-        case 'Green':
-          tmp = flower[3].uri1
-          break;
-        case 'Purple':
-          tmp = flower[4].uri1
-          break;
-        case 'Yellow':
-          tmp = flower[Math.floor(Math.random()*5)+5].uri1
-          break;
+    var tmp =''
+    var sw = userObject.point
+    if (sw < 6){
+      tmp = flower[userObject.nowFlowerSeed].uri1
+    }
+    else if (sw <14){
+      tmp = flower[userObject.nowFlowerSeed].uri2
+    }
+    else if(sw<21){
+      tmp = flower[userObject.nowFlowerSeed].uri3
+    }
+    else if(sw<26){
+      tmp = flower[userObject.nowFlowerSeed].uri4
+    }
+    else{
+      tmp = flower[userObject.nowFlowerSeed].uri5
     }
     return (
       <Image 
         source={tmp} 
         style={{width:300, height:400, marginLeft:5}}
       />
-    )
-
+      )
   }
-  
+  const Iosview =()=>{
+    if(Platform.OS==="ios")
+    return (
+      <View style={{height:"8%"}}/>
+    )
+  }
   return(
     <>
-      <View style={{flex:1}}>
+      <SafeAreaView style={{flex:1,backgroundColor:"rgb(166,150,135)"}}>
           <ImageBackground 
               style={{
                   height: '100%',
@@ -141,35 +145,41 @@ function Main(props){
                                   <Text style={styles.name}>{userObject.userName}</Text>
                                   <View style={styles.flexDirectionRow}>
                                       <Image source={require('../../imageResource/icon/ic_point.png')}/>
-                                      <Text style={{marginLeft:'8%'}}>{point}</Text>
+                                      <Text style={{marginLeft:'8%'}}>{userObject.point}</Text>
                                   </View>
                               </View>
                           </View>
                       </View>
                       <View style={styles.calenderAndNoticeBoxContainer}>
+                        <View  style={{flexDirection:'row'}}>
                           <TouchableOpacity onPress={()=>navigation.navigate('UnivRanking')}>
                               <Image 
                                 source={require('../../imageResource/jobDaHan/rank.png')}
                                 style={{width:25,height:25}}
                               />
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%'}}>
+                          <TouchableOpacity onPress={()=>setCalendarModalVisible(true)} style={{marginLeft:'10%',marginRight:'10%'}}>
                               <Image source={require('../../imageResource/icon/ic_calendar.png')}/>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={()=>navigation.navigate('Notice')} style={{marginLeft:'10%',marginRight:'10%'}}>  
+                          <TouchableOpacity onPress={()=>navigation.navigate('Notice')}>  
                               <Image source={require('../../imageResource/icon/ic_notice.png')}/>
                           </TouchableOpacity>  
+                        </View>
                       </View>
                   </View>
                   <View style={{height:'10%'}}/>
                   <View style={{alignItems:'center',height:'55%'}}>
                       {isSeedName()}
+                      <Iosview/>
                       <FlowerGIF/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
                       <TouchableOpacity onPress={()=>setModalVisible(true)}>  
                         <View style={{height:'45%'}}/>
                         <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={()=>{setfinishSeed(true)}}>  
+                        <Text>투더문</Text>
                       </TouchableOpacity>
                   </View>
               </View>
@@ -189,10 +199,14 @@ function Main(props){
                   seedColor={seedColor}
                   setSeedColor={setSeedColor}
               />
+              <Seedfinish
+                  finishSeed={finishSeed}
+                  setfinishSeed={setfinishSeed}
+                  seedName={seedName_mainPage}
+              />
           </ImageBackground>
-      </View>
+      </SafeAreaView>
     </>
   )
 }
-
 export default Main

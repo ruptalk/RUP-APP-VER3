@@ -43,7 +43,7 @@ const BottomSheet_Main = (props) => {
     const userObject = JSON.parse(jsonUser)
     const isFocused = useIsFocused();
     const [check,setCheck]=useState(0)
-    
+  
     const { modalVisible, setModalVisible, setPoint } = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY = useRef(new Animated.Value(screenHeight)).current;

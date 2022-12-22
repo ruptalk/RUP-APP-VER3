@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#a8cd98',
         marginTop:'7%'
 
-    },
+  },
     selectSeedText:{
         color:'white',
         fontWeight:'bold'
