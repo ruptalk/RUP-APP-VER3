@@ -84,12 +84,13 @@ function Main(props){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     //console.log(date)
   },[currentTime])
-  useEffect(()=>{
-    
+
+  useEffect(()=>{  
     if(Array.isArray(flowerRecord) && flowerRecord.length == 0){
       setSeedModalVisible(true)
     }    
   },[flowerRecord])
+
   const FlowerGIF =()=>{
     var tmp =''
     var sw = userObject.point
@@ -113,8 +114,9 @@ function Main(props){
         source={tmp} 
         style={{width:300, height:400, marginLeft:5}}
       />
-      )
+    )
   }
+
   const Iosview =()=>{
     if(Platform.OS==="ios")
     return (
