@@ -13,6 +13,8 @@ import PersonalRanking from './screen/Main/UnivRanking/PersonalRanking.js';
 import Notice from './screen/Main/Notice/Notice.js'
 import ProfileImageFullSize from './screen/Main/Profile/ProfileImageFullSize.js'
 import InFullBloom from './screen/Main/InFullBloom/InFullBloom.js';
+import SearchMajor from './screen/LoadingLoginSignup/SearchMajor';
+import SearchUniversity from './screen/LoadingLoginSignup/SearchUniversity';
 
 const Stack = createStackNavigator();
 function App(){
@@ -31,6 +33,9 @@ function App(){
           <Stack.Screen name = 'PersonalRanking' component={PersonalRanking}/>
           <Stack.Screen name = 'Notice' component={Notice}/>
           <Stack.Screen name = 'ProfileImageFullSize' component={ProfileImageFullSize}/>
+          <Stack.Screen name = 'SearchMajor' component={SearchMajor}/>
+          <Stack.Screen name = 'SearchUniversity' component={SearchUniversity}/>
+
         </Stack.Navigator>
       </NavigationContainer>
     </ToastProvider>

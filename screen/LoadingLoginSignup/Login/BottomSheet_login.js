@@ -12,24 +12,29 @@ import {
     TextInput,
     Text,
     ScrollView,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    SafeAreaView
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useIsFocused } from '@react-navigation/native';
 import KakaoSDK from '@actbase/react-kakaosdk'
 import { useToast } from "react-native-toast-notifications";
 import {validateNickName,validateEmail,validatePw} from '../../../validate.js'
 import { MMKV } from 'react-native-mmkv'
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios'
-import SearchUniversity from '../SearchUniversity.js';
-import SearchMajor from '../SearchMajor.js'
+//import SearchUniversity from '../SearchUniversity.js';
+//import SearchMajor from '../SearchMajor.js'
 import uuid from 'react-native-uuid';
 import styles from './style'
 
 export const storage = new MMKV()
 
 const BottomSheet_login = (props) => {
-    const { modalVisible, setModalVisible } = props;
+    const isFocused = useIsFocused();
+    // useEffect(() => {
+    //     console.log(props.major)
+    // }, [isFocused]);
+    const { modalVisible, setModalVisible,major,university } = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY_login = useRef(new Animated.Value(screenHeight)).current;
     const [loginSelectedTab, setLoginSelectedTab] = useState(true);
@@ -41,8 +46,8 @@ const BottomSheet_login = (props) => {
     const [userEmail,setUserEmail]=useState('')
     const [userPw,setUserPw]=useState('')
     const [userPwAgain,setUserPwAgain]=useState('')
-    const [userUniversity,setUserUniversity]=useState('학교찾기')
-    const [userMajor,setUserMajor]=useState('학과')
+    const [userUniversity,setUserUniversity]=useState('학교검색')
+    const [userMajor,setUserMajor]=useState('학과검색')
     const [userSex,setUserSex]=useState(null)
     const [userBirth,setUserBirth]=useState(null)
     const [universityModal, setUniversityModal] = useState(false);
@@ -51,7 +56,7 @@ const BottomSheet_login = (props) => {
     const [uid,setUid]=useState(null)
     const toast = useToast();
     const redStar = require('../../../imageResource/jobDaHan/redStar.png')
-
+    
     const signInWithKakao=async()=>{
         await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
@@ -191,10 +196,13 @@ const BottomSheet_login = (props) => {
                                 source={redStar}/>   
                             <TouchableOpacity                                                  
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
-                                onPress={()=>userUniversityModalOpen(name,email,pw,pwAgain,sex,birth)}
+                                onPress={()=>{
+                                    navigation.navigate("SearchUniversity")
+                                    setModalVisible(false)
+                                }}
                             >
                                 <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/search.png')}/>
-                                <Text>{userUniversity}</Text>
+                                <Text >{university=="" ? userUniversity:university}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{flexDirection:'row'}}>
@@ -203,10 +211,13 @@ const BottomSheet_login = (props) => {
                                 source={redStar}/>
                             <TouchableOpacity 
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
-                                onPress={()=>userMajorModalOpen(name,email,pw,pwAgain,sex,birth)}
+                                onPress={()=>{
+                                    navigation.navigate("SearchMajor")
+                                    setModalVisible(false)
+                                }}
                             >
                                 <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
-                                <Text >{userMajor}</Text>
+                                <Text >{major==""? userMajor:major}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -215,15 +226,18 @@ const BottomSheet_login = (props) => {
                             <Text>성별</Text>
                             <View style={styles.sex}/>
                             <Text>남</Text>
-                            <RadioButton
+                            <RadioButton.Android
                                 value='M'
                                 status={ sex === 'M' ? 'checked' : 'unchecked' }
+                                color="rgb(176,204,163)"
                                 onPress={() => setSex('M')}
                             />
+                            <></>
                             <Text>여</Text>
-                            <RadioButton
+                            <RadioButton.Android
                                 value='W'
                                 status={ sex === 'W' ? 'checked' : 'unchecked' }
+                                color="rgb(176,204,163)"
                                 onPress={() => setSex('W')}
                             />
                         </View>
@@ -286,6 +300,7 @@ const BottomSheet_login = (props) => {
             postSignUp()
         }
     },[uid])
+   
     const validation_nickName=(name)=>{                    //닉네임 유효성 검사
         if(validateNickName(name)){
             return nickToServer(name)
@@ -392,7 +407,7 @@ const BottomSheet_login = (props) => {
             console.log(data)
             if(data.success===true){
                 showToast('회원가입 완료!')
-                setSelectedTab('Login')
+                setLoginSelectedTab(true)
             }else{
                 showToast('회원가입 안됨')
             }
@@ -556,7 +571,7 @@ const BottomSheet_login = (props) => {
     }, [props.modalVisible]);
 
     const closeModal = () => {
-        setSelectedTab('Login')
+        setLoginSelectedTab(true)
         closeBottomSheet_login.start(()=>{
             setModalVisible(false);
         })
@@ -616,16 +631,16 @@ const BottomSheet_login = (props) => {
                     </View>
                 </KeyboardAvoidingView>
             </Modal>
-            <SearchUniversity
+            {/* <SearchUniversity
                 universityModal={universityModal}
                 setUniversityModal={setUniversityModal}
                 setUserUniversity={setUserUniversity}
-            />
-            <SearchMajor
+            /> */}
+            {/* <SearchMajor
                 majorModal={majorModal}
                 setMajorModal={setMajorModal}
                 setUserMajor={setUserMajor}
-            />
+            /> */}
         </>
     )
 }
