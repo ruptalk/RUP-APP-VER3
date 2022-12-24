@@ -6,8 +6,7 @@ import {
     Image,
     Text,
     BackHandler,
-    Alert,
-    SafeAreaView
+    Alert
 } from 'react-native';
 import BottomSheet_login from './BottomSheet_login.js';
 import styles from './style.js';
@@ -47,7 +46,7 @@ const Login = ({props,route}) => {
     },[isFocused])
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={{marginTop:'25%'}}/>
             <Image source = {require('../../../imageResource/logo/logo_main.png')}/>
             <View style={{padding:20}}></View>
@@ -62,7 +61,7 @@ const Login = ({props,route}) => {
                 major={major}            
                 university={university}
             />
-        </SafeAreaView>
+        </View>
     )
 }
 

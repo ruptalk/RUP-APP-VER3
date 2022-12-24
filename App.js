@@ -19,9 +19,7 @@ import SearchUniversity from './screen/LoadingLoginSignup/SearchUniversity';
 const Stack = createStackNavigator();
 function App(){
   return(
-    <ToastProvider
-      offsetTop={30}
-    >
+    <ToastProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown:false}}>
           <Stack.Screen name = 'Loading' component = {Loading}/>
