@@ -90,11 +90,11 @@ function FindPassword(){
         emailRef.current?.focus()
     },[])
     ////////////////////////////////////////// 이메일 입력 완료 시 학교,학과 모달 자동 띄우기 //////////////////
-    useEffect(()=>{
-        if(major==='학과'&&univ!=='학교찾기'){
-            setMajorModal(true)
-        }
-    },[univ])
+    // useEffect(()=>{
+    //     if(major==='학과'&&univ!=='학교찾기'){
+    //         setMajorModal(true)
+    //     }
+    // },[univ])
     // useEffect(()=>{},[isFocused])
     emailOnSubmitEditing=()=>{
         if(validateEmail(email))
