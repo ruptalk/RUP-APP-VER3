@@ -197,8 +197,9 @@ const BottomSheet_login = (props) => {
                             <TouchableOpacity                                                  
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
-                                    navigation.navigate("SearchUniversity")
+                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                     setModalVisible(false)
+                                    navigation.navigate("SearchUniversity")
                                 }}
                             >
                                 <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/search.png')}/>
@@ -212,8 +213,10 @@ const BottomSheet_login = (props) => {
                             <TouchableOpacity 
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
-                                    navigation.navigate("SearchMajor")
+                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                     setModalVisible(false)
+                                    navigation.navigate("SearchMajor")
+                                    
                                 }}
                             >
                                 <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
