@@ -118,8 +118,7 @@ const BottomSheet_login = (props) => {
                 <TouchableOpacity 
                     onPress={()=>
                     {
-                        console.log("dd")
-                        setModalVisible(false)
+                        setModalVisible(false),
                         navigation.navigate('FindPassword')
                     }}>
                     <Text style={styles.passwordPage}>비밀번호를 잊으셨나요?</Text>
@@ -134,17 +133,8 @@ const BottomSheet_login = (props) => {
         const [pwAgain,setPwAgain] = useState(userPwAgain)
         const [sex,setSex]=useState(userSex)
         const [birth,setBirth]=useState(userBirth)
-        const keepUserData = {
-            signName: "",
-            signEmail:"",
-            signPassword:"",
-            signSex:"",
-            signMajor:"",
-            signUniversity:""
-        }
-
         return(    //SignUp 아이콘 클릭시 띄울 화면
-            <SafeAreaView>
+            <>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{flexDirection:'row'}}>
                         <Image      
@@ -208,7 +198,6 @@ const BottomSheet_login = (props) => {
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
                                     navigation.navigate("SearchUniversity")
-                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                     setModalVisible(false)
                                 }}
                             >
@@ -224,7 +213,6 @@ const BottomSheet_login = (props) => {
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
                                     navigation.navigate("SearchMajor")
-                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                     setModalVisible(false)
                                 }}
                             >
@@ -280,7 +268,7 @@ const BottomSheet_login = (props) => {
                 >
                     <Text style={styles.signUpText}>가입하기</Text>
                 </TouchableOpacity>
-            </SafeAreaView>
+            </>
         )
     }
 
@@ -396,7 +384,7 @@ const BottomSheet_login = (props) => {
             type:'custom',
             duration:1500,
             animationType:'zoom-in',
-            placement:'top'
+            placement:'top',
         })
     }
     const postSignUp=()=>{
