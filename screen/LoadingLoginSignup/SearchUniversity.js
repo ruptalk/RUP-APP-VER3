@@ -4,16 +4,19 @@ import {
     Text,
     Modal,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    SafeAreaView
 } from 'react-native';
 import BigList from "react-native-big-list";
 import univ from './Login/Univ.js'
 import styles from './Login/style'
+import {useNavigation} from '@react-navigation/native';
 
 const SearchUniversity=(props)=>{
+
+    const navigation = useNavigation()
     const masterData = univ
     const [filterData,setFilterData] = useState(univ)
-    const { universityModal, setUniversityModal,setUserUniversity } = props;
     
     const renderItem = ({ item}) => (
         <Item univ={item.univ}/>
@@ -29,8 +32,7 @@ const SearchUniversity=(props)=>{
         </>
     );
     const selectUniversity=(univ)=>{
-        setUserUniversity(univ)
-        setUniversityModal(false)
+        navigation.navigate("Login",{university:univ})
     }
     const searchUniversity=(text)=>{
         if(text){
@@ -45,26 +47,19 @@ const SearchUniversity=(props)=>{
     }
     return(
         <>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={universityModal}
-                onRequestClose={()=>setUniversityModal(false)}
-            >     
-                <View style={styles.universityModalView}>
-                    <View style={{alignItems:'center'}}>
-                        <TextInput
-                            placeholder='대학(교) 검색'
-                            style={styles.sectionStyle}
-                            onChangeText={text => searchUniversity(text)}
-                        />
-                    </View>
-                    <BigList
-                        data={filterData}
-                        renderItem={renderItem}
+            <SafeAreaView style={styles.universityModalView}>
+                <View style={{alignItems:'center'}}>
+                    <TextInput
+                        placeholder='대학(교) 검색'
+                        style={styles.sectionStyle}
+                        onChangeText={text => searchUniversity(text)}
                     />
                 </View>
-            </Modal>
+                <BigList
+                    data={filterData}
+                    renderItem={renderItem}
+                />
+            </SafeAreaView>
         </>
     )
 }

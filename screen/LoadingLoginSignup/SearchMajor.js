@@ -7,15 +7,18 @@ import {
     TextInput
 } from 'react-native';
 import BigList from "react-native-big-list";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import major from './Login/Major.js'
 import styles from './Login/style'
+import {useNavigation} from '@react-navigation/native';
 
-const SearchUniversity=(props)=>{
+
+const SearchUniversity=()=>{
+    const navigation = useNavigation()
     const masterData = major
     const [filterData,setFilterData] = useState(major)
-    const { majorModal, setMajorModal,setUserMajor } = props;
     
-    const renderItem = ({ item}) => (
+    const renderItem = ({item}) => (
         <Item major={item.major}/>
       );
     const Item = ({ major }) => (
@@ -29,8 +32,7 @@ const SearchUniversity=(props)=>{
         </>
     );
     const selectMajor=(major)=>{
-        setUserMajor(major)
-        setMajorModal(false)
+        navigation.navigate("Login",{major:major})
     }
     const searchUniversity=(text)=>{
         if(text){
@@ -44,14 +46,8 @@ const SearchUniversity=(props)=>{
         }
     }
     return(
-        <>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={majorModal}
-                onRequestClose={()=>setMajorModal(false)}
-            >     
-                <View style={styles.universityModalView}>
+        <>  
+                <SafeAreaView style={styles.universityModalView}>
                     <View style={{alignItems:'center'}}>
                         <TextInput
                             placeholder='학과 검색'
@@ -63,8 +59,8 @@ const SearchUniversity=(props)=>{
                         data={filterData}
                         renderItem={renderItem}
                     />
-                </View>
-            </Modal>
+                </SafeAreaView>
+            
         </>
     )
 }

@@ -16,9 +16,12 @@ import { useIsFocused } from '@react-navigation/native';
 // import { MMKV } from 'react-native-mmkv'
 // export const storage = new MMKV()
 
-const Login = (props) => {
+const Login = ({props,route}) => {
     // storage.clearAll()
     const [ modalVisible, setModalVisible ] = useState(false);
+    const [major,setMajor] = useState("")
+    const [university,setUniversity] = useState("")
+
     const [check,setCheck]=useState(0)
     const pressButton=()=>{
         setModalVisible(true);
@@ -33,6 +36,13 @@ const Login = (props) => {
             setCheck(check+1)
             setModalVisible(false)
         }
+            
+        if(route.params!=undefined){
+            if(route.params.major!=undefined)
+                setMajor(route.params.major)
+            if(route.params.university!=undefined)
+                setUniversity(route.params.university)
+        }    
     },[isFocused])
 
     return (
@@ -48,6 +58,8 @@ const Login = (props) => {
             <BottomSheet_login
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
+                major={major}            
+                university={university}
             />
         </View>
     )
