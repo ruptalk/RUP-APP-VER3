@@ -10,10 +10,8 @@ import { Calendar } from "react-native-calendars";
 import styles from './style'
 
 const CalendarModal=(props)=>{
-    const { calendarModalVisible, setCalendarModalVisible,text} = props;
-    const success = [
-        "2022-08-01", "2022-08-14"
-    ];
+    const { calendarModalVisible, setCalendarModalVisible,calendarDate} = props;
+
     return(
         <>
             <Modal
@@ -44,7 +42,7 @@ const CalendarModal=(props)=>{
 
                             dayComponent={({date, state}) => {
                                 
-                                if (success.includes(date.dateString)){
+                                if (calendarDate.includes(date.dateString)){
                                 var dateimg = date.dateString.replace(/\-/g,"")
                                 if((dateimg*1)%2==0){
                                     return(
