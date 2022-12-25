@@ -1,5 +1,5 @@
 import React ,{useEffect,useState,useRef}from 'react'
-import {View, Image, StyleSheet,TouchableOpacity,Text,TextInput,Keyboard } from 'react-native'
+import {View, Image, StyleSheet,TouchableOpacity,Text,TextInput,Keyboard, SafeAreaView } from 'react-native'
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useToast } from "react-native-toast-notifications";
 import {validateEmail} from '../../../validate.js'
@@ -122,7 +122,7 @@ function FindPassword(props){
     }
     ////////////////////////////////////////// 이메일 입력 완료 시 학교,학과 모달 자동 띄우기 //////////////////
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <TouchableOpacity 
                 onPress={()=>navigation.navigate('Login')}
                 style={{marginTop:30,marginLeft:30}}                
@@ -160,7 +160,7 @@ function FindPassword(props){
                 </TouchableOpacity>
                 {findPwTab()}
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
