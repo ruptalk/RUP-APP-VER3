@@ -41,7 +41,7 @@ const BottomSheet_login = (props) => {
     const [SignUpSelectedTab, setSignUpSelectedTab] = useState(false);
     const [isNameBlank,setIsNameBlank]=useState('NotBlankName')
     const navigation = useNavigation()
-    const [userName,setUserName]=useState(null)
+    const [userName,setUserName]=useState("")
     const [nameCheke,setNameCheck]=useState(false)
     const [userEmail,setUserEmail]=useState('')
     const [userPw,setUserPw]=useState('')
