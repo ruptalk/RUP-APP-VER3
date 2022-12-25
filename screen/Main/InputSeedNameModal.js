@@ -19,10 +19,10 @@ const InputSeedNameModal=(props)=>{
     const closeModal=()=>{
         if(seedName!=='')
         {
-            setInputNameModalVisible(false)
-            setSeedName_mainPage(seedName)
             userObject.nowFlowerName=seedName
             storage.set('user',JSON.stringify(userObject))
+            setSeedName_mainPage(seedName)
+            setInputNameModalVisible(false)
         }
         else
         {
