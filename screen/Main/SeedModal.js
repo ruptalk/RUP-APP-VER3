@@ -48,7 +48,7 @@ const SeedModal=(props)=>{
                   break;
             }
             storage.set('user',JSON.stringify(userObject))
-            console.log(storage.getString('user'),"seedmodal")
+            //console.log(storage.getString('user'),"seedmodal")
             setInputNameModalVisible(true)
             setSeedModalVisible(false)
         }
