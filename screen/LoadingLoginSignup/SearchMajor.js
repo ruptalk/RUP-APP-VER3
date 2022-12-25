@@ -13,11 +13,10 @@ import styles from './Login/style'
 import {useNavigation} from '@react-navigation/native';
 
 
-const SearchUniversity=()=>{
+const SearchUniversity=(props)=>{
     const navigation = useNavigation()
     const masterData = major
     const [filterData,setFilterData] = useState(major)
-    
     const renderItem = ({item}) => (
         <Item major={item.major}/>
       );
@@ -32,7 +31,12 @@ const SearchUniversity=()=>{
         </>
     );
     const selectMajor=(major)=>{
-        navigation.navigate("Login",{major:major})
+        if(props.route.params.page==='BottomSheet_login'){
+            return navigation.navigate("Login",{major:major})
+        }
+        if(props.route.params.page==='FindPassword'){
+            return navigation.navigate('FindPassword',{major:major})
+        }
     }
     const searchUniversity=(text)=>{
         if(text){
