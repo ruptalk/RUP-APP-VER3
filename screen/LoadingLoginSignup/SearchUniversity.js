@@ -37,6 +37,9 @@ const SearchUniversity=(props)=>{
         if(props.route.params.page==='FindPassword'){
             return navigation.navigate('FindPassword',{univ:univ})
         }
+        if(props.route.params.page==='ProfileInfo'){
+            return navigation.navigate('Profile',{univ:univ})
+        }
     }
     const searchUniversity=(text)=>{
         if(text){

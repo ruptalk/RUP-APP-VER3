@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect, useState}from 'react'
 import {
     Text,
     TextInput,
@@ -10,14 +10,25 @@ import {
     Platform,
     SafeAreaView
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useIsFocused } from '@react-navigation/native';
 import ProfileImage from './ProfileImage.js'
 import ProfileInfo from './ProfileInfo.js';
 import styles from './style.js';
 import { storage } from '../Main.js';
 
-function Profile(photo){
+function Profile({route}){
+    const isFocused=useIsFocused()
     const navigation = useNavigation()
+    const [major, setMajor] = useState("")
+    const [university, setUniversity] = useState("")
+
+    useEffect(()=>{ 
+        if(route.params!=undefined){
+            if(route.params.univ!=undefined)
+                setUniversity(route.params.univ)
+            if(route.params.major!=undefined)
+                setMajor(route.params.major)
+        }},[isFocused])
     return(
         
         <SafeAreaView style={[styles.container]}>
@@ -36,7 +47,11 @@ function Profile(photo){
                     <View style={styles.horizonalLine}/>
                     <ProfileImage/>
                     <View style={{marginTop:'7%'}}/>
-                    <ProfileInfo/>
+                    <ProfileInfo
+                        profilemajor={major}
+                        profileuniversity={university}
+
+                    />
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
