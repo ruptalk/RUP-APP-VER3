@@ -56,7 +56,20 @@ function Main(props){
   const [seedModalVisible,setSeedModalVisible] = useState(false) 
   const [finishSeed,setfinishSeed] = useState(false) 
   const [asking,setasking] = useState(1)
-  
+  const [calendarDate,] = useState([
+    {
+        "uid": "d334cc4w",
+        "date": "2022-11-16",
+        "point": 2 
+    },
+    {
+        "uid": "d334cc4w",
+        "date": "2022-11-15",
+        "point": 11
+    }
+  ])
+  const [propcalendarDate,setPropcalendarDate] = useState([])
+
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -67,7 +80,12 @@ function Main(props){
   }
   useEffect(() => {
     if( userObject.nowFlowerName=="") setSeedModalVisible(true)
-    console.log(userObject.nowFlowerName,"isFocused")
+
+    setPropcalendarDate([])
+    for(key in calendarDate){
+        propcalendarDate.push(calendarDate[key].date)
+    }
+    console.log(propcalendarDate)
   }, [isFocused]);
   
   useEffect(()=>{
@@ -198,6 +216,7 @@ function Main(props){
               <CalendarModal
                 calendarModalVisible={calendarModalVisible}
                 setCalendarModalVisible={setCalendarModalVisible}
+                calendarDate = {propcalendarDate}
               />
               <SeedModal
                   seedModalVisible={seedModalVisible}
