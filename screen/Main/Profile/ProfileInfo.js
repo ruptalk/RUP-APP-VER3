@@ -1,4 +1,4 @@
-import React ,{useState}from 'react'
+import React ,{useEffect, useState}from 'react'
 import {
     Text,
     TextInput,
@@ -10,7 +10,7 @@ import {
     ScrollView
 } from 'react-native'
 import { MMKV } from 'react-native-mmkv'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useIsFocused } from '@react-navigation/native';
 import { useToast } from "react-native-toast-notifications";
 import SearchUniversity from '../../LoadingLoginSignup/SearchUniversity';
 import SearchMajor from '../../LoadingLoginSignup/SearchMajor'
@@ -18,8 +18,11 @@ import KakaoSDK from '@actbase/react-kakaosdk'
 import styles from './style.js'
 
 export const storage = new MMKV()
-const ProfileInfo=()=>{
+const ProfileInfo=(props)=>{
+    const {profilemajor, profileuniversity} = props;
+
     const navigation = useNavigation()
+    const isFocused = useIsFocused()
     const toast = useToast();
     const jsonUser = storage.getString('user')
     const userObject = JSON.parse(jsonUser)
@@ -36,6 +39,16 @@ const ProfileInfo=()=>{
     const [placeHolderEmail,setPlaceHolderEmail] = useState(userObject.email)
     const [placeHolderPhoneNumber,setPlaceHolderPhoneNumber] = useState(userObject.phoneNumber)
     const [placeHolderPw,setPlaceHolderPw]= useState(userObject.pw)
+
+    useEffect(()=>{
+        if(profilemajor!=""){
+            setMajor(profilemajor)
+        }
+        if(profileuniversity!=""){
+            setUniv(profileuniversity)
+        }
+    },[profilemajor,profileuniversity])
+
     const editProfile=()=>{
         userObject.userName = name
         userObject.email = email
@@ -75,7 +88,11 @@ const ProfileInfo=()=>{
             <View style={styles.middle}>
                 <TouchableOpacity
                     style={[styles.sectionStyle,{justifyContent:'center'}]}    
-                    onPress={()=>setUniversityModal(true)}
+                    onPress={()=>{
+                        navigation.navigate("SearchUniversity",{page:'ProfileInfo'})
+                       
+                    }
+                }
                 >
                     <Text>{univ}</Text>
                 </TouchableOpacity>
@@ -84,7 +101,10 @@ const ProfileInfo=()=>{
             <View style={styles.middle}>
                 <TouchableOpacity
                     style={[styles.sectionStyle,{justifyContent:'center'}]}    
-                    onPress={()=>setMajorModal(true)}
+                    onPress={()=>{
+                        navigation.navigate("SearchMajor",{page:'ProfileInfo'})
+                    }
+                }
                 >
                     <Text>{major}</Text>
                 </TouchableOpacity>
@@ -155,7 +175,7 @@ const ProfileInfo=()=>{
                     </TouchableOpacity>
                 </View>
             </View>
-            <SearchUniversity
+            {/* <SearchUniversity
                 universityModal={universityModal}
                 setUniversityModal={setUniversityModal}
                 setUserUniversity={setUniv}
@@ -164,7 +184,7 @@ const ProfileInfo=()=>{
                 majorModal={majorModal}
                 setMajorModal={setMajorModal}
                 setUserMajor={setMajor}
-            />
+            /> */}
         </ScrollView>
     )
 }
