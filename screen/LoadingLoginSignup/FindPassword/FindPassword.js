@@ -1,14 +1,12 @@
 import React ,{useEffect,useState,useRef}from 'react'
 import {View, Image, StyleSheet,TouchableOpacity,Text,TextInput,Keyboard } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useToast } from "react-native-toast-notifications";
 import {validateEmail} from '../../../validate.js'
 import Clipboard from '@react-native-clipboard/clipboard';
-import SearchUniversity from '../SearchUniversity.js';
-import SearchMajor from '../SearchMajor.js'
 import styles from './style.js';
 
-function FindPassword(){
+function FindPassword(props){
     const navigation = useNavigation()
     const emailRef = useRef(null)
     const [email,setEmail]=useState(null)
@@ -18,12 +16,25 @@ function FindPassword(){
     const [universityModal, setUniversityModal] = useState(false);
     const [majorModal, setMajorModal] = useState(false);
     const toast = useToast();
+    const isFocused = useIsFocused()
 
     const findPwTab = () => {    
         if(findPw==='비밀번호 찾기 버튼 클릭'){
             return <FindPw/>
         }
     }
+    useEffect(()=>{
+        if(props.route.params!=undefined){
+            if(props.route.params.univ!=undefined){
+                setUniv(props.route.params.univ)
+            }
+            if(props.route.params.major!=undefined){
+                setMajor(props.route.params.major)
+            }
+        }
+    },[isFocused])
+    
+
     const FindPw=()=>(
         <>
             <Text style={styles.secretText}>임시 비밀번호를 클립보드에 복사하였습니다!</Text>
@@ -129,13 +140,13 @@ function FindPassword(){
                 />
                 <TouchableOpacity
                     style={[styles.sectionStyle,{justifyContent:'center'}]}
-                    onPress={()=>setUniversityModal(true)}    
+                    onPress={()=>navigation.navigate('SearchUniversity',{page:'FindPassword'})}    
                 >
                     <Text>{univ}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.sectionStyle,{justifyContent:'center'}]}    
-                    onPress={()=>setMajorModal(true)}
+                    onPress={()=>navigation.navigate('SearchMajor',{page:'FindPassword'})}
                 >
                     <Text>{major}</Text>
                 </TouchableOpacity>
@@ -149,16 +160,6 @@ function FindPassword(){
                 </TouchableOpacity>
                 {findPwTab()}
             </View>
-            <SearchUniversity
-                universityModal={universityModal}
-                setUniversityModal={setUniversityModal}
-                setUserUniversity={setUniv}
-            />
-            <SearchMajor
-                majorModal={majorModal}
-                setMajorModal={setMajorModal}
-                setUserMajor={setMajor}
-            />
         </View>
     )
 }

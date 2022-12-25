@@ -13,7 +13,6 @@ import styles from './Login/style'
 import {useNavigation} from '@react-navigation/native';
 
 const SearchUniversity=(props)=>{
-
     const navigation = useNavigation()
     const masterData = univ
     const [filterData,setFilterData] = useState(univ)
@@ -32,7 +31,12 @@ const SearchUniversity=(props)=>{
         </>
     );
     const selectUniversity=(univ)=>{
-        navigation.navigate("Login",{university:univ})
+        if(props.route.params.page==='BottomSheet_login'){
+            return navigation.navigate("Login",{univ:univ})
+        }
+        if(props.route.params.page==='FindPassword'){
+            return navigation.navigate('FindPassword',{univ:univ})
+        }
     }
     const searchUniversity=(text)=>{
         if(text){

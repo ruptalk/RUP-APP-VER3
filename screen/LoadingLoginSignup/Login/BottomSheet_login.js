@@ -31,9 +31,7 @@ export const storage = new MMKV()
 
 const BottomSheet_login = (props) => {
     const isFocused = useIsFocused();
-    // useEffect(() => {
-    //     console.log(props.major)
-    // }, [isFocused]);
+    
     const { modalVisible, setModalVisible,major,university } = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY_login = useRef(new Animated.Value(screenHeight)).current;
@@ -56,7 +54,6 @@ const BottomSheet_login = (props) => {
     const [uid,setUid]=useState(null)
     const toast = useToast();
     const redStar = require('../../../imageResource/jobDaHan/redStar.png')
-    
     const signInWithKakao=async()=>{
         await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
@@ -197,9 +194,8 @@ const BottomSheet_login = (props) => {
                             <TouchableOpacity                                                  
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
-                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
+                                    navigation.navigate("SearchUniversity",{page:'BottomSheet_login'})
                                     setModalVisible(false)
-                                    navigation.navigate("SearchUniversity")
                                 }}
                             >
                                 <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/search.png')}/>
@@ -213,10 +209,8 @@ const BottomSheet_login = (props) => {
                             <TouchableOpacity 
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
-                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
+                                    navigation.navigate("SearchMajor",{page:'BottomSheet_login'})
                                     setModalVisible(false)
-                                    navigation.navigate("SearchMajor")
-                                    
                                 }}
                             >
                                 <Image style={styles.imageStyle} source={require('../../../imageResource/jobDaHan/triangle.png')}/>
@@ -309,7 +303,6 @@ const BottomSheet_login = (props) => {
             return nickToServer(name)
         }
         else{
-            console.log(name)
             return showToast("닉네임은 2~16자 입니다.")
         }
     }
@@ -323,7 +316,6 @@ const BottomSheet_login = (props) => {
         })
         .then(res=>{return res.json()})
         .then(data=>{
-            console.log(data)
             if(data.success===true){
                 showToast('중복 확인 완료')
                 setUserName(name)
@@ -338,7 +330,6 @@ const BottomSheet_login = (props) => {
         if(nameCheke===false){
             showToast('닉네임 중복확인을 해주세요')
         }else{
-            console.log(userName)
             return validation_email()
         }
     }
