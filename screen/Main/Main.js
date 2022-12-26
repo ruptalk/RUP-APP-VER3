@@ -18,6 +18,7 @@ import Seedfinish from './SeedFinish'
 import styles from './style'
 import flower from './flower'
 import KakaoSDK from '@actbase/react-kakaosdk'
+import axios from 'axios'
 
 export const storage = new MMKV()
 
@@ -53,7 +54,7 @@ function Main(props){
   const [flowerDate,setFlowerDate]=useState('')
   const [modalVisible,setModalVisible]=useState(false)
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-  const [seedModalVisible,setSeedModalVisible] = useState(false) 
+  const [seedModalVisible,setSeedModalVisible] = useState((userObject.flowerRecord).length===0?true:false) 
   const [finishSeed,setfinishSeed] = useState(false) 
   const [asking,setasking] = useState(1)
   const [calendarDate,] = useState([
@@ -79,13 +80,11 @@ function Main(props){
     console.log(ee)
   }
   const isSeedName=()=>{
-    if(userObject.nowFlowerName!='')
-        return <Text style={styles.tulipText}>{userObject.nowFlowerName}와 함께 {flowerDate}일째</Text>
-  }
-  useEffect(() => {
-    if( userObject.nowFlowerName=="") setSeedModalVisible(true)
-  }, [isFocused]);
-  
+    if((userObject.flowerRecord).length===0)
+        return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
+    else
+        return <Text style={styles.tulipText}>{userObject.flowerRecord.slice(-1)[0].flowerNickName}와 함께 {flowerDate}일째</Text>
+  }  
   useEffect(()=>{
     if(userObject.point%30==0 && userObject.point!=0 && asking==1){
       setfinishSeed(true)
@@ -103,13 +102,23 @@ function Main(props){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     //console.log(date)
   },[currentTime])
-
-  // useEffect(()=>{  
-  //   if(Array.isArray(flowerRecord) && flowerRecord.length == 0){
-  //     setSeedModalVisible(true)
-  //   }    
-  // },[flowerRecord])
-
+  console.log(flower[userObject.nowFlowerSeed].flowername)
+  useEffect(()=>{  
+    if(seedName_mainPage!==''){
+      axios.post('http://152.67.193.99/flower/add-new-flower', {
+            uid:userObject.uid,
+            flower:flower[userObject.nowFlowerSeed].flowername,
+            flowerNickname:seedName_mainPage
+          })
+          .then(function (response) {
+            console.log('success')
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+  },[seedName_mainPage])
+  console.log(userObject)
 
 
   const FlowerGIF =()=>{
