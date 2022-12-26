@@ -18,7 +18,7 @@ import {
 import { useNavigation,useIsFocused } from '@react-navigation/native';
 import KakaoSDK from '@actbase/react-kakaosdk'
 import { useToast } from "react-native-toast-notifications";
-import {validateNickName,validateEmail,validatePw} from '../../../validate.js'
+import {validateNickName,validateEmail,validatePw, validateBirth} from '../../../validate.js'
 import { MMKV } from 'react-native-mmkv'
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios'
@@ -54,6 +54,7 @@ const BottomSheet_login = (props) => {
     const [uid,setUid]=useState(null)
     const toast = useToast();
     const redStar = require('../../../imageResource/jobDaHan/redStar.png')
+    const [check,setcheck] = useState(0)
     const signInWithKakao=async()=>{
         await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
@@ -144,7 +145,11 @@ const BottomSheet_login = (props) => {
                             defaultValue={userName}
                             />
                         <TouchableOpacity 
-                            onPress={()=>validation_nickName(name)}
+                            onPress={()=>{
+                                validation_nickName(name)
+                                setcheck(1)
+                                console.log(check)
+                            }}
                             style={styles.nickNameCheck}
                         >
                             <Text style={{fontSize:12,color:'white'}}>중복 확인</Text>
@@ -194,6 +199,7 @@ const BottomSheet_login = (props) => {
                             <TouchableOpacity                                                  
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
+                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                     navigation.navigate("SearchUniversity",{page:'BottomSheet_login'})
                                     setModalVisible(false)
                                 }}
@@ -209,6 +215,7 @@ const BottomSheet_login = (props) => {
                             <TouchableOpacity 
                                 style={[styles.sectionStyle,{flexDirection:'row',alignItems:'center'}]}
                                 onPress={()=>{
+                                    userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                     navigation.navigate("SearchMajor",{page:'BottomSheet_login'})
                                     setModalVisible(false)
                                 }}
@@ -240,12 +247,10 @@ const BottomSheet_login = (props) => {
                         </View>
                     </View>
                     <TextInput
-                        placeholder='생년월일(ex.2000-01-01)'
+                        placeholder='생년월일(ex.19950101)'
                         style={styles.sectionStyle3}
                         onChangeText={birth => {
-                            if(birth.length===4){setBirth(birth.concat('-'))}
-                            else if(birth.length===7){setBirth(birth.concat('-'))}
-                            else if(birth.length===10){setBirth(birth)}
+                            if(birth.length===8){setBirth(birth)}
                         }}
                         defaultValue={birth}
                         keyboardType={'number-pad'}
@@ -270,13 +275,19 @@ const BottomSheet_login = (props) => {
     }
 
     const signUp=(name,email,pw,pwAgain,sex,birth)=>{
-        setUserName(name)
-        setUserEmail(email)
-        setUserPw(pw)
-        setUserPwAgain(pwAgain)
-        setUserSex(sex)
-        setUserBirth(birth)
-        setOpenToastMessage(openToastMessage+1)
+        if(check==1){
+            setUserName(name)
+            setUserEmail(email)
+            setUserPw(pw)
+            setUserPwAgain(pwAgain)
+            setUserSex(sex)
+            setUserBirth(birth)
+            setOpenToastMessage(openToastMessage+1)
+        }
+        else{
+            return showToast("닉네임 중복검사를 해주세요")
+        }
+        
     }
     const userDefaultValue=(name,email,pw,pwAgain,sex,birth)=>{
         setUserName(name)
@@ -359,10 +370,18 @@ const BottomSheet_login = (props) => {
     }
     const validation_university=()=>{                           //비밀번호 유효성 검사
         if(userUniversity!=='학교찾기'){
-            return validation_major()
+            return validation_birthday()
         }
         else{
             return showToast("학교를 선택해주세요!")
+        }
+    }
+    const validation_birthday=()=>{
+        if(validateBirth(userBirth)){
+            return validation_major()
+        }
+        else{
+            return showToast("생일엔 숫자만 입력해 주세요.")
         }
     }
     const validation_major=()=>{                           //비밀번호 유효성 검사
@@ -382,7 +401,7 @@ const BottomSheet_login = (props) => {
         })
     }
     const postSignUp=()=>{
-        fetch('http://152.67.193.99/user/add-new-user',{
+        fetch('http://13.124.80.15/user/add-new-user',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
