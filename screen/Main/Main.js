@@ -97,7 +97,6 @@ function Main(props){
       axios.post('http://13.124.80.15/flower/add-new-flower', {
             uid:userObject.uid,
             flower:flower[userObject.nowFlowerSeed].flowername,
-            nowFlowerSeed:userObject.nowFlowerSeed,
             flowerNickname:seedName_mainPage
           })
           .then(function (response) {
