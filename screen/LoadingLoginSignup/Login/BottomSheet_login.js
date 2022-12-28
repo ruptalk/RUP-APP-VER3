@@ -318,7 +318,7 @@ const BottomSheet_login = (props) => {
         }
     }
     const nickToServer=(name)=>{
-        fetch('http://152.67.193.99/user/nickname-check',{
+        fetch('http://13.124.80.15/user/nickname-check',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
@@ -447,7 +447,7 @@ const BottomSheet_login = (props) => {
         // })
         // .catch(error=>console.log('ERROR'))
 
-        axios.post('http://152.67.193.99/user/login', {
+        axios.post('http://13.124.80.15/user/login', {
             email: email,
             password: pw
           })
@@ -498,7 +498,7 @@ const BottomSheet_login = (props) => {
         // })
         // .catch(error=>console.log('ERROR'))
 
-        axios.get('http://152.67.193.99/home/main', {
+        axios.get('http://13.124.80.15/home/main', {
             params: {
               uid: uid
             }
