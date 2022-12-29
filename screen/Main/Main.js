@@ -72,7 +72,7 @@ function Main(props){
     if((userObject.flowerRecord).length===0)
         return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
     else
-        return <Text style={styles.tulipText}>{userObject.flowerRecord.slice(-1)[0].flowerNickName}와 함께 {flowerDate}일째</Text>
+        return <Text style={styles.tulipText}>{userObject.flowerRecord.slice(-1)[0].flowerNickname}와 함께 {flowerDate}일째</Text>
   }  
   useEffect(()=>{
     if(userObject.point%30==0 && userObject.point!=0 && asking==1){
