@@ -35,10 +35,10 @@ const UnivRanking=()=>{
                 style={dystyle().rank}
                 onPress={()=>navigation.navigate('PersonalRanking',{univ : item.univ})}>
                 <View style={styles.univLogoContainer}>
-                    <Image 
+                    {/* <Image 
                         source={require('../../../imageResource/jobDaHan/donga.png')}
                         style={styles.univLogo}
-                    />
+                    /> */}
                 </View>
                 <View style={styles.itemRank}>
                     <Text style={styles.itemFont}>{item.rank}등</Text>

@@ -13,6 +13,11 @@ export const validatePw = (Pw) => {
     return regex.test(Pw)
 }
 
+export const validateBirth = (birth) =>{
+    const regex = /^[0-9]*$/
+    return regex.test(birth)
+}
+
 
 //  /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ 최소8자,최소 한 개의 숫자, 최소 한 개의 영문자
 

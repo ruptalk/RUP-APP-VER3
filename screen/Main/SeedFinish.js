@@ -34,6 +34,7 @@ const SeedFinish = (props) => {
         for(key in userObject.flowerUri){
            if(userObject.flowerUri[key]==-1){
             userObject.flowerUri[key]=userObject.nowFlowerSeed
+            userObject.nowFlowerSeed=10
             storage.set('user',JSON.stringify(userObject))
             break;
            }

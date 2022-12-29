@@ -57,22 +57,11 @@ function Main(props){
   const [seedModalVisible,setSeedModalVisible] = useState((userObject.flowerRecord).length===0?true:false) 
   const [finishSeed,setfinishSeed] = useState(false) 
   const [asking,setasking] = useState(1)
-  const [calendarDate,] = useState([
-    {
-        "uid": "d334cc4w",
-        "date": "2022-11-16",
-        "point": 2 
-    },
-    {
-        "uid": "d334cc4w",
-        "date": "2022-11-15",
-        "point": 11
-    }
-  ])
+  const calendarDate = userObject.calendarDate
   const [propcalendarDate,setPropcalendarDate] = useState([])
 
   for(key in calendarDate){
-    propcalendarDate.push(calendarDate[key].date)
+    propcalendarDate.push((calendarDate[key].date).slice(0,10))
   }
 
   const kaka=async()=>{
@@ -102,10 +91,10 @@ function Main(props){
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
     //console.log(date)
   },[currentTime])
-  console.log(flower[userObject.nowFlowerSeed].flowername)
+  // console.log(flower[userObject.nowFlowerSeed].flowername)
   useEffect(()=>{  
     if(seedName_mainPage!==''){
-      axios.post('http://152.67.193.99/flower/add-new-flower', {
+      axios.post('http://13.124.80.15/flower/add-new-flower', {
             uid:userObject.uid,
             flower:flower[userObject.nowFlowerSeed].flowername,
             flowerNickname:seedName_mainPage
@@ -118,12 +107,13 @@ function Main(props){
           });
     }
   },[seedName_mainPage])
-  console.log(userObject)
+
+  // console.log(userObject)
 
 
   const FlowerGIF =()=>{
     var tmp =''
-    var sw = userObject.point
+    var sw = userObject.countRecycle
     if (sw < 6){
       tmp = flower[userObject.nowFlowerSeed].uri1
     }
@@ -206,13 +196,21 @@ function Main(props){
                       <FlowerGIF/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
-                      <TouchableOpacity onPress={()=>setModalVisible(true)}>  
+                      <TouchableOpacity onPress={()=>{
+                        if(userObject.point%30==0 && userObject.point!=0){
+                          setSeedModalVisible(true)
+                        }
+                        else{
+                          setModalVisible(true)
+                        }
+                      }
+                      }>  
                         <View style={{height:'45%'}}/>
                         <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={()=>{setfinishSeed(true)}}>  
+                      {/* <TouchableOpacity onPress={()=>{setfinishSeed(true)}}>  
                         <Text>투더문</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                   </View>
               </View>
               <BottomSheet_Main

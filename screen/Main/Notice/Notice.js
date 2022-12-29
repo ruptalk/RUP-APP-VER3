@@ -22,29 +22,28 @@ function Notice(){
   const userObject = JSON.parse(jsonUser)
   const [uid,]=useState(userObject.uid)
 
-  const [notice,setNotice] = useState([])
+  const [notice,setNotice] = useState()
+  const [pointRecord,setPointRecord] = useState([])
+
   const navigation = useNavigation()
   const isFocused = useIsFocused()
 
   useEffect(()=>{
     getNotice(uid)
+    console.log(notice,"노티스입니다")
   },[isFocused])
 
   const getNotice=(uid)=>{
-    axios.get('http://152.67.193.99/home/notice-and-point-record', { //http://152.67.193.99 //http://13.124.80.15
+    axios.get('http://13.124.80.15/home/notice-and-point-record', { 
     params: {
       uid: uid
     }
   })
   .then(function(response) {
-    console.log(response,"?DFSF?")
-    // const getNotice = {
-    //   uid:response.data.uid,
-    //   noticeDate : response.data.noticeDate,
-    //   notice : response.data.notice,
-    //   pointRecord : response.date.pointRecord      
-    // }
-    // setNotice(getNotice)      
+    console.log(response.data)
+    
+    setNotice(response.data.notice)      
+    setPointRecord(response.data.pointRecord)
   })
   .catch(function (error) {
     console.log(error);
@@ -67,14 +66,14 @@ function Notice(){
   );
 
   const [noticemodalVisible, setnoticeModalVisible] = useState(false);
-  const [text, setText]=useState('공지사항')
+
 
   return(
     <>
       <Notice_modal
         noticemodalVisible={noticemodalVisible}
         setnoticeModalVisible={setnoticeModalVisible}
-        text={text}
+        text={notice}
       />
     
       <SafeAreaView style={styles.container}>
@@ -91,12 +90,12 @@ function Notice(){
             onPress={()=>setnoticeModalVisible(true)}
           >
           <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_notice_02.png')}/>
-          <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] v 1.1 업데이트 되었습니다.</Text>
+          <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] {notice} </Text>
         </TouchableOpacity>
         
         <SafeAreaView style={{height:'80%'}}>
           <BigList
-            data={notice.pointRecord}
+            data={pointRecord}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />
