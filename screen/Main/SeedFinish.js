@@ -59,7 +59,7 @@ return (
                         <Text style={{ color: '#000000' }}>나만의 정원으로 옮겨보세요</Text>
                     </View>
                     <View style={{ marginLeft: '20%' }}>
-                        <Image style={{ width: 170, height: 250 }} source={userObject.nowFlowerSeed != -1 ? flower[userObject.nowFlowerSeed].upng : {uri:''}}/>
+                        <Image style={{ width: 170, height: 250 }} source={userObject.nowFlowerSeed != 10 ? flower[userObject.nowFlowerSeed].upng : {uri:''}}/>
                     </View>
                     <View style={styles.flexThree}>
                         <View style={{ flexDirection: 'row' }}>

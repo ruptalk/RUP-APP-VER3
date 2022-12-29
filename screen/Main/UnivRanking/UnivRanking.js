@@ -1,30 +1,48 @@
 import React ,{useState,useRef, useEffect}from 'react'
 import {
     Text,
-    TextInput,
     StyleSheet,
     TouchableOpacity,
     Image,
     View,
-    KeyboardAvoidingView,
     FlatList,
     SafeAreaView
 } from 'react-native'
-import { MMKV } from 'react-native-mmkv'
-import { useNavigation } from '@react-navigation/native';
-import { useToast } from "react-native-toast-notifications";
-import KakaoSDK from '@actbase/react-kakaosdk'
+// import { MMKV } from 'react-native-mmkv'
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+// import { useToast } from "react-native-toast-notifications";
+// import KakaoSDK from '@actbase/react-kakaosdk'
 import ReactNativeAnimatedSearchbox from 'react-native-animated-searchbox';
 import styles from './style.js'
 import {screenHeight,screenWidth} from '../../Main/fullScreenValue'
 
 
 const UnivRanking=()=>{
+    const isfocus = useIsFocused()
     const refSearchBox=useRef()
     const [searchUnivText,setSearchUnivText] = useState(true)
     const [searchUnivBox,setSearchUnivBox] = useState(false)
-    const [filterData,setFilterData] = useState(arr)
+    const [filterData,setFilterData] = useState([])
+    const [rank, setRank]= useState([])
     const navigation = useNavigation()
+
+    useEffect(()=>{
+        getRanking()    
+      },[isfocus])
+    
+      const getRanking=()=>{
+        fetch('http://13.124.80.15/rank/college-rank', { 
+        method:'GET',
+        headers:{'Content-Type':'application/json'},     
+      })
+      .then(res=>{return res.json()})
+      .then(data=>{setRank(data),setFilterData(data)}) 
+      .catch(function (error) {
+        console.log(error);
+        console.log('fail')
+      });
+    }
+
     const renderItem=({item})=>{
             return (<Item item={item} backgroundColor={'#a8ce9e'} />)
         }        
@@ -33,38 +51,32 @@ const UnivRanking=()=>{
         return(
             <TouchableOpacity 
                 style={dystyle().rank}
-                onPress={()=>navigation.navigate('PersonalRanking',{univ : item.univ})}>
+                onPress={()=>navigation.navigate('PersonalRanking',{univ : item.college})}>
                 <View style={styles.univLogoContainer}>
-                    {/* <Image 
-                        source={require('../../../imageResource/jobDaHan/donga.png')}
-                        style={styles.univLogo}
-                    /> */}
                 </View>
                 <View style={styles.itemRank}>
                     <Text style={styles.itemFont}>{item.rank}등</Text>
                 </View>
                 <View style={styles.itemUniv}>
-                    <Text style={styles.itemFont}>{item.univ}</Text>
+                    <Text style={styles.itemFont}>{item.college}</Text>
                 </View>
                 <View style={styles.itemPoint}>
-                    <Text style={styles.itemFont}>{item.point} p</Text>
+                    <Text style={styles.itemFont}>{item.totalPoint} p</Text>
                 </View>
             </TouchableOpacity>
         )
     }
     const searchUniversity=(text)=>{
         if(text){
-            const searchData = arr.filter((item)=>{
-                return item.univ.includes(text)
+            const searchData = rank.filter((item)=>{
+                return item.college.includes(text)
             })
             setFilterData(searchData)
         }
         else{
-            setFilterData(arr)
+            setFilterData(rank)
         }
     }
-    console.log(screenHeight)
-    console.log(screenWidth)
     //Call for the open  
     openSearchBox = () => refSearchBox.current.open();  
 
@@ -110,7 +122,7 @@ const UnivRanking=()=>{
                 <FlatList
                     data={filterData}
                     renderItem={renderItem}    
-                    keyExtractor={(item)=>item.rank}
+                    keyExtractor={(item)=>item.college}
                     showsVerticalScrollIndicator={false}
                 />
             </View>
@@ -133,60 +145,3 @@ const dystyle=()=>StyleSheet.create({
     },
 })
 
-const arr = [
-    {
-        rank:1,
-        univ:'동아대',
-        point:0
-    },
-    {
-        rank:2,
-        univ:'부산대',
-        point:0
-    },
-    {
-        rank:3,
-        univ:'부경대',
-        point:0
-    },
-    {
-        rank:4,
-        univ:'해양대',
-        point:0
-    },
-    {
-        rank:5,
-        univ:'경희대',
-        point:0
-    },
-    {
-        rank:6,
-        univ:'서울시립대',
-        point:0
-    },
-    {
-        rank:7,
-        univ:'중앙대',
-        point:0
-    },
-    {
-        rank:8,
-        univ:'서강대',
-        point:0
-    },
-    {
-        rank:9,
-        univ:'성균관대',
-        point:0
-    },
-    {
-        rank:10,
-        univ:'서울대',
-        point:0
-    },
-    {
-        rank:11,
-        univ:'한양대',
-        point:0
-    },
-]

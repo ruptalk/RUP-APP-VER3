@@ -1,29 +1,52 @@
 import React ,{useState,useRef, useEffect}from 'react'
 import {
     Text,
-    TextInput,
     StyleSheet,
     TouchableOpacity,
     Image,
     View,
-    KeyboardAvoidingView,
-    FlatList
+    FlatList,
+    SafeAreaView
 } from 'react-native'
-import { MMKV } from 'react-native-mmkv'
-import { useNavigation } from '@react-navigation/native';
-import { useToast } from "react-native-toast-notifications";
-import KakaoSDK from '@actbase/react-kakaosdk'
+// import { MMKV } from 'react-native-mmkv'
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+// import { useToast } from "react-native-toast-notifications";
+// import KakaoSDK from '@actbase/react-kakaosdk'
 import ReactNativeAnimatedSearchbox from 'react-native-animated-searchbox';
 import styles from './style.js'
 import {screenHeight,screenWidth} from '../../Main/fullScreenValue'
 
 const PersonalRanking=(props)=>{
+    const isfocus = useIsFocused()
     const univ = props.route.params.univ
     const refSearchBox=useRef()
     const [searchUnivText,setSearchUnivText] = useState(true)
     const [searchUnivBox,setSearchUnivBox] = useState(false)
-    const [filterData,setFilterData] = useState(arr)
     const navigation = useNavigation()
+    const [eachRank,setEachRank] = useState([])
+    const [filterData,setFilterData] = useState([])
+
+
+    useEffect(()=>{
+        getRanking()    
+      },[isfocus])
+    
+      const getRanking=()=>{
+        fetch('http://13.124.80.15/rank/college-each-rank', { 
+        method:'POST',
+        headers:{'Content-Type':'application/json'},     
+        body:JSON.stringify({
+            college: univ
+        })
+      })
+      .then(res=>{return res.json()})
+      .then(data=>{console.log(data),setEachRank(data),setFilterData(data)})
+      .catch(function (error) {
+        console.log(error);
+        console.log('fail')
+      });
+    }
+
     const renderItem=({item})=>{
         return (<Item item={item} backgroundColor={'#a8ce9e'} />)      
     }
@@ -32,46 +55,42 @@ const PersonalRanking=(props)=>{
         return(
             <View style={dystyle().rank}>
                 <View style={styles.univLogoContainer}>
-                    <Image 
-                        source={require('../../../imageResource/jobDaHan/donga.png')}
-                        style={styles.univLogo}
-                    />
                 </View>
                 <View style={styles.itemRank}>
                     <Text style={styles.itemFont}>{item.rank}등</Text>
                 </View>
                 <View style={styles.itemUniv}>
-                    <Text style={styles.itemFont}>{item.univ}</Text>
+                    <Text style={styles.itemFont}>{item.nickname}</Text>
                 </View>
                 <View style={styles.itemPoint}>
-                    <Text style={styles.itemFont}>{item.point} p</Text>
+                    <Text style={styles.itemFont}>{item.totalPoint} p</Text>
                 </View>
             </View>
         )
     }
     const searchUniversity=(text)=>{
         if(text){
-            const searchData = arr.filter((item)=>{
-                return item.univ.includes(text)
+            const searchData = eachRank.filter((item)=>{
+                return item.nickname.includes(text)
             })
             setFilterData(searchData)
         }
         else{
-            setFilterData(arr)
+            setFilterData(eachRank)
         }
     }
-    console.log(screenHeight)
-    console.log(screenWidth)
+
     //Call for the open  
     openSearchBox = () => refSearchBox.current.open();  
-
     //Call for the close  
     closeSearchBox = () => refSearchBox.current.close();
+
     useEffect(()=>{
         console.log('hi')
     },[refSearchBox.current]) 
+
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.topLine}>
                 <TouchableOpacity 
                     onPress={()=>navigation.goBack()}
@@ -107,11 +126,11 @@ const PersonalRanking=(props)=>{
                 <FlatList
                     data={filterData}
                     renderItem={renderItem}    
-                    keyExtractor={(item)=>item.rank}
+                    keyExtractor={(item)=>item.uid}
                     showsVerticalScrollIndicator={false}
                 />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -129,62 +148,3 @@ const dystyle=()=>StyleSheet.create({
         alignItems:'center',
     },
 })
-
-const arr = [
-    {
-        rank:1,
-        univ:'동아대',
-        point:0
-    },
-    {
-        rank:2,
-        univ:'부산대',
-        point:0
-    },
-    {
-        rank:3,
-        univ:'부경대',
-        point:0
-    },
-    {
-        rank:4,
-        univ:'해양대',
-        point:0
-    },
-    {
-        rank:5,
-        univ:'경희대',
-        point:0
-    },
-    {
-        rank:6,
-        univ:'서울시립대',
-        point:0
-    },
-    {
-        rank:7,
-        univ:'중앙대',
-        point:0
-    },
-    {
-        rank:8,
-        univ:'서강대',
-        point:0
-    },
-    {
-        rank:9,
-        univ:'성균관대',
-        point:0
-    },
-    {
-        rank:10,
-        univ:'서울대',
-        point:0
-    },
-    {
-        rank:11,
-        univ:'한양대',
-        point:0
-    },
-]
-/* 화살표 1 */
