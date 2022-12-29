@@ -411,8 +411,9 @@ const BottomSheet_login = (props) => {
                 nickname: userName,// 필수
                 sex : userSex,
                 birth: userBirth,
-                college: userUniversity,
-                major:userMajor
+                college: university,
+                major:major
+                
             })
         })
         .then(res=>{return res.json()})
