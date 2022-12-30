@@ -59,7 +59,7 @@ function Main(props){
   const [asking,setasking] = useState(1)
   const calendarDate = userObject.calendarDate
   const [propcalendarDate,setPropcalendarDate] = useState([])
-
+  const createFlowerDate = (userObject.flowerRecord).length===0?new Date():new Date(userObject.flowerRecord.slice(-1)[0].date)
   for(key in calendarDate){
     propcalendarDate.push((calendarDate[key].date).slice(0,10))
   }
@@ -84,14 +84,12 @@ function Main(props){
   useInterval(()=>{{
     setCurrentTime(new Date())
     setasking(1)
-    }},60000)
+    }},6000)
 
   useEffect(()=>{
-    let date = currentTime.getTime() - seedTime.getTime()
+    let date = currentTime.getTime() - createFlowerDate.getTime()   //현재시각 - 꽃 만들었을 때 시각
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
-    //console.log(date)
   },[currentTime])
-  // console.log(flower[userObject.nowFlowerSeed].flowername)
   useEffect(()=>{  
     if(seedName_mainPage!==''){
       axios.post('http://13.124.80.15/flower/add-new-flower', {
