@@ -54,7 +54,7 @@ function Main(props){
   const [flowerDate,setFlowerDate]=useState('')
   const [modalVisible,setModalVisible]=useState(false)
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-  const [seedModalVisible,setSeedModalVisible] = useState((userObject.flowerRecord).length===0?true:false) 
+  const [seedModalVisible,setSeedModalVisible] = useState((userObject.nowFlowerSeed)===10?true:false) 
   const [finishSeed,setfinishSeed] = useState(false) 
   const [asking,setasking] = useState(1)
   const calendarDate = userObject.calendarDate
