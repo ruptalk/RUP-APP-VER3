@@ -23,7 +23,7 @@ export const storage = new MMKV()
 const ProfileImage=()=>{
     const navigation = useNavigation()
     const jsonUser = storage.getString('user')
-    const userObject = JSON.parse(jsonUser)
+    const userObject = jsonUser == undefined ? {} :JSON.parse(jsonUser)
     const [ modalVisible, setModalVisible ] = useState(false);
     const [profileImage, setProfileImage] = useState(userObject.profileImage);
     const galleryImagePick= async ()=>{                       ///////////////갤러리 이미지픽

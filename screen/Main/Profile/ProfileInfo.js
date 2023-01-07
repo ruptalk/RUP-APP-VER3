@@ -25,7 +25,7 @@ const ProfileInfo=(props)=>{
     const isFocused = useIsFocused()
     const toast = useToast();
     const jsonUser = storage.getString('user')
-    const userObject = JSON.parse(jsonUser)
+    const userObject = jsonUser == undefined ? {} :JSON.parse(jsonUser)
     const [name,setName] = useState(userObject.userName)
     const [email,setEmail] = useState(userObject.email)
     const [univ,setUniv] = useState(userObject.univ)
@@ -161,7 +161,10 @@ const ProfileInfo=(props)=>{
                     <TouchableOpacity 
                         onPress={async()=>{
                             //await KakaoSDK.unlink()
+                            console.log(storage)
+
                             storage.clearAll()
+                            console.log(storage)
                             //await KakaoSDK.logout()
                             navigation.reset({routes:[{name:'Login'}]})
                         }}

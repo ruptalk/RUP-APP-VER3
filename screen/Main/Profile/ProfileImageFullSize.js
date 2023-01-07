@@ -7,7 +7,8 @@ export const storage = new MMKV()
 
 const ProfileImageFullSize=()=>{
     const jsonUser = storage.getString('user') // { 'username': 'Marc', 'age': 21 }
-    const userObject = JSON.parse(jsonUser)
+    const userObject = jsonUser == undefined ? {} :JSON.parse(jsonUser)
+
     return(
         <View style={{flex:1,flexDirection:'column'}}>
             <View style={{flex:1,backgroundColor:'black'}}/>
