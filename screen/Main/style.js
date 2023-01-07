@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     bottomSheetContainer: {
-        height:'50%',
+        height:'40%',
         alignItems: "center",
         backgroundColor: "white",
         borderTopLeftRadius: 40,

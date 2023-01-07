@@ -194,15 +194,8 @@ const BottomSheet_Main = (props) => {
                         />
                     </View>
                     <View style={{height:'40%',width:'100%',alignItems:'center'}}>
-                        <View style={{marginTop:'5%'}}>
+                        <View style={{marginTop:'15%'}}>
                             <Text style={styles.QrCodeScanText}>QR코드를 스캔하시면 포인트가 적립됩니다.</Text>
-                        </View>
-                        <View>
-                            <TouchableOpacity 
-                                onPress={()=>{closeModal(),selectSeed()}}
-                                style={styles.selectSeedButton}>
-                                <Text style={styles.selectSeedText}>씨앗 선택하기</Text>
-                            </TouchableOpacity>
                         </View>
                     </View>
                 </Animated.View>
