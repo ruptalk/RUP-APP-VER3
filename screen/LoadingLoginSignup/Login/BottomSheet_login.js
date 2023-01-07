@@ -627,7 +627,8 @@ const BottomSheet_login = (props) => {
                             <View style={styles.iconDirection}>
                                 <View style={{flex:1}}/>
                                 <TouchableOpacity
-                                    onPress={()=>{setSignUpSelectedTab(false),setLoginSelectedTab(true)}}
+                           
+                            onPress={()=>{setSignUpSelectedTab(false),setLoginSelectedTab(true), navigation.reset({routes:[{name:'Login'}]})}}
                                     style={styles.iconLocation}>
                                     
                                     <Image source={require('../../../imageResource/icon/ic_login.png')}/>
