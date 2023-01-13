@@ -32,15 +32,15 @@ export const storage = new MMKV()
 const BottomSheet_login = (props) => {
     const isFocused = useIsFocused();
     
-    const { modalVisible, setModalVisible,major,university } = props;
+    const { modalVisible, setModalVisible,major,university,setMajor,setUniversity} = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY_login = useRef(new Animated.Value(screenHeight)).current;
     const [loginSelectedTab, setLoginSelectedTab] = useState(true);
     const [SignUpSelectedTab, setSignUpSelectedTab] = useState(false);
-    const [isNameBlank,setIsNameBlank]=useState('NotBlankName')
+    const [nameDoubleCheck,setNameDoubleCheck]=useState('ruprupruprupruprupruprurprup')
     const navigation = useNavigation()
     const [userName,setUserName]=useState("")
-    const [nameCheke,setNameCheck]=useState(false)
+    const [nameCheck,setNameCheck]=useState(false)
     const [userEmail,setUserEmail]=useState('')
     const [userPw,setUserPw]=useState('')
     const [userPwAgain,setUserPwAgain]=useState('')
@@ -55,6 +55,12 @@ const BottomSheet_login = (props) => {
     const toast = useToast();
     const redStar = require('../../../imageResource/jobDaHan/redStar.png')
     const [check,setcheck] = useState(0)
+    const nickNameRef = useRef()
+    const emailRef = useRef()
+    const pwRef = useRef()
+    const pwAgainRef = useRef()
+    const birthRef = useRef()
+
     const signInWithKakao=async()=>{
         await KakaoSDK.init("6d2aa639e8ea6e75a8dd34f45ad60cf0")
         try{
@@ -95,7 +101,7 @@ const BottomSheet_login = (props) => {
                         secureTextEntry={true}
                     />
                     <TouchableOpacity
-                        onPress={()=> postLogin(email,pw,null,false)} //navigation.reset({routes:[{name:'Main'}]})
+                        onPress={()=> postLogin(email.trim(),pw,null,false)} //navigation.reset({routes:[{name:'Main'}]})
                         style={styles.signUp}
                     >
                         <Text style={styles.signUpText}>로그인</Text>
@@ -146,6 +152,7 @@ const BottomSheet_login = (props) => {
                             />
                         <TouchableOpacity 
                             onPress={()=>{
+                                userDefaultValue(name,email,pw,pwAgain,sex,birth)
                                 validation_nickName(name)
                                 setcheck(1)
                                 console.log(check)
@@ -276,12 +283,7 @@ const BottomSheet_login = (props) => {
 
     const signUp=(name,email,pw,pwAgain,sex,birth)=>{
         if(check==1){
-            setUserName(name)
-            setUserEmail(email)
-            setUserPw(pw)
-            setUserPwAgain(pwAgain)
-            setUserSex(sex)
-            setUserBirth(birth)
+            userDefaultValue(name,email,pw,pwAgain,sex,birth)
             setOpenToastMessage(openToastMessage+1)
         }
         else{
@@ -331,6 +333,7 @@ const BottomSheet_login = (props) => {
                 showToast('중복 확인 완료')
                 setUserName(name)
                 setNameCheck(true)
+                setNameDoubleCheck(name)
             }else{
                 showToast('이미 존재하는 닉네임 입니다.')
             }
@@ -338,11 +341,13 @@ const BottomSheet_login = (props) => {
         .catch(error=>console.log('ERROR'))
     }
     const isName=()=>{
-        if(nameCheke===false){
-            showToast('닉네임 중복확인을 해주세요')
-        }else{
-            return validation_email()
+        if(nameCheck===false){
+            return showToast('닉네임 중복확인을 해주세요')
         }
+        if(userName!==nameDoubleCheck){
+            return showToast('닉네임 중복확인을 다시 해주세요')
+        }
+        return validation_email()
     }
     const validation_email=()=>{                       //이메일 유효성 검사
         if(validateEmail(userEmail)){
@@ -422,6 +427,10 @@ const BottomSheet_login = (props) => {
             if(data.success===true){
                 showToast('회원가입 완료!')
                 setLoginSelectedTab(true)
+                userDefaultValue('','','','',null,null)
+                setUniversity("")
+                setMajor("")
+                console.log('good')
             }else{
                 showToast('회원가입 안됨')
             }
@@ -454,6 +463,7 @@ const BottomSheet_login = (props) => {
           })
           .then(function (response) {
             if(response.data.uid!=='-1'){
+                setModalVisible(false)
                 getMainData(response.data.uid)
             }else{
                 showToast('이메일 또는 비밀번호가 틀렸습니다.')
@@ -505,12 +515,13 @@ const BottomSheet_login = (props) => {
             }
           })
           .then(function (response) {
+            console.log(response.data)
             const user = {
                 uid:response.data.uid,
                 userName: response.data.nickname,
                 email: response.data.email,
                 password: response.data.password,
-                profileImage:'https://image.fnnews.com/resource/media/image/2022/07/16/202207160834208420_l.jpg',
+                profileImgPath:response.data.profileImgPath,
                 point:response.data.point,
                 countRecycle:response.data.countRecycle,
                 calendarDate:response.data.calendarDate,
@@ -532,11 +543,9 @@ const BottomSheet_login = (props) => {
                   "7" : -1,
                   "8" : -1,
                   "9" : -1
-            }      
-            }      
-            
+                }      
+            }
             storage.set('user', JSON.stringify(user))
-            setModalVisible(false)
             navigation.reset({routes:[{name:'Main'}]})
           })
           .catch(function (error) {
@@ -561,7 +570,7 @@ const BottomSheet_login = (props) => {
         duration: 300,
         useNativeDriver: true,
     });
-
+    
     const panResponders_login = useRef(PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponder: () => false,
@@ -627,10 +636,8 @@ const BottomSheet_login = (props) => {
                             <View style={styles.iconDirection}>
                                 <View style={{flex:1}}/>
                                 <TouchableOpacity
-                           
-                            onPress={()=>{setSignUpSelectedTab(false),setLoginSelectedTab(true), navigation.reset({routes:[{name:'Login'}]})}}
+                                    onPress={()=>{setSignUpSelectedTab(false),setLoginSelectedTab(true)}}
                                     style={styles.iconLocation}>
-                                    
                                     <Image source={require('../../../imageResource/icon/ic_login.png')}/>
                                 </TouchableOpacity>
                                 <TouchableOpacity
