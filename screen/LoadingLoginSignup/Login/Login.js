@@ -43,6 +43,9 @@ const Login = (props) => {
                 setMajor(props.route.params.major)
         }    
     },[isFocused])
+    useEffect(()=>{
+        console.log('check')
+    },[university])
     return (
         <View style={styles.container}>
             <View style={{marginTop:'25%'}}/>
@@ -58,6 +61,8 @@ const Login = (props) => {
                 setModalVisible={setModalVisible}
                 major={major}            
                 university={university}
+                setMajor={setMajor}
+                setUniversity={setUniversity}
             />
         </View>
     )
