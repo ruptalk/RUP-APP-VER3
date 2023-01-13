@@ -15,7 +15,7 @@ componentDidMount(){
     }
 ```
  useNativeDriver:false 추가
- 
+
 ![이미지](https://i.ibb.co/pb9mH3P/444.png)
 
 render() {
@@ -38,4 +38,10 @@ render() {
 
 위와 같이 변경
 
+<TextInput>안에 
+```javascript
+onChangeText={(text)=>searchUniversity(text)}
+``` 추가
+
+![이미지](https://i.ibb.co/zHx9G9Z/555.png)
 
