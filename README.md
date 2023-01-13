@@ -38,10 +38,12 @@ render() {
 
 위와 같이 변경
 
-<TextInput>안에 
+ 
 ```javascript
 onChangeText={(text)=>searchUniversity(text)}
-``` 추가
+```
+
+위 코드를 다음 이미지와 같은 위치에 추가
 
 ![이미지](https://i.ibb.co/zHx9G9Z/555.png)
 
