@@ -47,7 +47,7 @@ function Main(props){
   const userObject = JSON.parse(jsonUser)
   const [point,setPoint]=useState(userObject.point)
   const [flowerRecord,setFlowerRecord]=useState(userObject.flowerRecord)
-  const [seedName_mainPage,setSeedName_mainPage]=useState('')
+  const [seedName_mainPage,setSeedName_mainPage]=useState((userObject.flowerRecord).length===0?'':userObject.flowerRecord.slice(-1)[0].flowerNickname)
   const [seedColor,setSeedColor]=useState('')
   const [currentTime,setCurrentTime]=useState(new Date())
   const [seedTime,setSeedTime]=useState(new Date())
@@ -59,11 +59,11 @@ function Main(props){
   const [asking,setasking] = useState(1)
   const calendarDate = userObject.calendarDate
   const [propcalendarDate,setPropcalendarDate] = useState([])
-  const createFlowerDate = (userObject.flowerRecord).length===0?new Date():new Date(userObject.flowerRecord.slice(-1)[0].date)
+  const createFlowerDate = (userObject.flowerRecord).length===0?new Date():new Date((userObject.flowerRecord.slice(-1)[0].date).replace(' ','T'))
   for(key in calendarDate){
     propcalendarDate.push((calendarDate[key].date).slice(0,10))
   }
-
+  console.log(userObject.uid)
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
@@ -84,14 +84,14 @@ function Main(props){
   useInterval(()=>{{
     setCurrentTime(new Date())
     setasking(1)
-    }},6000)
+    }},60000)
 
   useEffect(()=>{
     let date = currentTime.getTime() - createFlowerDate.getTime()   //현재시각 - 꽃 만들었을 때 시각
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
   },[currentTime])
   useEffect(()=>{  
-    if(seedName_mainPage!==''){
+    if(seedName_mainPage!==''&&(userObject.flowerRecord).length===0){
       axios.post('http://13.124.80.15/flower/add-new-flower', {
             uid:userObject.uid,
             flower:flower[userObject.nowFlowerSeed].flowername,
@@ -141,6 +141,11 @@ function Main(props){
       <View style={{height:"8%"}}/>
     )
   }
+  if(userObject.profileImage==""){
+    console.log('ff')
+  }else{
+    console.log(userObject.profileImgPath)
+  }
   return(
     <>
       <SafeAreaView style={{flex:1,backgroundColor:"rgb(166,150,135)"}}>
@@ -158,7 +163,7 @@ function Main(props){
                                   onPress={()=>navigation.navigate('InFullBloom')}
                                   style={styles.profileImageContainer}>
                                   <Image 
-                                      source={{uri:userObject.profileImage}}
+                                      source={userObject.profileImgPath===undefined?require('../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}
                                       style={styles.profileImage}/>
                               </TouchableOpacity>
                               <View style={{justifyContent:'center',marginLeft:'5%',flexDirection:'column'}}>
