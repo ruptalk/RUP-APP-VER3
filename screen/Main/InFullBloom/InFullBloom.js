@@ -19,18 +19,16 @@ export const storage = new MMKV()
 function InFullBloom(){
     const screenHeight = Dimensions.get("screen").height //phone 높이,폭 px
     const screenWidth = Dimensions.get("screen").width
-    const [jsonUser,setJsonUser] = useState(storage.getString('user')) // { 'userName': '박재연', 'point': 0 }
-    const [userObject,setUserObject] = useState(JSON.parse(jsonUser))
+    const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
+    const userObject = JSON.parse(jsonUser)
     const isFocused = useIsFocused();
     const navigation = useNavigation()
     const [modalVisible,setModalVisible]=useState(false)
     const [recycle,setRecycle]=useState(userObject.countRecycle)
     const [point,setPoint]=useState(userObject.point)
-    const caching = ()=>{
-        setJsonUser(storage.getString('user'))
-        setUserObject(JSON.parse(jsonUser))
-    }
+
     useEffect(() => {}, [isFocused]); //isFocused로 화면 전환시 리렌더링
+    console.log('fef ',userObject.profileImgPath)
     return(
         <SafeAreaView style={{flex:1, backgroundColor:"rgb(253,246,234)"}}>
             <ImageBackground style={{
@@ -45,7 +43,7 @@ function InFullBloom(){
                                     onPress={()=>navigation.navigate('Profile')}
                                     style={styles.profileImageContainer}>
                                     <Image 
-                                        source={{uri:userObject.profileImage}}
+                                        source={userObject.profileImgPath===undefined?require('../../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}
                                         style={styles.profileImage}/>
                                 </TouchableOpacity>
                                 <View style={{justifyContent:'center',marginLeft:'5%'}}>
