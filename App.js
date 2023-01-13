@@ -15,6 +15,7 @@ import ProfileImageFullSize from './screen/Main/Profile/ProfileImageFullSize.js'
 import InFullBloom from './screen/Main/InFullBloom/InFullBloom.js';
 import SearchMajor from './screen/LoadingLoginSignup/SearchMajor';
 import SearchUniversity from './screen/LoadingLoginSignup/SearchUniversity';
+import Test from './Test'
 
 const Stack = createStackNavigator();
 function App(){
@@ -24,6 +25,7 @@ function App(){
     >
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown:false}}>
+          
           <Stack.Screen name = 'Loading' component = {Loading}/>
           <Stack.Screen name = 'Login' component = {Login} />
           <Stack.Screen name = 'KakaoSignUp' component = {KakaoSignUp} />
@@ -52,3 +54,4 @@ export default App
 //pull_test
 
 //dds
+//<Stack.Screen name = 'Test' component = {Test}/>
