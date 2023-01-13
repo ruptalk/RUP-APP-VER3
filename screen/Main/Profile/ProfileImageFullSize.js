@@ -15,7 +15,7 @@ const ProfileImageFullSize=()=>{
             <View style={{flex:4}}>
                 <Image
                     style={{height:'100%',width:'100%'}}
-                    source = {{uri:userObject.profileImage}}/>
+                    source = {userObject.profileImgPath===undefined?require('../../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}/>
             </View>
             <View style={{flex:1,backgroundColor:'black'}}/>
         </View>
