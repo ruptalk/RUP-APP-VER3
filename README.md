@@ -15,6 +15,7 @@ componentDidMount(){
     }
 ```
  useNativeDriver:false 추가
+ 
 ![이미지](https://i.ibb.co/pb9mH3P/444.png)
 
 render() {
