@@ -25,7 +25,7 @@ const ProfileImage=()=>{
     const jsonUser = storage.getString('user')
     const userObject = jsonUser == undefined ? {} :JSON.parse(jsonUser)
     const [ modalVisible, setModalVisible ] = useState(false);
-    const [profileImage, setProfileImage] = useState(userObject.profileImage);
+    const [profileImage, setProfileImage] = useState(userObject.profileImgPath===undefined?require('../../../imageResource/icon/ic_profile.png'):userObject.profileImgPath);
     const galleryImagePick= async ()=>{                       ///////////////갤러리 이미지픽
         const grantedstorage = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -46,7 +46,7 @@ const ProfileImage=()=>{
               const localUri = result.assets[0].uri;
               const uriPath = localUri.split("//").pop();
               setProfileImage("file://"+uriPath)
-              userObject.profileImage="file://"+uriPath
+              userObject.profileImgPath="file://"+uriPath
               storage.set('user', JSON.stringify(userObject))
         }
     }
@@ -73,8 +73,10 @@ const ProfileImage=()=>{
             const localUri = result.assets[0].uri;
             const uriPath = localUri.split("//").pop();
             setProfileImage("file://"+uriPath)
-            userObject.profileImage="file://"+uriPath
+            userObject.profileImgPath="file://"+uriPath
             storage.set('user', JSON.stringify(userObject))
+            console.log('d ',userObject.profileImgPath)
+            console.log(uriPath)
         }
     }
 
@@ -143,7 +145,7 @@ const ProfileImage=()=>{
                         onPress={()=>navigation.navigate('ProfileImageFullSize')}
                         style={styles.profileImageContainer}>
                         <Image 
-                            source={{uri:profileImage}}
+                            source={profileImage===require('../../../imageResource/icon/ic_profile.png')?profileImage:{uri:profileImage}}
                             style={styles.profileImage}/>
                     </TouchableOpacity>
                 </View>
