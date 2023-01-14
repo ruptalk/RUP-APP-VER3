@@ -23,6 +23,7 @@ function Notice(){
   const [uid,]=useState(userObject.uid)
 
   const [notice,setNotice] = useState()
+  const [NoticeTitle,setNoticeTitle] =useState()
   const [pointRecord,setPointRecord] = useState([])
 
   const navigation = useNavigation()
@@ -31,6 +32,7 @@ function Notice(){
   useEffect(()=>{
     getNotice(uid)
     console.log(notice,"노티스입니다")
+    console.log(NoticeTitle,"타이틀입니다")
   },[isFocused])
 
   const getNotice=(uid)=>{
@@ -41,7 +43,7 @@ function Notice(){
   })
   .then(function(response) {
     console.log(response.data)
-    
+    setNoticeTitle(response.data.title)
     setNotice(response.data.notice)      
     setPointRecord(response.data.pointRecord)
   })
@@ -90,7 +92,7 @@ function Notice(){
             onPress={()=>setnoticeModalVisible(true)}
           >
           <Image style={{width:20,height:20}} source={require('../../../imageResource/icon/ic_notice_02.png')}/>
-          <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] {notice} </Text>
+          <Text style={{marginLeft:'5%',fontWeight:'bold'}}>[공지사항] {NoticeTitle} </Text>
         </TouchableOpacity>
         
         <SafeAreaView style={{height:'80%'}}>

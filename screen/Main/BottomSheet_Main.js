@@ -105,7 +105,7 @@ const BottomSheet_Main = (props) => {
                 return
             }else{
                 setTimeout(()=>{
-                    axios.get('http://152.67.193.99/home/main', {
+                    axios.get('http://13.124.80.15/home/main', {
                         params: {
                             uid: userObject.uid
                         }
@@ -116,7 +116,7 @@ const BottomSheet_Main = (props) => {
                             userName: response.data.nickname,
                             email: response.data.email,
                             password: response.data.password,
-                            profileImage:'https://image.fnnews.com/resource/media/image/2022/07/16/202207160834208420_l.jpg',
+                            profileImgPath:response.data.profileImgPath,
                             point:response.data.point,
                             countRecycle:response.data.countRecycle,
                             calendarDate:response.data.calendarDate,
@@ -124,7 +124,21 @@ const BottomSheet_Main = (props) => {
                             birth:response.data.birth,
                             sex:response.data.sex,
                             univ:response.data.college,
-                            major:response.data.major
+                            major:response.data.major,
+                            nowFlowerSeed:response.data.nowFlowerSeed, 
+                            nowFlowerName:'',
+                            flowerUri:{
+                            "0" : -1,
+                            "1" : -1,
+                            "2" : -1,
+                            "3" : -1,
+                            "4" : -1,
+                            "5" : -1,
+                            "6" : -1,
+                            "7" : -1,
+                            "8" : -1,
+                            "9" : -1
+                            } 
                         }      
                         storage.set('user', JSON.stringify(user))
                         console.log('suc')

@@ -43,7 +43,7 @@ function InFullBloom(){
                                     onPress={()=>navigation.navigate('Profile')}
                                     style={styles.profileImageContainer}>
                                     <Image 
-                                        source={userObject.profileImgPath===undefined?require('../../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}
+                                        source={userObject.profileImgPath===''?require('../../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}
                                         style={styles.profileImage}/>
                                 </TouchableOpacity>
                                 <View style={{justifyContent:'center',marginLeft:'5%'}}>

@@ -62,7 +62,7 @@ function FindPassword(props){
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-                email : email,
+                email : email.trim(),
                 college : univ,
                 major : major
             })
@@ -73,7 +73,6 @@ function FindPassword(props){
                 showToast('존재하지 않는 회원정보입니다.')
             }else{
                 const randomNum = (Math.floor(Math.random() * (999999-100000)) + 100000).toString() // 100000 ~ 999999
-                setTempRandom(randomNum)
                 postTempPw(data.uid,randomNum)             
             }
         })
@@ -91,7 +90,7 @@ function FindPassword(props){
         .then(res=>{return res.json()})
         .then(data=>{
             if(data.success===true){
-                Clipboard.setString(tempRandom)
+                Clipboard.setString(tempPw)
                 setFindPw('비밀번호 찾기 버튼 클릭')
             }else{
                 showToast('네트워크 오류')            
