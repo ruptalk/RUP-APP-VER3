@@ -515,15 +515,39 @@ const BottomSheet_login = (props) => {
             }
           })
           .then(function (response) {
-            console.log(response.data)
+            let arr = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+            if((response.data.flowerRecord).length>1){
+                for(let i=0;i<(response.data.flowerRecord).length-1;i++ ){
+                    if(response.data.flowerRecord[i].flower==='flowerA')
+                        arr[i]=0
+                    else if(response.data.flowerRecord[i].flower==='flowerB')
+                        arr[i]=1
+                    else if(response.data.flowerRecord[i].flower==='flowerC')
+                        arr[i]=2
+                    else if(response.data.flowerRecord[i].flower==='flowerD')
+                        arr[i]=3
+                    else if(response.data.flowerRecord[i].flower==='flowerE')
+                        arr[i]=4
+                    else if(response.data.flowerRecord[i].flower==='flowerF')
+                        arr[i]=5
+                    else if(response.data.flowerRecord[i].flower==='flowerG')
+                        arr[i]=6
+                    else if(response.data.flowerRecord[i].flower==='flowerH')
+                        arr[i]=7
+                    else if(response.data.flowerRecord[i].flower==='flowerI')
+                        arr[i]=8
+                    else if(response.data.flowerRecord[i].flower==='flowerJ')
+                        arr[i]=9
+                }
+            }
             const user = {
                 uid:response.data.uid,
                 userName: response.data.nickname,
                 email: response.data.email,
                 password: response.data.password,
                 profileImgPath:response.data.profileImgPath,
-                point:response.data.point,
-                countRecycle:response.data.countRecycle,
+                point:29,
+                countRecycle:29,
                 calendarDate:response.data.calendarDate,
                 flowerRecord:response.data.flowerRecord,
                 birth:response.data.birth,
@@ -533,16 +557,16 @@ const BottomSheet_login = (props) => {
                 nowFlowerSeed:response.data.nowFlowerSeed, 
                 nowFlowerName:'',
                 flowerUri:{
-                  "0" : -1,
-                  "1" : -1,
-                  "2" : -1,
-                  "3" : -1,
-                  "4" : -1,
-                  "5" : -1,
-                  "6" : -1,
-                  "7" : -1,
-                  "8" : -1,
-                  "9" : -1
+                "0" : arr[0],
+                "1" : arr[1],
+                "2" : arr[2],
+                "3" : arr[3],
+                "4" : arr[4],
+                "5" : arr[5],
+                "6" : arr[6],
+                "7" : arr[7],
+                "8" : arr[8],
+                "9" : arr[9],
                 }      
             }
             storage.set('user', JSON.stringify(user))

@@ -46,6 +46,7 @@ function Main(props){
   const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
   const userObject = JSON.parse(jsonUser)
   const [point,setPoint]=useState(userObject.point)
+  const [recycle,setRecycle]=useState(userObject.countRecycle)
   const [flowerRecord,setFlowerRecord]=useState(userObject.flowerRecord)
   const [seedName_mainPage,setSeedName_mainPage]=useState((userObject.flowerRecord).length===0?'':userObject.flowerRecord.slice(-1)[0].flowerNickname)
   const [seedColor,setSeedColor]=useState('')
@@ -55,7 +56,7 @@ function Main(props){
   const [modalVisible,setModalVisible]=useState(false)
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [seedModalVisible,setSeedModalVisible] = useState((userObject.nowFlowerSeed)===10?true:false) 
-  const [finishSeed,setfinishSeed] = useState(false) 
+  const [finishSeed,setfinishSeed] = useState(false)
   const [asking,setasking] = useState(1)
   const calendarDate = userObject.calendarDate
   const [propcalendarDate,setPropcalendarDate] = useState([])
@@ -63,23 +64,20 @@ function Main(props){
   for(key in calendarDate){
     propcalendarDate.push((calendarDate[key].date).slice(0,10))
   }
-  console.log(userObject.uid)
+
   const kaka=async()=>{
     const ee = await KakaoSDK.getProfile()
     console.log(ee)
   }
   const isSeedName=()=>{
-    if((userObject.flowerRecord).length===0)
-        return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
-    else
-        return <Text style={styles.tulipText}>{userObject.flowerRecord.slice(-1)[0].flowerNickname}와 함께 {flowerDate}일째</Text>
+    return <Text style={styles.tulipText}>{seedName_mainPage}와 함께 {flowerDate}일째</Text>
   }  
   useEffect(()=>{
-    if(userObject.point%30==0 && userObject.point!=0 && asking==1){
+    if(point%30===0 && point!==0 && asking==1){
       setfinishSeed(true)
       setasking(0)
     }
-  })
+  },[point])
   
   useInterval(()=>{{
     setCurrentTime(new Date())
@@ -90,9 +88,29 @@ function Main(props){
     let date = currentTime.getTime() - createFlowerDate.getTime()   //현재시각 - 꽃 만들었을 때 시각
     setFlowerDate(Math.floor(date/(1000*60*60*24)))
   },[currentTime])
+
   useEffect(()=>{  
-    if(seedName_mainPage!==''&&(userObject.flowerRecord).length===0){
-      axios.post('http://13.124.80.15/flower/add-new-flower', {
+    if((userObject.flowerRecord).length===0){
+      return nullFlowerRecord()
+    }else{
+      return notNullFlowerRecord()
+    }
+  },[seedName_mainPage])
+
+  const nullFlowerRecord=()=>{
+    if(seedName_mainPage!==''){
+      flowerAdd()
+    }
+  }
+
+  const notNullFlowerRecord=()=>{
+    if(userObject.flowerRecord.slice(-1)[0].flowerNickname!==seedName_mainPage){
+      flowerAdd()
+    }
+  }
+
+  const flowerAdd=()=>{
+    axios.post('http://13.124.80.15/flower/add-new-flower', {
             uid:userObject.uid,
             flower:flower[userObject.nowFlowerSeed].flowername,
             flowerNickname:seedName_mainPage
@@ -103,15 +121,14 @@ function Main(props){
           .catch(function (error) {
             console.log(error);
           });
-    }
-  },[seedName_mainPage])
-
+  }
   // console.log(userObject)
 
-
+  console.log('nowFlowerSeed2 : ',userObject.nowFlowerSeed)
+  console.log(userObject)
   const FlowerGIF =()=>{
     var tmp =''
-    var sw = userObject.countRecycle
+    var sw = recycle%30
     if (sw < 6){
       tmp = flower[userObject.nowFlowerSeed].uri1
     }
@@ -124,7 +141,7 @@ function Main(props){
     else if(sw<26){
       tmp = flower[userObject.nowFlowerSeed].uri4
     }
-    else{
+    else {
       tmp = flower[userObject.nowFlowerSeed].uri5
     }
     return (
@@ -163,14 +180,14 @@ function Main(props){
                                   onPress={()=>navigation.navigate('InFullBloom')}
                                   style={styles.profileImageContainer}>
                                   <Image 
-                                      source={userObject.profileImgPath===undefined?require('../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}
+                                      source={userObject.profileImgPath===''?require('../../imageResource/icon/ic_profile.png'):{uri:userObject.profileImgPath}}
                                       style={styles.profileImage}/>
                               </TouchableOpacity>
                               <View style={{justifyContent:'center',marginLeft:'5%',flexDirection:'column'}}>
                                   <Text style={styles.name}>{userObject.userName}</Text>
                                   <View style={styles.flexDirectionRow}>
                                       <Image source={require('../../imageResource/icon/ic_point.png')}/>
-                                      <Text style={{marginLeft:'8%'}}>{userObject.point}</Text>
+                                      <Text style={{marginLeft:'8%'}}>{point}</Text>
                                   </View>
                               </View>
                           </View>
@@ -199,15 +216,7 @@ function Main(props){
                       <FlowerGIF/>
                   </View>
                   <View style={{alignItems:'center',height:'20%',justifyContent:'center'}}>
-                      <TouchableOpacity onPress={()=>{
-                        if(userObject.point%30==0 && userObject.point!=0){
-                          setSeedModalVisible(true)
-                        }
-                        else{
-                          setModalVisible(true)
-                        }
-                      }
-                      }>  
+                      <TouchableOpacity onPress={()=>setModalVisible(true)}>  
                         <View style={{height:'45%'}}/>
                         <Image style={{width:70,height:70}} source={require('../../imageResource/icon/qrcode.png')}/>
                       </TouchableOpacity>
@@ -220,6 +229,7 @@ function Main(props){
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 setPoint={setPoint}
+                setRecycle={setRecycle}
               />
               <CalendarModal
                 calendarModalVisible={calendarModalVisible}
@@ -237,6 +247,7 @@ function Main(props){
                   finishSeed={finishSeed}
                   setfinishSeed={setfinishSeed}
                   seedName={seedName_mainPage}
+                  setSeedModalVisible={setSeedModalVisible}
               />
           </ImageBackground>
       </SafeAreaView>

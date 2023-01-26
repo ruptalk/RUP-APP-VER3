@@ -15,6 +15,7 @@ import { useToast } from "react-native-toast-notifications";
 import SearchUniversity from '../../LoadingLoginSignup/SearchUniversity';
 import SearchMajor from '../../LoadingLoginSignup/SearchMajor'
 import KakaoSDK from '@actbase/react-kakaosdk'
+import axios from 'axios';
 import styles from './style.js'
 
 export const storage = new MMKV()
@@ -50,17 +51,61 @@ const ProfileInfo=(props)=>{
     },[profilemajor,profileuniversity])
 
     const editProfile=()=>{
-        userObject.userName = name
-        userObject.email = email
-        userObject.password = pw
-        storage.set('user', JSON.stringify(userObject))
-
-        setPlaceHolderName(name)
-        setPlaceHolderEmail(email)
-
+        if(userObject.userName!==name){
+            nickToServer()
+        }else{
+            edit()
+        }
     }
-    const showToast = () => {
-        toast.show("수정되었습니다!",{  //https://github.com/arnnis/react-native-toast-notifications
+    const nickToServer=()=>{
+        fetch('http://13.124.80.15/user/nickname-check',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+            nickname:name
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            if(data.success===true){
+                console.log('good')
+                return edit()
+            }else{
+                return showToast('이미 존재하는 닉네임 입니다.')
+            }
+        })
+        .catch(error=>console.log('ERROR'))
+    }
+    const edit=()=>{
+        fetch('http://13.124.80.15/user/update-user-info',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                uid: userObject.uid,
+                email: email,
+                password: pw,
+                nickname: name,
+                sex: userObject.sex,
+                birth: userObject.birth,
+                college: univ,
+                major: major,
+            })
+        })
+        .then(res=>{return res.json()})
+        .then(data=>{
+            userObject.userName = name
+            userObject.email = email
+            userObject.password = pw
+            storage.set('user', JSON.stringify(userObject))
+            setPlaceHolderName(name)
+            setPlaceHolderEmail(email)
+            showToast('수정 완료!')
+        })
+        .catch(error=>console.log('ERROR'))
+    }
+    
+    const showToast = (message) => {
+        toast.show(message,{  //https://github.com/arnnis/react-native-toast-notifications
             type:'custom',
             duration:1000,
             animationType:'zoom-in',
@@ -151,7 +196,7 @@ const ProfileInfo=(props)=>{
             <View style={styles.middle}>
                 <View>
                     <TouchableOpacity 
-                        onPress={()=>{editProfile(),showToast()}}
+                        onPress={()=>{editProfile()}}
                         style={styles.signUp}
                     >
                         <Text style={styles.editProfileButton}>수정</Text>

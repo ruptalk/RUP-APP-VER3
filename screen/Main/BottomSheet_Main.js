@@ -44,7 +44,7 @@ const BottomSheet_Main = (props) => {
     const isFocused = useIsFocused();
     const [check,setCheck]=useState(0)
   
-    const { modalVisible, setModalVisible, setPoint } = props;
+    const { modalVisible, setModalVisible, setPoint, setRecycle } = props;
     const screenHeight = Dimensions.get("screen").height;
     const panY = useRef(new Animated.Value(screenHeight)).current;
     const translateY = panY.interpolate({
@@ -111,38 +111,11 @@ const BottomSheet_Main = (props) => {
                         }
                     })
                     .then(function (response) {
-                        const user = {
-                            uid:response.data.uid,
-                            userName: response.data.nickname,
-                            email: response.data.email,
-                            password: response.data.password,
-                            profileImgPath:response.data.profileImgPath,
-                            point:response.data.point,
-                            countRecycle:response.data.countRecycle,
-                            calendarDate:response.data.calendarDate,
-                            flowerRecord:response.data.flowerRecord,
-                            birth:response.data.birth,
-                            sex:response.data.sex,
-                            univ:response.data.college,
-                            major:response.data.major,
-                            nowFlowerSeed:response.data.nowFlowerSeed, 
-                            nowFlowerName:'',
-                            flowerUri:{
-                            "0" : -1,
-                            "1" : -1,
-                            "2" : -1,
-                            "3" : -1,
-                            "4" : -1,
-                            "5" : -1,
-                            "6" : -1,
-                            "7" : -1,
-                            "8" : -1,
-                            "9" : -1
-                            } 
-                        }      
-                        storage.set('user', JSON.stringify(user))
-                        console.log('suc')
+                        userObject.point = response.data.point
+                        userObject.countRecycle = response.data.countRecycle
+                        storage.set('user', JSON.stringify(userObject))
                         setPoint(response.data.point)
+                        setRecycle(response.data.countRecycle)
                     })
                     .catch(function (error) {
                         console.log(error);

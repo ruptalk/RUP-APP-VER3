@@ -15,7 +15,7 @@ export const storage = new MMKV()
 const SeedFinish = (props) => {
     const isFocused = useIsFocused()
     const navigation = useNavigation()
-    const { finishSeed, seedName, setfinishSeed} = props;
+    const { finishSeed, seedName, setfinishSeed, setSeedModalVisible} = props;
 
     const [jsonUser,setJsonUser] = useState(storage.getString('user'))
     const [userObject,setUserObject] = useState(JSON.parse(jsonUser))
@@ -33,14 +33,14 @@ const SeedFinish = (props) => {
     const gotoMoon = () => {
         for(key in userObject.flowerUri){
            if(userObject.flowerUri[key]==-1){
-            userObject.flowerUri[key]=userObject.nowFlowerSeed
-            userObject.nowFlowerSeed=10
-            storage.set('user',JSON.stringify(userObject))
-            break;
+                userObject.flowerUri[key]=userObject.nowFlowerSeed
+                userObject.nowFlowerSeed=10
+                storage.set('user',JSON.stringify(userObject))
+                break;
            }
         }
+        setSeedModalVisible(true)
         setfinishSeed(false)
-        navigation.navigate("InFullBloom")
     }
 return (
     <>

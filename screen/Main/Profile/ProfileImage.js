@@ -39,17 +39,6 @@ const ProfileImage=()=>{
             storage.set('user', JSON.stringify(userObject))
     }
     const androidPhotoImagePick= async ()=>{                           /////////////////포토 이미지픽
-        const grantedcamera = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: "App Camera Permission",
-              message:"App needs access to your camera ",
-              buttonNeutral: "Ask Me Later",
-              buttonNegative: "Cancel",
-              buttonPositive: "OK"
-            }
-        )
-        if (grantedcamera === PermissionsAndroid.RESULTS.GRANTED) {
             setModalVisible(false)
             const result = await launchCamera({
                 mediaType : 'photo',
@@ -65,7 +54,7 @@ const ProfileImage=()=>{
             storage.set('user', JSON.stringify(userObject))
             console.log('d ',userObject.profileImgPath)
             console.log(uriPath)
-        }
+        
     }
 
     const platFormGalleryImage=()=>{

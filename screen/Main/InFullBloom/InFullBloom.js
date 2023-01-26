@@ -16,19 +16,17 @@ import flower from '../flower'
 import { rgb } from 'color-convert';
 
 export const storage = new MMKV()
-function InFullBloom(){
+function InFullBloom(props){
     const screenHeight = Dimensions.get("screen").height //phone 높이,폭 px
     const screenWidth = Dimensions.get("screen").width
     const jsonUser = storage.getString('user') // { 'userName': '박재연', 'point': 0 }
     const userObject = JSON.parse(jsonUser)
+    const dd = storage.getString('user')
     const isFocused = useIsFocused();
     const navigation = useNavigation()
     const [modalVisible,setModalVisible]=useState(false)
     const [recycle,setRecycle]=useState(userObject.countRecycle)
     const [point,setPoint]=useState(userObject.point)
-
-    useEffect(() => {}, [isFocused]); //isFocused로 화면 전환시 리렌더링
-    console.log('fef ',userObject.profileImgPath)
     return(
         <SafeAreaView style={{flex:1, backgroundColor:"rgb(253,246,234)"}}>
             <ImageBackground style={{
@@ -54,11 +52,11 @@ function InFullBloom(){
                         <View style={{width:'38%',flexDirection:'row'}}>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
                                 <Image style ={{width:30,height:30}} source={require('../../../imageResource/icon/ic_recycle_0.png')}/>
-                                <Text style={styles.name}>{recycle}</Text>
+                                <Text style={styles.name}>{userObject.countRecycle}</Text>
                             </View>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center',flexDirection:'column',marginRight:'20%'}}>
                                 <Image style ={{width:30,height:30,}} source={require('../../../imageResource/icon/ic_point.png')}/>
-                                <Text style={styles.name}>{point}</Text>
+                                <Text style={styles.name}>{userObject.point}</Text>
                             </View>
                         </View>
                     </View>
